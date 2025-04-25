@@ -9,5 +9,6 @@ router.get("/users", userController.index)
 router.post("/users", userController.create)
 router.get("/users/:id", userController.show)
 router.put("/users/:id", userController.update)
+router.delete("/users/:id", userController.delete)
 
 export { router };

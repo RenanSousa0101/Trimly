@@ -60,4 +60,23 @@ export class UserController {
             next(error);
         }
     }
+
+    // DELETE /users/:id
+    delete: Handler = async (req, res, next) => {
+        try {
+            const id = Number(req.params.id)
+
+            const userExists = await prisma.user.findUnique({ where: { id } })
+            if (!userExists) throw new HttpError(404, "User not found");
+
+            const deletedUser = await prisma.user.delete({
+                where: { id }
+            })
+
+            res.status(200).json({ deletedUser })
+
+        } catch (error) {
+            next(error); 
+        }
+    }
 }
