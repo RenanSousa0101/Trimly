@@ -13,7 +13,9 @@ router.get("/users/:id", userController.show)
 router.put("/users/:id", userController.update)
 router.delete("/users/:id", userController.delete)
 
+router.get("/users/:id/phones", phoneController.show)
 router.post("/users/:id/phones", phoneController.create)
 router.put("/users/:id/phones/:phoneId", phoneController.update)
+router.delete("/users/:id/phones/:phoneId", phoneController.delete)
 
 export { router };
