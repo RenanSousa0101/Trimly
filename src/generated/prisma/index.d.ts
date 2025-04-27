@@ -4437,7 +4437,7 @@ export namespace Prisma {
     id: number | null
     user_id: number | null
     phone_number: string | null
-    Phone_type: $Enums.PhoneType | null
+    phone_type: $Enums.PhoneType | null
     is_primary: boolean | null
     created_at: Date | null
     updated_at: Date | null
@@ -4447,7 +4447,7 @@ export namespace Prisma {
     id: number | null
     user_id: number | null
     phone_number: string | null
-    Phone_type: $Enums.PhoneType | null
+    phone_type: $Enums.PhoneType | null
     is_primary: boolean | null
     created_at: Date | null
     updated_at: Date | null
@@ -4457,7 +4457,7 @@ export namespace Prisma {
     id: number
     user_id: number
     phone_number: number
-    Phone_type: number
+    phone_type: number
     is_primary: number
     created_at: number
     updated_at: number
@@ -4479,7 +4479,7 @@ export namespace Prisma {
     id?: true
     user_id?: true
     phone_number?: true
-    Phone_type?: true
+    phone_type?: true
     is_primary?: true
     created_at?: true
     updated_at?: true
@@ -4489,7 +4489,7 @@ export namespace Prisma {
     id?: true
     user_id?: true
     phone_number?: true
-    Phone_type?: true
+    phone_type?: true
     is_primary?: true
     created_at?: true
     updated_at?: true
@@ -4499,7 +4499,7 @@ export namespace Prisma {
     id?: true
     user_id?: true
     phone_number?: true
-    Phone_type?: true
+    phone_type?: true
     is_primary?: true
     created_at?: true
     updated_at?: true
@@ -4596,7 +4596,7 @@ export namespace Prisma {
     id: number
     user_id: number
     phone_number: string
-    Phone_type: $Enums.PhoneType
+    phone_type: $Enums.PhoneType
     is_primary: boolean
     created_at: Date
     updated_at: Date
@@ -4625,7 +4625,7 @@ export namespace Prisma {
     id?: boolean
     user_id?: boolean
     phone_number?: boolean
-    Phone_type?: boolean
+    phone_type?: boolean
     is_primary?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -4636,7 +4636,7 @@ export namespace Prisma {
     id?: boolean
     user_id?: boolean
     phone_number?: boolean
-    Phone_type?: boolean
+    phone_type?: boolean
     is_primary?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -4647,7 +4647,7 @@ export namespace Prisma {
     id?: boolean
     user_id?: boolean
     phone_number?: boolean
-    Phone_type?: boolean
+    phone_type?: boolean
     is_primary?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -4658,13 +4658,13 @@ export namespace Prisma {
     id?: boolean
     user_id?: boolean
     phone_number?: boolean
-    Phone_type?: boolean
+    phone_type?: boolean
     is_primary?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type PhoneOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "phone_number" | "Phone_type" | "is_primary" | "created_at" | "updated_at", ExtArgs["result"]["phone"]>
+  export type PhoneOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "phone_number" | "phone_type" | "is_primary" | "created_at" | "updated_at", ExtArgs["result"]["phone"]>
   export type PhoneInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -4684,7 +4684,7 @@ export namespace Prisma {
       id: number
       user_id: number
       phone_number: string
-      Phone_type: $Enums.PhoneType
+      phone_type: $Enums.PhoneType
       is_primary: boolean
       created_at: Date
       updated_at: Date
@@ -5115,7 +5115,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Phone", 'Int'>
     readonly user_id: FieldRef<"Phone", 'Int'>
     readonly phone_number: FieldRef<"Phone", 'String'>
-    readonly Phone_type: FieldRef<"Phone", 'PhoneType'>
+    readonly phone_type: FieldRef<"Phone", 'PhoneType'>
     readonly is_primary: FieldRef<"Phone", 'Boolean'>
     readonly created_at: FieldRef<"Phone", 'DateTime'>
     readonly updated_at: FieldRef<"Phone", 'DateTime'>
@@ -26105,7 +26105,7 @@ export namespace Prisma {
     id: 'id',
     user_id: 'user_id',
     phone_number: 'phone_number',
-    Phone_type: 'Phone_type',
+    phone_type: 'phone_type',
     is_primary: 'is_primary',
     created_at: 'created_at',
     updated_at: 'updated_at'
@@ -26579,7 +26579,7 @@ export namespace Prisma {
     id?: IntFilter<"Phone"> | number
     user_id?: IntFilter<"Phone"> | number
     phone_number?: StringFilter<"Phone"> | string
-    Phone_type?: EnumPhoneTypeFilter<"Phone"> | $Enums.PhoneType
+    phone_type?: EnumPhoneTypeFilter<"Phone"> | $Enums.PhoneType
     is_primary?: BoolFilter<"Phone"> | boolean
     created_at?: DateTimeFilter<"Phone"> | Date | string
     updated_at?: DateTimeFilter<"Phone"> | Date | string
@@ -26590,7 +26590,7 @@ export namespace Prisma {
     id?: SortOrder
     user_id?: SortOrder
     phone_number?: SortOrder
-    Phone_type?: SortOrder
+    phone_type?: SortOrder
     is_primary?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -26604,7 +26604,7 @@ export namespace Prisma {
     NOT?: PhoneWhereInput | PhoneWhereInput[]
     user_id?: IntFilter<"Phone"> | number
     phone_number?: StringFilter<"Phone"> | string
-    Phone_type?: EnumPhoneTypeFilter<"Phone"> | $Enums.PhoneType
+    phone_type?: EnumPhoneTypeFilter<"Phone"> | $Enums.PhoneType
     is_primary?: BoolFilter<"Phone"> | boolean
     created_at?: DateTimeFilter<"Phone"> | Date | string
     updated_at?: DateTimeFilter<"Phone"> | Date | string
@@ -26615,7 +26615,7 @@ export namespace Prisma {
     id?: SortOrder
     user_id?: SortOrder
     phone_number?: SortOrder
-    Phone_type?: SortOrder
+    phone_type?: SortOrder
     is_primary?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -26633,7 +26633,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Phone"> | number
     user_id?: IntWithAggregatesFilter<"Phone"> | number
     phone_number?: StringWithAggregatesFilter<"Phone"> | string
-    Phone_type?: EnumPhoneTypeWithAggregatesFilter<"Phone"> | $Enums.PhoneType
+    phone_type?: EnumPhoneTypeWithAggregatesFilter<"Phone"> | $Enums.PhoneType
     is_primary?: BoolWithAggregatesFilter<"Phone"> | boolean
     created_at?: DateTimeWithAggregatesFilter<"Phone"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Phone"> | Date | string
@@ -27938,7 +27938,7 @@ export namespace Prisma {
 
   export type PhoneCreateInput = {
     phone_number: string
-    Phone_type?: $Enums.PhoneType
+    phone_type?: $Enums.PhoneType
     is_primary?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -27949,7 +27949,7 @@ export namespace Prisma {
     id?: number
     user_id: number
     phone_number: string
-    Phone_type?: $Enums.PhoneType
+    phone_type?: $Enums.PhoneType
     is_primary?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -27957,7 +27957,7 @@ export namespace Prisma {
 
   export type PhoneUpdateInput = {
     phone_number?: StringFieldUpdateOperationsInput | string
-    Phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
+    phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
     is_primary?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27968,7 +27968,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     phone_number?: StringFieldUpdateOperationsInput | string
-    Phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
+    phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
     is_primary?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27978,7 +27978,7 @@ export namespace Prisma {
     id?: number
     user_id: number
     phone_number: string
-    Phone_type?: $Enums.PhoneType
+    phone_type?: $Enums.PhoneType
     is_primary?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -27986,7 +27986,7 @@ export namespace Prisma {
 
   export type PhoneUpdateManyMutationInput = {
     phone_number?: StringFieldUpdateOperationsInput | string
-    Phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
+    phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
     is_primary?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27996,7 +27996,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     phone_number?: StringFieldUpdateOperationsInput | string
-    Phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
+    phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
     is_primary?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29401,7 +29401,7 @@ export namespace Prisma {
     id?: SortOrder
     user_id?: SortOrder
     phone_number?: SortOrder
-    Phone_type?: SortOrder
+    phone_type?: SortOrder
     is_primary?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -29416,7 +29416,7 @@ export namespace Prisma {
     id?: SortOrder
     user_id?: SortOrder
     phone_number?: SortOrder
-    Phone_type?: SortOrder
+    phone_type?: SortOrder
     is_primary?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -29426,7 +29426,7 @@ export namespace Prisma {
     id?: SortOrder
     user_id?: SortOrder
     phone_number?: SortOrder
-    Phone_type?: SortOrder
+    phone_type?: SortOrder
     is_primary?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -32007,7 +32007,7 @@ export namespace Prisma {
 
   export type PhoneCreateWithoutUserInput = {
     phone_number: string
-    Phone_type?: $Enums.PhoneType
+    phone_type?: $Enums.PhoneType
     is_primary?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -32016,7 +32016,7 @@ export namespace Prisma {
   export type PhoneUncheckedCreateWithoutUserInput = {
     id?: number
     phone_number: string
-    Phone_type?: $Enums.PhoneType
+    phone_type?: $Enums.PhoneType
     is_primary?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -32206,7 +32206,7 @@ export namespace Prisma {
     id?: IntFilter<"Phone"> | number
     user_id?: IntFilter<"Phone"> | number
     phone_number?: StringFilter<"Phone"> | string
-    Phone_type?: EnumPhoneTypeFilter<"Phone"> | $Enums.PhoneType
+    phone_type?: EnumPhoneTypeFilter<"Phone"> | $Enums.PhoneType
     is_primary?: BoolFilter<"Phone"> | boolean
     created_at?: DateTimeFilter<"Phone"> | Date | string
     updated_at?: DateTimeFilter<"Phone"> | Date | string
@@ -34711,7 +34711,7 @@ export namespace Prisma {
   export type PhoneCreateManyUserInput = {
     id?: number
     phone_number: string
-    Phone_type?: $Enums.PhoneType
+    phone_type?: $Enums.PhoneType
     is_primary?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -34765,7 +34765,7 @@ export namespace Prisma {
 
   export type PhoneUpdateWithoutUserInput = {
     phone_number?: StringFieldUpdateOperationsInput | string
-    Phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
+    phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
     is_primary?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34774,7 +34774,7 @@ export namespace Prisma {
   export type PhoneUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     phone_number?: StringFieldUpdateOperationsInput | string
-    Phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
+    phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
     is_primary?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34783,7 +34783,7 @@ export namespace Prisma {
   export type PhoneUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     phone_number?: StringFieldUpdateOperationsInput | string
-    Phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
+    phone_type?: EnumPhoneTypeFieldUpdateOperationsInput | $Enums.PhoneType
     is_primary?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string

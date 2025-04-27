@@ -35,7 +35,7 @@ model Phone {
   id           Int       @id @default(autoincrement())
   user_id      Int
   phone_number String    @db.VarChar(255)
-  Phone_type   PhoneType @default(Mobile)
+  phone_type   PhoneType @default(Mobile)
   is_primary   Boolean   @default(false)
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt

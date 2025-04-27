@@ -8,7 +8,7 @@ export const userWithFullAddressSelect = {
         select: {
             id: true,
             phone_number: true,
-            Phone_type: true,
+            phone_type: true,
             is_primary: true,
         }
     },

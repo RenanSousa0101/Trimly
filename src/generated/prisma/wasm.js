@@ -132,7 +132,7 @@ exports.Prisma.PhoneScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
   phone_number: 'phone_number',
-  Phone_type: 'Phone_type',
+  phone_type: 'phone_type',
   is_primary: 'is_primary',
   created_at: 'created_at',
   updated_at: 'updated_at'

@@ -1,14 +1,19 @@
 import { Router } from "express";
 import { UserController } from "./controllers/UserController";
+import { PhoneController } from "./controllers/PhoneController";
 
 const router = Router()
 
 const userController = new UserController()
+const phoneController = new PhoneController()
 
 router.get("/users", userController.index)
 router.post("/users", userController.create)
 router.get("/users/:id", userController.show)
 router.put("/users/:id", userController.update)
 router.delete("/users/:id", userController.delete)
+
+router.post("/users/:id/phones", phoneController.create)
+router.put("/users/:id/phones/:phoneId", phoneController.update)
 
 export { router };
