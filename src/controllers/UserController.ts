@@ -58,12 +58,41 @@ export class UserController {
         try {
             const user = await prisma.user.findUnique({
                 where: { id: Number(req.params.id) },
-                select: userWithFullAddressSelect
+                select: userWithFullAddressSelect,
             });
 
             if (!user) throw new HttpError(404, "User not found");
 
-            res.status(200).json(user);
+           const formattedUser = {
+                id: user.id,
+                roles: user.User_Roles.map((role) => role.roles.role_type),
+                name: user.name,
+                email: user.email,
+                avatar_url: user.avatar_url,
+                bio: user.bio,
+                phones: user.Phone.map((phone) => ({
+                    id: phone.id,
+                    phone_type: phone.phone_type,
+                    phone_number: phone.phone_number,
+                    is_primary: phone.is_primary,
+                })),
+                address: user.Address.map((address) => ({
+                    id: address.id,
+                    type: address.address_type,
+                    country: address.district.city.state.country.name,
+                    acronym: address.district.city.state.country.acronym,
+                    state: address.district.city.state.name,
+                    uf: address.district.city.state.uf,
+                    district: address.district.name,
+                    city: address.district.city.name,
+                    street: address.street,
+                    number: address.number,
+                    cep: address.cep_street,
+                    complement: address.complement,
+                })),
+           }
+
+        res.status(200).json(formattedUser);
         } catch (error) {
             next(error);
         }

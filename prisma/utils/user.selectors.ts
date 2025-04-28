@@ -1,5 +1,15 @@
 export const userWithFullAddressSelect = {
     id: true,
+    User_Roles: {
+        select: {
+            roles: { 
+                select: {
+                    id: true,
+                    role_type: true
+                }
+            }
+        }
+    },
     name: true,
     email: true,
     bio: true,

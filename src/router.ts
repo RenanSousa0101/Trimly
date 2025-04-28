@@ -2,12 +2,14 @@ import { Router } from "express";
 import { UserController } from "./controllers/UserController";
 import { PhoneController } from "./controllers/PhoneController";
 import { AddressController } from "./controllers/AddressController";
+import { RolesController } from "./controllers/RolesController";
 
 const router = Router()
 
 const userController = new UserController()
 const phoneController = new PhoneController()
 const addressController = new AddressController()
+const rolesController = new RolesController()
 
 router.get("/users", userController.index)
 router.post("/users", userController.create)
@@ -25,5 +27,7 @@ router.post("/users/:id/addresses", addressController.create)
 router.put("/users/:id/addresses/:addressId", addressController.update)
 router.delete("/users/:id/addresses/:addressId", addressController.delete)
 
+router.get("/users/:id/roles", rolesController.show)
+router.post("/users/:id/roles", rolesController.create)
 
 export { router };

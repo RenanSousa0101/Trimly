@@ -26987,14 +26987,14 @@ export namespace Prisma {
 
   export type RolesWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    role_type?: $Enums.RoleType
     AND?: RolesWhereInput | RolesWhereInput[]
     OR?: RolesWhereInput[]
     NOT?: RolesWhereInput | RolesWhereInput[]
-    role_type?: EnumRoleTypeFilter<"Roles"> | $Enums.RoleType
     created_at?: DateTimeFilter<"Roles"> | Date | string
     updated_at?: DateTimeFilter<"Roles"> | Date | string
     user_roles?: User_RolesListRelationFilter
-  }, "id">
+  }, "id" | "role_type">
 
   export type RolesOrderByWithAggregationInput = {
     id?: SortOrder
@@ -27043,6 +27043,7 @@ export namespace Prisma {
 
   export type User_RolesWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    user_id_roles_id?: User_RolesUser_idRoles_idCompoundUniqueInput
     AND?: User_RolesWhereInput | User_RolesWhereInput[]
     OR?: User_RolesWhereInput[]
     NOT?: User_RolesWhereInput | User_RolesWhereInput[]
@@ -27052,7 +27053,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"User_Roles"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     roles?: XOR<RolesScalarRelationFilter, RolesWhereInput>
-  }, "id">
+  }, "id" | "user_id_roles_id">
 
   export type User_RolesOrderByWithAggregationInput = {
     id?: SortOrder
@@ -29759,6 +29760,11 @@ export namespace Prisma {
   export type RolesScalarRelationFilter = {
     is?: RolesWhereInput
     isNot?: RolesWhereInput
+  }
+
+  export type User_RolesUser_idRoles_idCompoundUniqueInput = {
+    user_id: number
+    roles_id: number
   }
 
   export type User_RolesCountOrderByAggregateInput = {

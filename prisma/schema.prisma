@@ -113,7 +113,7 @@ model Country {
 
 model Roles {
   id         Int          @id @default(autoincrement())
-  role_type  RoleType     @default(Client)
+  role_type  RoleType     @unique @default(Client)
   created_at DateTime     @default(now())
   updated_at DateTime     @updatedAt
   user_roles User_Roles[]
@@ -133,6 +133,8 @@ model User_Roles {
   updated_at DateTime @updatedAt
   user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   roles      Roles    @relation(fields: [roles_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, roles_id])
 }
 
 model Admin {
