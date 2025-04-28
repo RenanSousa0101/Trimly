@@ -22,7 +22,8 @@ router.delete("/users/:id/phones/:phoneId", phoneController.delete)
 
 router.get("/users/:id/addresses", addressController.show)
 router.post("/users/:id/addresses", addressController.create)
-
+router.put("/users/:id/addresses/:addressId", addressController.update)
+router.delete("/users/:id/addresses/:addressId", addressController.delete)
 
 
 export { router };
