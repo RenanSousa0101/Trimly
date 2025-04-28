@@ -21,6 +21,7 @@ router.put("/users/:id/phones/:phoneId", phoneController.update)
 router.delete("/users/:id/phones/:phoneId", phoneController.delete)
 
 router.get("/users/:id/addresses", addressController.show)
+router.post("/users/:id/addresses", addressController.create)
 
 
 
