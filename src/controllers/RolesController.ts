@@ -1,7 +1,7 @@
 import { Handler } from "express";
 import { prisma } from "../database";
 import { HttpError } from "../errors/HttpError";
-import { CreateRoleRequestSchema } from "./schemas/RoleRequestSchemas";
+import { CreateRoleRequestSchema, UpdateRoleRequestSchema } from "./schemas/RoleRequestSchemas";
 
 export class RolesController {
     // SHOW User/:id/roles
@@ -87,7 +87,7 @@ export class RolesController {
         try {
             const id = Number(req.params.id);
             const roleId = Number(req.params.roleId);
-            const body = CreateRoleRequestSchema.parse(req.body);
+            const body = UpdateRoleRequestSchema.parse(req.body);
             
             const userExists = await prisma.user.findUnique({ where: { id } });
             if (!userExists) throw new HttpError(404, "User not found");
@@ -141,9 +141,44 @@ export class RolesController {
             });
 
             res.status(200).json(updatedRole);
-            console.log(updatedRole);
         } catch (error) {
            next(error); 
         }
+    }
+
+    // DELETE User/:id/roles/:roleId
+    delete: Handler = async (req, res, next) => {
+        try {
+            const id = Number(req.params.id);
+            const roleId = Number(req.params.roleId);
+
+            const userExists = await prisma.user.findUnique({ where: { id } });
+            if (!userExists) throw new HttpError(404, "User not found");
+
+            const roleExists = await prisma.roles.findUnique({ where: { id: roleId } });
+            if (!roleExists) throw new HttpError(404, "Role not found");
+
+            const deletedRole = await prisma.user_Roles.delete({
+                where: {
+                    user_id_roles_id: {
+                        user_id: id,
+                        roles_id: roleId
+                    }
+                },
+                select: {
+                    user_id: true,
+                    roles_id: true,
+                    roles: {
+                        select: {
+                            role_type: true,
+                        }
+                    }
+                }
+            });
+
+            res.status(200).json(deletedRole);
+        } catch (error) {
+           next(error); 
+        } 
     }
 }

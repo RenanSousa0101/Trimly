@@ -30,5 +30,6 @@ router.delete("/users/:id/addresses/:addressId", addressController.delete)
 router.get("/users/:id/roles", rolesController.show)
 router.post("/users/:id/roles", rolesController.create)
 router.put("/users/:id/roles/:roleId", rolesController.update)
+router.delete("/users/:id/roles/:roleId", rolesController.delete)
 
 export { router };
