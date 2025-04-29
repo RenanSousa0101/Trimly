@@ -1,40 +1,40 @@
 import { Handler } from "express";
-import { prisma } from "../database";
 import { CreateUserRequestSchema, GetUserRequestSchema, UpdateUserRequestSchema } from "./schemas/UserRequestSchemas";
 import { HttpError } from "../errors/HttpError";
-import { userWithFullAddressSelect } from "../../prisma/utils/user.selectors";
-import { Prisma } from "../generated/prisma";
+import { IuserRepository, UserWhereParams } from "../repositories/UserRepository";
 
 export class UserController {
+    private userRepository: IuserRepository;
+
+    constructor(userRepository: IuserRepository) {
+        this.userRepository = userRepository
+    }
+
+
     // SHOW ALL /users
     index: Handler = async (req, res, next) => {
        try {
             const query = GetUserRequestSchema.parse(req.query);
             const { page = "1", pageSize = "10", name, sortBy = "name", order = "asc"} = query;
 
-            const pageNumber = Number(page);
-            const pageSizeNumber = Number(pageSize);
+            
+            const take = Number(pageSize);
+            const skip = (Number(page) - 1) * take;
 
-            const where: Prisma.UserWhereInput = {}
+            const where: UserWhereParams = {}
 
             if (name) where.name = { contains: name, mode: "insensitive" }
 
-            const users = await prisma.user.findMany({
-                where,
-                skip: (pageNumber - 1) * pageSizeNumber,
-                take: pageSizeNumber,
-                orderBy: {  [sortBy]: order }
-            });
-
-            const totalUsers = await prisma.user.count({ where });
-
+            const users = await this.userRepository.find({ where, sortBy, order, skip, take })
+            const totalUsers = await this.userRepository.count(where)
+        
             res.status(200).json({
                 data: users,
                 meta: {
-                    page: pageNumber,
-                    pageSize: pageSizeNumber,
+                    page: Number(page),
+                    pageSize: take,
                     total: totalUsers,
-                    totalPages: Math.ceil(totalUsers / pageSizeNumber)
+                    totalPages: Math.ceil(totalUsers / take)
                 }
             });
        } catch (error) {
@@ -46,12 +46,11 @@ export class UserController {
         try {
             const body = CreateUserRequestSchema.parse(req.body);
 
-            const userExists = await prisma.user.findUnique({ where: { email: body.email } })
+            const userExists = await this.userRepository.findByEmail(body.email)
             if (userExists) throw new HttpError(409, "User already exists");
 
-            const newUser = await prisma.user.create({
-                data: body
-            });
+            const newUser = await this.userRepository.create(body);
+            
             res.status(201).json(newUser);
         } catch (error) {
             next(error);
@@ -60,10 +59,7 @@ export class UserController {
     // SHOW ONE /users/:id
     show: Handler = async (req, res, next) => {
         try {
-            const user = await prisma.user.findUnique({
-                where: { id: Number(req.params.id) },
-                select: userWithFullAddressSelect,
-            });
+            const user = await this.userRepository.findById(Number(req.params.id));
 
             if (!user) throw new HttpError(404, "User not found");
 
@@ -108,13 +104,12 @@ export class UserController {
             const id = Number(req.params.id)
             const body = UpdateUserRequestSchema.parse(req.body)
 
-            const leadExists = await prisma.user.findUnique({ where: { id } })
-            if (!leadExists) throw new HttpError(404, "User not found");
+            const userExists = await this.userRepository.findById(id)
+            
+            if (!userExists) throw new HttpError(404, "User not found");
 
-            const updatedUser = await prisma.user.update({
-                data: body,
-                where: { id }                                     
-            })
+            const updatedUser = await this.userRepository.updateById(id, body)
+            
             res.status(200).json(updatedUser);
         } catch (error) {
             next(error);
@@ -126,12 +121,11 @@ export class UserController {
         try {
             const id = Number(req.params.id)
 
-            const userExists = await prisma.user.findUnique({ where: { id } })
+            const userExists = await this.userRepository.findById(id)
+        
             if (!userExists) throw new HttpError(404, "User not found");
 
-            const deletedUser = await prisma.user.delete({
-                where: { id }
-            })
+            const deletedUser = await this.userRepository.deleteById(id)
 
             res.status(200).json({ deletedUser })
 

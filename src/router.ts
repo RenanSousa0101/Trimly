@@ -1,26 +1,16 @@
 import { Router } from "express";
-import { UserController } from "./controllers/UserController";
-import { PhoneController } from "./controllers/PhoneController";
-import { AddressController } from "./controllers/AddressController";
-import { RolesController } from "./controllers/RolesController";
-import { AuthController } from "./controllers/authController";
 import { ensureAdmin, ensureAuth, ensureProvider } from "./middlewares/auth-middleware";
+import { addressController, authController, phoneController, rolesController, userController } from "./container";
 
 const router = Router()
-
-const userController = new UserController()
-const phoneController = new PhoneController()
-const addressController = new AddressController()
-const rolesController = new RolesController()
-const authController = new AuthController()
 
 router.post("/auth/register", authController.register)
 router.post("/auth/login", authController.login)
 
 router.get("/users", ensureAuth, ensureAdmin, userController.index)
 router.post("/users", ensureAuth, ensureAdmin, userController.create)
-router.get("/users/:id", ensureAuth, userController.show)
-router.put("/users/:id", ensureAuth, userController.update)
+router.get("/users/:id", ensureAuth, ensureAdmin, userController.show)
+router.put("/users/:id", ensureAuth, ensureAdmin, userController.update)
 router.delete("/users/:id", ensureAuth, ensureAdmin, userController.delete)
 
 router.get("/users/:id/phones", ensureAuth, ensureAdmin, phoneController.show)
