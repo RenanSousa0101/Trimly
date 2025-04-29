@@ -6,7 +6,9 @@ import { User } from '../generated/prisma';
 
 declare module "express" {
     interface Request {
-        user?: User; 
+        user?: User & {
+            User_Roles?: Array<{ roles: { role_type: string } }> 
+         }; 
     }
 }
 
@@ -43,7 +45,20 @@ export const ensureAuth = async (req: Request, res: Response, next: NextFunction
              return;
         }
 
-        const user = await prisma.user.findUnique({ where: { id: userId } });
+        const user = await prisma.user.findUnique({ 
+            where: { id: userId }, 
+            include: {
+                User_Roles: {
+                    select: {
+                        roles: {
+                            select: {
+                                role_type: true
+                            }
+                        }
+                    }
+                }    
+            }
+        });
 
         if (!user) {
             res.status(401).json({ message: 'Token inválido (Usuário não encontrado)!' });
@@ -57,5 +72,23 @@ export const ensureAuth = async (req: Request, res: Response, next: NextFunction
         console.error("Erro de autenticação:", error);
         res.status(401).json({ message: 'Token inválido!' });
         return;
+    }
+};
+
+export const ensureAdmin = (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+        console.error("Erro de configuração de middleware: ensureAdmin rodando antes de ensureAuth ou req.user não foi definido.");
+        res.status(500).json({ message: "Erro interno do servidor." });
+        return;
+    }
+
+    const isAdmin = req.user.User_Roles?.some(
+        userRole => userRole.roles?.role_type === 'Admin'
+    );
+
+    if (isAdmin) {
+        next(); 
+    } else {
+        res.status(403).json({ message: 'Acesso negado. Requer privilégios de administrador.' });
     }
 };
