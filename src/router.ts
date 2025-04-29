@@ -3,6 +3,8 @@ import { UserController } from "./controllers/UserController";
 import { PhoneController } from "./controllers/PhoneController";
 import { AddressController } from "./controllers/AddressController";
 import { RolesController } from "./controllers/RolesController";
+import { AuthController } from "./controllers/authController";
+import { ensureAuth } from "./middlewares/auth-middleware";
 
 const router = Router()
 
@@ -10,8 +12,12 @@ const userController = new UserController()
 const phoneController = new PhoneController()
 const addressController = new AddressController()
 const rolesController = new RolesController()
+const authController = new AuthController()
 
-router.get("/users", userController.index)
+router.post("/auth/register", authController.register)
+router.post("/auth/login", authController.login)
+
+router.get("/users", ensureAuth, userController.index)
 router.post("/users", userController.create)
 router.get("/users/:id", userController.show)
 router.put("/users/:id", userController.update)

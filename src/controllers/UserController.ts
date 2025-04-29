@@ -45,6 +45,10 @@ export class UserController {
     create: Handler = async (req, res, next) => {
         try {
             const body = CreateUserRequestSchema.parse(req.body);
+
+            const userExists = await prisma.user.findUnique({ where: { email: body.email } })
+            if (userExists) throw new HttpError(409, "User already exists");
+
             const newUser = await prisma.user.create({
                 data: body
             });
