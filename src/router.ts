@@ -4,7 +4,7 @@ import { PhoneController } from "./controllers/PhoneController";
 import { AddressController } from "./controllers/AddressController";
 import { RolesController } from "./controllers/RolesController";
 import { AuthController } from "./controllers/authController";
-import { ensureAdmin, ensureAuth } from "./middlewares/auth-middleware";
+import { ensureAdmin, ensureAuth, ensureProvider } from "./middlewares/auth-middleware";
 
 const router = Router()
 
@@ -18,24 +18,24 @@ router.post("/auth/register", authController.register)
 router.post("/auth/login", authController.login)
 
 router.get("/users", ensureAuth, ensureAdmin, userController.index)
-router.post("/users", userController.create)
-router.get("/users/:id", userController.show)
-router.put("/users/:id", userController.update)
-router.delete("/users/:id", userController.delete)
+router.post("/users", ensureAuth, ensureAdmin, userController.create)
+router.get("/users/:id", ensureAuth, userController.show)
+router.put("/users/:id", ensureAuth, userController.update)
+router.delete("/users/:id", ensureAuth, ensureAdmin, userController.delete)
 
-router.get("/users/:id/phones", phoneController.show)
-router.post("/users/:id/phones", phoneController.create)
-router.put("/users/:id/phones/:phoneId", phoneController.update)
-router.delete("/users/:id/phones/:phoneId", phoneController.delete)
+router.get("/users/:id/phones", ensureAuth, ensureAdmin, phoneController.show)
+router.post("/users/:id/phones", ensureAuth, phoneController.create)
+router.put("/users/:id/phones/:phoneId", ensureAuth, phoneController.update)
+router.delete("/users/:id/phones/:phoneId", ensureAuth, phoneController.delete)
 
-router.get("/users/:id/addresses", addressController.show)
-router.post("/users/:id/addresses", addressController.create)
-router.put("/users/:id/addresses/:addressId", addressController.update)
-router.delete("/users/:id/addresses/:addressId", addressController.delete)
+router.get("/users/:id/addresses", ensureAuth, addressController.show)
+router.post("/users/:id/addresses", ensureAuth, addressController.create)
+router.put("/users/:id/addresses/:addressId", ensureAuth, addressController.update)
+router.delete("/users/:id/addresses/:addressId", ensureAuth, addressController.delete)
 
-router.get("/users/:id/roles", rolesController.show)
-router.post("/users/:id/roles", rolesController.create)
-router.put("/users/:id/roles/:roleId", rolesController.update)
-router.delete("/users/:id/roles/:roleId", rolesController.delete)
+router.get("/users/:id/roles", ensureAuth, ensureAdmin, rolesController.show)
+router.post("/users/:id/roles", ensureAuth, ensureAdmin, rolesController.create)
+router.put("/users/:id/roles/:roleId", ensureAuth, ensureAdmin, rolesController.update)
+router.delete("/users/:id/roles/:roleId", ensureAuth, ensureAdmin, rolesController.delete)
 
 export { router };
