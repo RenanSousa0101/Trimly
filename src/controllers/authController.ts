@@ -16,7 +16,12 @@ export class AuthController {
             const newUser = await prisma.user.create({
                 data: {
                     ...body,
-                    password: bcrypt.hashSync(body.password, 10)
+                    password: bcrypt.hashSync(body.password, 10),
+                    User_Roles: {
+                        create: {
+                            roles_id: 7
+                        }
+                    }
                 },
                 select: {
                     name: true,
