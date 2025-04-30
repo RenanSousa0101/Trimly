@@ -1,5 +1,4 @@
 import { Handler } from "express";
-import { prisma } from "../database";
 import { HttpError } from "../errors/HttpError";
 import { CreateAddressRequestSchema } from "./schemas/AddressRequestSchemas";
 import { IuserRepository } from "../repositories/UserRepository";

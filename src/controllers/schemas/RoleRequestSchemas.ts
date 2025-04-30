@@ -5,5 +5,5 @@ export const CreateRoleRequestSchema = z.object({
 })
 
 export const UpdateRoleRequestSchema = z.object({
-    role_type: z.enum(["Admin", "Provider", "Client"]).optional()
+    role_type: z.enum(["Admin", "Provider", "Client"]).default('Client')
 })
