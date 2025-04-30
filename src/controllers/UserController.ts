@@ -4,30 +4,24 @@ import { HttpError } from "../errors/HttpError";
 import { IuserRepository, UserWhereParams } from "../repositories/UserRepository";
 
 export class UserController {
-    private userRepository: IuserRepository;
 
+    private userRepository: IuserRepository;
+    
     constructor(userRepository: IuserRepository) {
         this.userRepository = userRepository
     }
-
 
     // SHOW ALL /users
     index: Handler = async (req, res, next) => {
        try {
             const query = GetUserRequestSchema.parse(req.query);
             const { page = "1", pageSize = "10", name, sortBy = "name", order = "asc"} = query;
-
-            
             const take = Number(pageSize);
             const skip = (Number(page) - 1) * take;
-
             const where: UserWhereParams = {}
-
             if (name) where.name = { contains: name, mode: "insensitive" }
-
             const users = await this.userRepository.find({ where, sortBy, order, skip, take })
             const totalUsers = await this.userRepository.count(where)
-        
             res.status(200).json({
                 data: users,
                 meta: {
@@ -45,12 +39,9 @@ export class UserController {
     create: Handler = async (req, res, next) => {
         try {
             const body = CreateUserRequestSchema.parse(req.body);
-
             const userExists = await this.userRepository.findByEmail(body.email)
             if (userExists) throw new HttpError(409, "User already exists");
-
             const newUser = await this.userRepository.create(body);
-            
             res.status(201).json(newUser);
         } catch (error) {
             next(error);
@@ -60,10 +51,8 @@ export class UserController {
     show: Handler = async (req, res, next) => {
         try {
             const user = await this.userRepository.findById(Number(req.params.id));
-
             if (!user) throw new HttpError(404, "User not found");
-
-           const formattedUser = {
+            const formattedUser = {
                 id: user.id,
                 roles: user.User_Roles.map((role) => role.roles.role_type),
                 name: user.name,
@@ -91,44 +80,32 @@ export class UserController {
                     complement: address.complement,
                 })),
            }
-
-        res.status(200).json(formattedUser);
+            res.status(200).json(formattedUser);
         } catch (error) {
             next(error);
         }
     }
-
     // UPDATE /users/:id
     update: Handler = async (req, res, next) => {
         try {
             const id = Number(req.params.id)
             const body = UpdateUserRequestSchema.parse(req.body)
-
             const userExists = await this.userRepository.findById(id)
-            
             if (!userExists) throw new HttpError(404, "User not found");
-
             const updatedUser = await this.userRepository.updateById(id, body)
-            
             res.status(200).json(updatedUser);
         } catch (error) {
             next(error);
         }
     }
-
     // DELETE /users/:id
     delete: Handler = async (req, res, next) => {
         try {
             const id = Number(req.params.id)
-
             const userExists = await this.userRepository.findById(id)
-        
             if (!userExists) throw new HttpError(404, "User not found");
-
             const deletedUser = await this.userRepository.deleteById(id)
-
             res.status(200).json({ deletedUser })
-
         } catch (error) {
             next(error); 
         }

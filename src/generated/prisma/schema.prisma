@@ -79,6 +79,8 @@ model District {
   updated_at DateTime  @updatedAt
   address    Address[]
   city       City      @relation(fields: [city_id], references: [id], onDelete: Cascade)
+
+  @@unique([name, city_id])
 }
 
 model City {
@@ -89,6 +91,8 @@ model City {
   updated_at DateTime   @updatedAt
   district   District[]
   state      State      @relation(fields: [state_id], references: [id], onDelete: Cascade)
+
+  @@unique([name, state_id])
 }
 
 model State {
@@ -100,12 +104,14 @@ model State {
   updated_at DateTime @updatedAt
   city       City[]
   country    Country  @relation(fields: [country_id], references: [id], onDelete: Cascade)
+
+  @@unique([uf, country_id])
 }
 
 model Country {
   id         Int      @id @default(autoincrement())
   name       String   @db.VarChar(255)
-  acronym    String   @db.VarChar(3)
+  acronym    String   @unique @db.VarChar(3)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   state      State[]

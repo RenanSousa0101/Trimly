@@ -12,7 +12,6 @@ export interface FindPhoneAttributes {
     phone_type: PhoneType
     is_primary: boolean
 }[]
-
 export interface IphoneRepository {
     findByUserIdPhone(userId: number): Promise<FindPhoneAttributes[]>
     findByUserIdPhoneId(userId: number, phoneId: number): Promise<Phone | null>

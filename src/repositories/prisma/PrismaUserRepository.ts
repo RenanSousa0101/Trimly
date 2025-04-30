@@ -1,4 +1,4 @@
-import { userWithFullAddressSelect } from "../../../prisma/utils/user.selectors";
+import { userWithFullAddressSelect } from "../prisma/utils/userWithFullAddressSelect";
 import { prisma } from "../../database";
 import { User } from "../../generated/prisma";
 import { CreateUserAttributes, FindUserParams, FullUserDate, IuserRepository, UserWhereParams } from "../UserRepository";

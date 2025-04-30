@@ -26749,6 +26749,7 @@ export namespace Prisma {
 
   export type DistrictWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    name_city_id?: DistrictNameCity_idCompoundUniqueInput
     AND?: DistrictWhereInput | DistrictWhereInput[]
     OR?: DistrictWhereInput[]
     NOT?: DistrictWhereInput | DistrictWhereInput[]
@@ -26758,7 +26759,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"District"> | Date | string
     address?: AddressListRelationFilter
     city?: XOR<CityScalarRelationFilter, CityWhereInput>
-  }, "id">
+  }, "id" | "name_city_id">
 
   export type DistrictOrderByWithAggregationInput = {
     id?: SortOrder
@@ -26809,6 +26810,7 @@ export namespace Prisma {
 
   export type CityWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    name_state_id?: CityNameState_idCompoundUniqueInput
     AND?: CityWhereInput | CityWhereInput[]
     OR?: CityWhereInput[]
     NOT?: CityWhereInput | CityWhereInput[]
@@ -26818,7 +26820,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"City"> | Date | string
     district?: DistrictListRelationFilter
     state?: XOR<StateScalarRelationFilter, StateWhereInput>
-  }, "id">
+  }, "id" | "name_state_id">
 
   export type CityOrderByWithAggregationInput = {
     id?: SortOrder
@@ -26871,6 +26873,7 @@ export namespace Prisma {
 
   export type StateWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    uf_country_id?: StateUfCountry_idCompoundUniqueInput
     AND?: StateWhereInput | StateWhereInput[]
     OR?: StateWhereInput[]
     NOT?: StateWhereInput | StateWhereInput[]
@@ -26881,7 +26884,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"State"> | Date | string
     city?: CityListRelationFilter
     country?: XOR<CountryScalarRelationFilter, CountryWhereInput>
-  }, "id">
+  }, "id" | "uf_country_id">
 
   export type StateOrderByWithAggregationInput = {
     id?: SortOrder
@@ -26932,15 +26935,15 @@ export namespace Prisma {
 
   export type CountryWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    acronym?: string
     AND?: CountryWhereInput | CountryWhereInput[]
     OR?: CountryWhereInput[]
     NOT?: CountryWhereInput | CountryWhereInput[]
     name?: StringFilter<"Country"> | string
-    acronym?: StringFilter<"Country"> | string
     created_at?: DateTimeFilter<"Country"> | Date | string
     updated_at?: DateTimeFilter<"Country"> | Date | string
     state?: StateListRelationFilter
-  }, "id">
+  }, "id" | "acronym">
 
   export type CountryOrderByWithAggregationInput = {
     id?: SortOrder
@@ -29534,6 +29537,11 @@ export namespace Prisma {
     isNot?: CityWhereInput
   }
 
+  export type DistrictNameCity_idCompoundUniqueInput = {
+    name: string
+    city_id: number
+  }
+
   export type DistrictCountOrderByAggregateInput = {
     id?: SortOrder
     city_id?: SortOrder
@@ -29583,6 +29591,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type CityNameState_idCompoundUniqueInput = {
+    name: string
+    state_id: number
+  }
+
   export type CityCountOrderByAggregateInput = {
     id?: SortOrder
     state_id?: SortOrder
@@ -29630,6 +29643,11 @@ export namespace Prisma {
 
   export type CityOrderByRelationAggregateInput = {
     _count?: SortOrder
+  }
+
+  export type StateUfCountry_idCompoundUniqueInput = {
+    uf: string
+    country_id: number
   }
 
   export type StateCountOrderByAggregateInput = {
