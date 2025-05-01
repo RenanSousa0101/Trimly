@@ -1,24 +1,17 @@
 import { Handler } from "express";
 import { HttpError } from "../errors/HttpError";
 import { CreatePhoneRequestSchema, UpdatePhoneRequestSchema } from "./schemas/PhoneRequestSchemas";
-import { IphoneRepository } from "../repositories/PhoneRepository";
-import { IuserRepository } from "../repositories/UserRepository";
+import { PhoneService } from "../services/PhoneService";
 
 export class PhoneController {
-    private phoneRepository: IphoneRepository;
-    private userRepository: IuserRepository;
-    
-    constructor(phoneRepository: IphoneRepository, userRepository: IuserRepository) {
-        this.userRepository = userRepository
-        this.phoneRepository = phoneRepository
-    }
+    constructor(
+        private readonly phoneService: PhoneService
+    ) {}
     // SHOW User/:id/phones
     show: Handler = async (req, res, next) => {
         try {
             const id = Number(req.params.id)
-            const userExists = await this.userRepository.findById(id)
-            if (!userExists) throw new HttpError(404, "User not found");
-            const phones = await this.phoneRepository.findByUserIdPhone(id)
+            const phones = await this.phoneService.getUserPhones(id)
             res.status(200).json(phones);
         } catch (error) {
             next(error);
@@ -29,9 +22,7 @@ export class PhoneController {
         try {
             const id = Number(req.params.id)
             const body = CreatePhoneRequestSchema.parse(req.body)
-            const userExists = await this.userRepository.findById(id)
-            if (!userExists) throw new HttpError(404, "User not found");
-            const newPhone = await this.phoneRepository.createPhone(id, body)
+            const newPhone =  await this.phoneService.createUserPhone(id, body)
             res.status(201).json(newPhone);
         } catch (error) {
             next(error);
@@ -43,11 +34,7 @@ export class PhoneController {
             const id = Number(req.params.id)
             const phoneId = Number(req.params.phoneId)
             const body = UpdatePhoneRequestSchema.parse(req.body)
-            const userExists = await this.userRepository.findById(id)
-            if (!userExists) throw new HttpError(404, "User not found");
-            const phoneExists = await this.phoneRepository.findByUserIdPhoneId(id, phoneId)
-            if (!phoneExists) throw new HttpError(404, "Phone not found");
-            const updatedPhone = await this.phoneRepository.updateByIdPhone(id, phoneId, body)
+            const updatedPhone = await this.phoneService.updateUserPhone(id, phoneId, body)
             res.status(200).json(updatedPhone);
         } catch (error) {
             next(error);
@@ -58,11 +45,7 @@ export class PhoneController {
         try {
             const id = Number(req.params.id);
             const phoneId = Number(req.params.phoneId);
-            const userExists = await this.userRepository.findById(id);
-            const phoneExists = await this.phoneRepository.findByUserIdPhoneId(id, phoneId);
-            if (!userExists) throw new HttpError(404, "User not found");
-            if (!phoneExists) throw new HttpError(404, "Phone not found");
-            const userDeleted = await this.phoneRepository.deleteByIdPhone(id, phoneId);
+            const userDeleted = await this.phoneService.deleteUserPhone(id, phoneId)
             res.status(200).json({message: "Phone deleted successfully", userDeleted });
         } catch (error) {
             next(error);

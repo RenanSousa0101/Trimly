@@ -8,11 +8,6 @@ interface GetUsersWithPaginationParams {
     sortBy?: "name"
     order?: "asc" | "desc"
 }
-
-interface CreateUserParams {
-
-}
-
 export class UsersService {
 
     constructor(private readonly userRepository: IuserRepository) { }

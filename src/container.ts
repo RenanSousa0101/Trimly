@@ -8,6 +8,7 @@ import { PrismaPhoneRepository } from "./repositories/prisma/PrismaPhoneReposito
 import { PrismaAddressRepository } from "./repositories/prisma/PrismaAddressRepository";
 import { PrismaRoleRepository } from "./repositories/prisma/PrismaRoleRepository";
 import { UsersService } from "./services/UserService";
+import { PhoneService } from "./services/PhoneService";
 
 const userRepository = new PrismaUserRepository
 const phoneRepository = new PrismaPhoneRepository
@@ -15,9 +16,10 @@ const addressRepository = new PrismaAddressRepository
 const rolesRepository = new PrismaRoleRepository
 
 export const usersService = new UsersService(userRepository)
+export const phoneService = new PhoneService(phoneRepository, userRepository)
 
 export const userController = new UserController(usersService)
-export const phoneController = new PhoneController(phoneRepository, userRepository)
+export const phoneController = new PhoneController(phoneService)
 export const addressController = new AddressController(addressRepository, userRepository)
 export const rolesController = new RolesController(rolesRepository, userRepository)
 export const authController = new AuthController(userRepository)
