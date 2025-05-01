@@ -1,8 +1,5 @@
 import { Handler } from "express";
-import { HttpError } from "../errors/HttpError";
 import { CreateRoleRequestSchema, UpdateRoleRequestSchema } from "./schemas/RoleRequestSchemas";
-import { IrolesRepository } from "../repositories/RolesRepository";
-import { IuserRepository } from "../repositories/UserRepository";
 import { RolesService } from "../services/RolesService";
 
 export class RolesController {

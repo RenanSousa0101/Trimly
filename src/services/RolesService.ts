@@ -1,5 +1,4 @@
 import { HttpError } from "../errors/HttpError";
-import { RoleType } from "../generated/prisma";
 import { IrolesRepository, RoleTypeAttributes } from "../repositories/RolesRepository";
 import { IuserRepository } from "../repositories/UserRepository";
 
