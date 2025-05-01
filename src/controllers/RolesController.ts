@@ -21,9 +21,10 @@ export class RolesController {
     // CREATE User/:id/roles
     create: Handler = async (req, res, next) => {
         try {
+            const userRoleId = Number(req.params.userRoleId)
             const id = Number(req.params.id);
             const body = CreateRoleRequestSchema.parse(req.body);
-            const newRole = await this.rolesService.addUserRoles(id, body)
+            const newRole = await this.rolesService.addUserRoles(userRoleId, id, body)
             res.status(201).json(newRole);
         } catch (error) {
             next(error);
@@ -32,10 +33,11 @@ export class RolesController {
     // UPDATE User/:id/roles/:roleId
     update: Handler = async (req, res, next) => {
         try {
+            const userRoleId = Number(req.params.userRoleId)
             const id = Number(req.params.id);
             const roleId = Number(req.params.roleId);
             const body = UpdateRoleRequestSchema.parse(req.body);
-            const updatedRole = await this.rolesService.updateUserRole(id, roleId, body)
+            const updatedRole = await this.rolesService.updateUserRole(userRoleId , id, roleId, body)
             res.status(200).json(updatedRole);
         } catch (error) {
             next(error);
@@ -44,9 +46,10 @@ export class RolesController {
     // DELETE User/:id/roles/:roleId
     delete: Handler = async (req, res, next) => {
         try {
+            const userRoleId = Number(req.params.userRoleId)
             const id = Number(req.params.id);
             const roleId = Number(req.params.roleId);
-            const deletedRole = await this.rolesService.deleteUserRoles(id, roleId)
+            const deletedRole = await this.rolesService.deleteUserRoles(userRoleId, id, roleId)
             res.status(200).json(deletedRole);
         } catch (error) {
             next(error);

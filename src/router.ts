@@ -24,8 +24,8 @@ router.put("/users/:id/addresses/:addressId", ensureAuth, addressController.upda
 router.delete("/users/:id/addresses/:addressId", ensureAuth, addressController.delete)
 
 router.get("/users/:id/roles", ensureAuth, rolesController.show)
-router.post("/users/:id/roles", ensureAuth, rolesController.create)
-router.put("/users/:id/roles/:roleId", ensureAuth, rolesController.update)
-router.delete("/users/:id/roles/:roleId", ensureAuth, rolesController.delete)
+router.post("/userRole/:userRoleId/users/:id/roles", ensureAuth, rolesController.create)
+router.put("/userRole/:userRoleId/users/:id/roles/:roleId", ensureAuth, rolesController.update)
+router.delete("/userRole/:userRoleId/users/:id/roles/:roleId", ensureAuth, rolesController.delete)
 
 export { router };
