@@ -16,7 +16,7 @@ export class UserController {
                 page: +page,
                 pageSize: +pageSize,
             })
-            res.status(200).json({result});
+            res.status(200).json({...result, password: undefined});
        } catch (error) {
             next(error);
        } 
@@ -26,7 +26,7 @@ export class UserController {
         try {
             const body = CreateUserRequestSchema.parse(req.body);
             const newUser = await this.usersService.createUser(body)
-            res.status(201).json(newUser);
+            res.status(201).json({...newUser, password: undefined});
         } catch (error) {
             next(error);
         }
@@ -35,7 +35,7 @@ export class UserController {
     show: Handler = async (req, res, next) => {
         try {
             const user = await this.usersService.getUserById(+req.params.id)
-            res.status(200).json(user);
+            res.status(200).json({user, password: undefined});
         } catch (error) {
             next(error);
         }
@@ -43,10 +43,11 @@ export class UserController {
     // UPDATE /users/:id
     update: Handler = async (req, res, next) => {
         try {
+            const userRoleId = Number(req.params.userRoleId)
             const id = Number(req.params.id)
             const body = UpdateUserRequestSchema.parse(req.body)
-            const updatedUser =  await this.usersService.updateUser(id, body)
-            res.status(200).json(updatedUser);
+            const updatedUser =  await this.usersService.updateUser(userRoleId, id, body)
+            res.status(200).json({...updatedUser, password: undefined});
         } catch (error) {
             next(error);
         }
@@ -54,9 +55,10 @@ export class UserController {
     // DELETE /users/:id
     delete: Handler = async (req, res, next) => {
         try {
+            const userRoleId = Number(req.params.userRoleId)
             const id = Number(req.params.id)
-            const deletedUser = await this.usersService.deleteUser(id)
-            res.status(200).json({ deletedUser })
+            const deletedUser = await this.usersService.deleteUser(userRoleId, id)
+            res.status(200).json({ ...deletedUser, password: undefined })
         } catch (error) {
             next(error); 
         }

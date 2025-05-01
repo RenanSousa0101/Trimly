@@ -1,11 +1,11 @@
 import { userWithFullAddressSelect } from "../prisma/utils/userWithFullAddressSelect";
 import { prisma } from "../../database";
 import { User } from "../../generated/prisma";
-import { CreateUserAttributes, FindUserParams, FullUserDate, IuserRepository, RegisterUser, ReturnRegisterUser, UserWhereParams } from "../UserRepository";
+import { CreateUserAttributes, FindUserParams, FullUserDate, IuserRepository, RegisterUser, ReturnRegisterUser, returnUser, UserWhereParams } from "../UserRepository";
 import bcrypt from "bcrypt";
 
 export class PrismaUserRepository implements IuserRepository {
-    async find(params: FindUserParams): Promise<User[]> {
+    async find(params: FindUserParams): Promise<returnUser[]> {
         return prisma.user.findMany({
             where: {
                 name: {
@@ -17,6 +17,15 @@ export class PrismaUserRepository implements IuserRepository {
             orderBy: { [params.sortBy ?? "name"]: params.order || "asc" },
             skip: params.skip,
             take: params.take,
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                avatar_url: true,
+                bio: true,
+                created_at: true, 
+                updated_at: true,
+            }
         })
     }
 
@@ -45,18 +54,27 @@ export class PrismaUserRepository implements IuserRepository {
         })
     }
 
-    async create(attributes: CreateUserAttributes): Promise<User> {
-        return prisma.user.create({ data: attributes })
+    async create(roleId: number, attributes: CreateUserAttributes): Promise<User> {
+        return await prisma.user.create({ 
+            data: {...attributes, 
+                password: bcrypt.hashSync(attributes.password, 10),
+                User_Roles: {
+                    create: {
+                        roles_id: roleId
+                    }
+                }
+            } 
+        })
     }
 
-    async register(attributes: RegisterUser): Promise<ReturnRegisterUser> {
+    async register(roleId: number, attributes: RegisterUser): Promise<ReturnRegisterUser> {
         return await prisma.user.create({
             data: {
                 ...attributes,
                 password: bcrypt.hashSync(attributes.password, 10),
                 User_Roles: {
                     create: {
-                        roles_id: 7
+                        roles_id: roleId
                     }
                 }
             },

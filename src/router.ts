@@ -7,11 +7,11 @@ const router = Router()
 router.post("/auth/register", authController.register)
 router.post("/auth/login", authController.login)
 
-router.get("/users", ensureAuth, ensureAdmin, userController.index)
+router.get("/users", ensureAuth, userController.index)
 router.post("/users", ensureAuth, ensureAdmin, userController.create)
 router.get("/users/:id", ensureAuth, userController.show)
-router.put("/users/:id", ensureAuth, userController.update)
-router.delete("/users/:id", ensureAuth, ensureAdmin, userController.delete)
+router.put("/userRole/:userRoleId/users/:id", ensureAuth, userController.update)
+router.delete("/userRole/:userRoleId/users/:id", ensureAuth, ensureAdmin, userController.delete)
 
 router.get("/users/:id/phones", ensureAuth, phoneController.show)
 router.post("/users/:id/phones", ensureAuth, phoneController.create)
@@ -25,7 +25,7 @@ router.delete("/users/:id/addresses/:addressId", ensureAuth, addressController.d
 
 router.get("/users/:id/roles", ensureAuth, rolesController.show)
 router.post("/userRole/:userRoleId/users/:id/roles", ensureAuth, rolesController.create)
-router.put("/userRole/:userRoleId/users/:id/roles/:roleId", ensureAuth, rolesController.update)
-router.delete("/userRole/:userRoleId/users/:id/roles/:roleId", ensureAuth, rolesController.delete)
+router.put("/userRole/:userRoleId/users/:id/roles/:roleId", ensureAuth, ensureAdmin, rolesController.update)
+router.delete("/userRole/:userRoleId/users/:id/roles/:roleId", ensureAuth, ensureAdmin, rolesController.delete)
 
 export { router };

@@ -16,6 +16,16 @@ export interface FindUserParams {
     take?: number
 }
 
+export interface returnUser {
+    id: number
+    name: string
+    email: string
+    avatar_url?: string | null
+    bio?: string | null
+    created_at: Date
+    updated_at: Date
+}[]
+
 export interface CreateUserAttributes {
     name: string
     email: string
@@ -82,17 +92,17 @@ export interface FullUserDate {
                     }
                 }
             }
-        }    
+        }
     }[];
 }
 
 export interface IuserRepository {
-    find: (params: FindUserParams) => Promise<User[]>;
+    find: (params: FindUserParams) => Promise<returnUser[] | null>;
     findById: (id: number) => Promise<FullUserDate | null>;
     findByEmail: (email: string) => Promise<User | null>;
     count: (where: UserWhereParams) => Promise<number>;
-    create: (attributes: CreateUserAttributes) => Promise<User>;
-    register: (attributes: RegisterUser) => Promise<ReturnRegisterUser>
+    create: (roleId: number, attributes: CreateUserAttributes) => Promise<User>;
+    register: (roleId: number, attributes: RegisterUser) => Promise<ReturnRegisterUser>
     updateById: (id: number, attributes: Partial<CreateUserAttributes>) => Promise<User | null>;
     deleteById: (id: number) => Promise<User | null>;
 }

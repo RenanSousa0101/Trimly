@@ -46,9 +46,9 @@ export interface FindAddressAttributes {
 }[]
 
 export interface IaddressRepository {
-    findByUserIdAddress(userId: number): Promise<FindAddressAttributes[]>
-    findByUserIdAddressId(userId: number, addressId: number): Promise<Address | null>
-    createAddress(userId: number, attributes: CreateAddressAttributes): Promise<Address>
-    updateByIdAddress(userId: number, addressId: number, attributes: Partial<CreateAddressAttributes>): Promise<Address | null>
-    deleteByIdAddress(userId: number, addressId: number): Promise<Address | null>
+    findByUserIdAddress:(userId: number) => Promise<FindAddressAttributes[]>
+    findByUserIdAddressId:(userId: number, addressId: number) => Promise<Address | null>
+    createAddress:(userId: number, attributes: CreateAddressAttributes) => Promise<Address>
+    updateByIdAddress:(userId: number, addressId: number, attributes: Partial<CreateAddressAttributes>) => Promise<Address | null>
+    deleteByIdAddress:(userId: number, addressId: number) => Promise<Address | null>
 }

@@ -1,16 +1,22 @@
 import { HttpError } from "../errors/HttpError";
 import { IuserRepository, LoginUser, RegisterUser } from "../repositories/UserRepository";
+import { IrolesRepository } from "../repositories/RolesRepository";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 export class AuthService {
 
-    constructor(private readonly userRepository: IuserRepository) { }
+    constructor(
+        private readonly userRepository: IuserRepository,
+        private readonly rolesRepository: IrolesRepository
+    ) { }
 
     async registerUser(params: RegisterUser) {
         const userExists = await this.userRepository.findByEmail(params.email)
         if (userExists) throw new HttpError(409, "Email already exists");
-        const newUser = await this.userRepository.register(params)
+        const role = await this.rolesRepository.findByRoleType("Client")
+        if(!role) throw new HttpError(404, "Role not found!")
+        const newUser = await this.userRepository.register(role.id, params)
         return newUser
     }
 

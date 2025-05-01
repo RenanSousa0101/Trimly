@@ -18,11 +18,11 @@ export const phoneRepository = new PrismaPhoneRepository
 export const addressRepository = new PrismaAddressRepository
 export const rolesRepository = new PrismaRoleRepository
 
-export const usersService = new UsersService(userRepository)
+export const usersService = new UsersService(userRepository, rolesRepository)
 export const phoneService = new PhoneService(phoneRepository, userRepository)
 export const addressService = new AddressService(addressRepository, userRepository)
 export const rolesService = new RolesService(rolesRepository, userRepository)
-export const authService = new AuthService(userRepository)
+export const authService = new AuthService(userRepository, rolesRepository)
 
 export const userController = new UserController(usersService)
 export const phoneController = new PhoneController(phoneService)
