@@ -24,6 +24,17 @@ export interface CreateUserAttributes {
     bio?: string
 }
 
+export interface RegisterUser {
+    name: string
+    email: string
+    password: string
+}
+
+export interface ReturnRegisterUser {
+    name: string
+    email: string
+}
+
 export interface FullUserDate {
     id: number
     User_Roles: {
@@ -76,6 +87,7 @@ export interface IuserRepository {
     findByEmail: (email: string) => Promise<User | null>;
     count: (where: UserWhereParams) => Promise<number>;
     create: (attributes: CreateUserAttributes) => Promise<User>;
+    register: (attributes: RegisterUser) => Promise<ReturnRegisterUser>
     updateById: (id: number, attributes: Partial<CreateUserAttributes>) => Promise<User | null>;
     deleteById: (id: number) => Promise<User | null>;
 }

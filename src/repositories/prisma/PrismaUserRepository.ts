@@ -1,7 +1,8 @@
 import { userWithFullAddressSelect } from "../prisma/utils/userWithFullAddressSelect";
 import { prisma } from "../../database";
 import { User } from "../../generated/prisma";
-import { CreateUserAttributes, FindUserParams, FullUserDate, IuserRepository, UserWhereParams } from "../UserRepository";
+import { CreateUserAttributes, FindUserParams, FullUserDate, IuserRepository, RegisterUser, ReturnRegisterUser, UserWhereParams } from "../UserRepository";
+import bcrypt from "bcrypt";
 
 export class PrismaUserRepository implements IuserRepository {
     async find(params: FindUserParams): Promise<User[]> {
@@ -46,6 +47,24 @@ export class PrismaUserRepository implements IuserRepository {
 
     async create(attributes: CreateUserAttributes): Promise<User> {
         return prisma.user.create({ data: attributes })
+    }
+
+    async register(attributes: RegisterUser): Promise<ReturnRegisterUser> {
+        return await prisma.user.create({
+            data: {
+                ...attributes,
+                password: bcrypt.hashSync(attributes.password, 10),
+                User_Roles: {
+                    create: {
+                        roles_id: 7
+                    }
+                }
+            },
+            select: {
+                name: true,
+                email: true,
+            }
+        });
     }
 
     async updateById(id: number, attributes: Partial<CreateUserAttributes>): Promise<User> {
