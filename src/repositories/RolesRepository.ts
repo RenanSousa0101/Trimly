@@ -14,6 +14,10 @@ export interface UserRoleFull {
     }
 }
 
+export interface RoleTypeAttributes {
+    role_type: "Client" | "Provider" | "Admin";
+}
+
 export interface IrolesRepository {
     findByRoleId(roleId: number): Promise<Roles | null>
     findByRoleType(roleType: RoleType): Promise<Roles | null> 

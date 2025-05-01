@@ -1,5 +1,4 @@
 import { Handler } from "express";
-import { HttpError } from "../errors/HttpError";
 import { CreateAddressRequestSchema } from "./schemas/AddressRequestSchemas";
 import { AddressService } from "../services/AddressService";
 
