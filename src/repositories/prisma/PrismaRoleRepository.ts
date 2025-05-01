@@ -13,7 +13,7 @@ export class PrismaRoleRepository {
             where: { role_type: roleType },      
         });
     }
-    async findByUserIdRoles(userId: number): Promise<FindRoleAttributes[]> {
+    async findByUserIdRoles(userId: number): Promise<FindRoleAttributes[] | null> {
         return prisma.user_Roles.findMany({
             where: { user_id: userId },
             select: {

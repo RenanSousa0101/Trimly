@@ -21,7 +21,7 @@ export interface RoleTypeAttributes {
 export interface IrolesRepository {
     findByRoleId(roleId: number): Promise<Roles | null>
     findByRoleType(roleType: RoleType): Promise<Roles | null> 
-    findByUserIdRoles(userId: number): Promise<FindRoleAttributes[]>
+    findByUserIdRoles(userId: number): Promise<FindRoleAttributes[] | null>
     findByUserRoleExist(userId: number, roleId: number): Promise<User_Roles | null> 
     findByUserIdRoleId(userId: number, roleId: number): Promise<User_Roles | null>
     addUserRole(userId: number, roleId: number): Promise<UserRoleFull>
