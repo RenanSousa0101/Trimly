@@ -1,3 +1,5 @@
+// src/services/RolesService.ts
+
 import { HttpError } from "../errors/HttpError";
 import { IrolesRepository, RoleTypeAttributes } from "../repositories/RolesRepository";
 import { IuserRepository } from "../repositories/UserRepository";
@@ -12,7 +14,7 @@ export class RolesService {
     async getUserRoles(userId: number) {
         const userExists = await this.userRepository.findById(userId);
         if (!userExists) {
-            throw new HttpError(404, "User not found");
+            throw new HttpError(404, "User not found"); // Target user
         }
 
         const roles = await this.rolesRepository.findByUserIdRoles(userId);
@@ -22,27 +24,13 @@ export class RolesService {
 
     async addUserRoles(actingUserId: number, userId: number, params: RoleTypeAttributes) {
         const actingUserRoles = await this.rolesRepository.findByUserIdRoles(actingUserId);
-
         const safeActingUserRoles = actingUserRoles || [];
-
         const actingUserIsAdmin = safeActingUserRoles.some(assignment => assignment.roles.role_type === "Admin");
         const actingUserIsClient = safeActingUserRoles.some(assignment => assignment.roles.role_type === "Client");
 
-        let canAddRole = false;
-
-        if (actingUserIsAdmin) {
-            canAddRole = true;
-        }else if (actingUserId === userId && actingUserIsClient && params.role_type === "Provider") {
-            canAddRole = true;
-        }
-
-        if (!canAddRole) {
-            if (actingUserId !== userId) {
-                throw new HttpError(403, "Permission denied. You can only add roles to yourself if you are a Client adding the Provider role.");
-            } else if (params.role_type !== "Provider") {
-                throw new HttpError(403, "Permission denied. You can only add the Provider role to yourself as a Client.");
-            } else {
-                throw new HttpError(403, "Permission denied.");
+        if (!actingUserIsAdmin) {
+            if (!actingUserIsClient || params.role_type !== "Provider") {
+                 throw new HttpError(403, "Permission denied. As a non-Admin user, you can only add the Provider role to yourself if you are a Client.");
             }
         }
 
@@ -68,17 +56,7 @@ export class RolesService {
         return newAssignment;
     }
 
-    async updateUserRole(actingUserId: number, userId: number, oldRoleId: number, params: RoleTypeAttributes) {
-        const actingUserRoles = await this.rolesRepository.findByUserIdRoles(actingUserId);
-
-        const safeActingUserRoles = actingUserRoles || [];
-
-
-        const actingUserIsAdmin = safeActingUserRoles.some(assignment => assignment.roles.role_type === "Admin");
-
-        if (!actingUserIsAdmin) {
-            throw new HttpError(403, "Permission denied. Only Admin users can update roles.");
-        }
+    async updateUserRole(userId: number, oldRoleId: number, params: RoleTypeAttributes) {
 
         const userExists = await this.userRepository.findById(userId);
         if (!userExists) {
@@ -94,6 +72,7 @@ export class RolesService {
         if (!oldRoleDetails) {
             throw new HttpError(404, `Old role with ID ${oldRoleId} details not found.`);
         }
+        
         if (oldRoleDetails.role_type === "Client") {
             throw new HttpError(403, "Unable to change the 'Client' role assignment.");
         }
@@ -114,16 +93,7 @@ export class RolesService {
         return updatedAssignment;
     }
 
-    async deleteUserRoles(actingUserId: number, userId: number, roleId: number) {
-        const actingUserRoles = await this.rolesRepository.findByUserIdRoles(actingUserId);
-
-        const safeActingUserRoles = actingUserRoles || [];
-
-        const actingUserIsAdmin = safeActingUserRoles.some(assignment => assignment.roles.role_type === "Admin");
-
-        if (!actingUserIsAdmin) {
-            throw new HttpError(403, "Permission denied. Only Admin users can delete roles.");
-        }
+    async deleteUserRoles(userId: number, roleId: number) {
 
         const userExists = await this.userRepository.findById(userId);
         if (!userExists) {
@@ -137,10 +107,9 @@ export class RolesService {
 
         const roleDetails = await this.rolesRepository.findByRoleId(roleId);
         if (!roleDetails) {
-
             throw new HttpError(404, `Role with ID ${roleId} details not found.`);
         }
-
+        
         if (roleDetails.role_type === "Client") {
             throw new HttpError(403, "Unable to delete the 'Client' role assignment.");
         }

@@ -1,6 +1,8 @@
-import { Handler } from "express";
+import { Request, Response, NextFunction, Handler } from 'express';
 import { CreateRoleRequestSchema, UpdateRoleRequestSchema } from "./schemas/RoleRequestSchemas";
 import { RolesService } from "../services/RolesService";
+
+import '../middlewares/auth-middleware';
 
 export class RolesController {
 
@@ -19,12 +21,12 @@ export class RolesController {
         }
     }
     // CREATE User/:id/roles
-    create: Handler = async (req, res, next) => {
+    create: Handler = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const userRoleId = Number(req.params.userRoleId)
+            const actingUserId = Number(req.user!.id);
             const id = Number(req.params.id);
             const body = CreateRoleRequestSchema.parse(req.body);
-            const newRole = await this.rolesService.addUserRoles(userRoleId, id, body)
+            const newRole = await this.rolesService.addUserRoles(actingUserId, id, body)
             res.status(201).json(newRole);
         } catch (error) {
             next(error);
@@ -33,11 +35,10 @@ export class RolesController {
     // UPDATE User/:id/roles/:roleId
     update: Handler = async (req, res, next) => {
         try {
-            const userRoleId = Number(req.params.userRoleId)
             const id = Number(req.params.id);
             const roleId = Number(req.params.roleId);
             const body = UpdateRoleRequestSchema.parse(req.body);
-            const updatedRole = await this.rolesService.updateUserRole(userRoleId , id, roleId, body)
+            const updatedRole = await this.rolesService.updateUserRole(id, roleId, body)
             res.status(200).json(updatedRole);
         } catch (error) {
             next(error);
@@ -46,10 +47,9 @@ export class RolesController {
     // DELETE User/:id/roles/:roleId
     delete: Handler = async (req, res, next) => {
         try {
-            const userRoleId = Number(req.params.userRoleId)
             const id = Number(req.params.id);
             const roleId = Number(req.params.roleId);
-            const deletedRole = await this.rolesService.deleteUserRoles(userRoleId, id, roleId)
+            const deletedRole = await this.rolesService.deleteUserRoles(id, roleId)
             res.status(200).json(deletedRole);
         } catch (error) {
             next(error);

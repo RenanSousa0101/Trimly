@@ -1,6 +1,7 @@
 import { HttpError } from "../errors/HttpError";
 import { CreateUserAttributes, IuserRepository, UserWhereParams } from "../repositories/UserRepository";
-import { IrolesRepository } from "../repositories/RolesRepository"; 
+import { IrolesRepository } from "../repositories/RolesRepository";
+import bcrypt from "bcrypt";
 
 interface GetUsersWithPaginationParams {
     page?: number
@@ -14,7 +15,7 @@ export class UsersService {
 
     constructor(
         private readonly userRepository: IuserRepository,
-        private readonly rolesRepository: IrolesRepository 
+        private readonly rolesRepository: IrolesRepository
     ) { }
 
     async getAllUsersPaginated(params: GetUsersWithPaginationParams) {
@@ -46,11 +47,12 @@ export class UsersService {
     async getUserById(id: number) {
         const user = await this.userRepository.findById(id);
         if (!user) {
-            throw new HttpError(404, "User not found");
+            throw new HttpError(404, "User not found")
         }
+
         const formattedUser = {
             id: user.id,
-            roles: user.User_Roles ? user.User_Roles.map((role) => role.roles.role_type) : [], 
+            roles: user.User_Roles ? user.User_Roles.map((role) => role.roles.role_type) : [],
             name: user.name,
             email: user.email,
             avatar_url: user.avatar_url,
@@ -80,87 +82,88 @@ export class UsersService {
     }
 
     async createUser(params: CreateUserAttributes) {
+
         const userExists = await this.userRepository.findByEmail(params.email);
         if (userExists) {
             throw new HttpError(409, "User already exists");
         }
-        const role = await this.rolesRepository.findByRoleType("Client")
-        if(!role) throw new HttpError(404, "Role not found!")
+
+        const role = await this.rolesRepository.findByRoleType("Client");
+        if (!role) {
+
+            throw new HttpError(500, "Default 'Client' role not found!")
+        }
+
         const newUser = await this.userRepository.create(role.id, params);
-        return newUser;
+
+        return newUser
     }
 
     async updateUser(actingUserId: number, userId: number, params: Partial<CreateUserAttributes>) {
+
         const actingUserRoles = await this.rolesRepository.findByUserIdRoles(actingUserId);
         const safeActingUserRoles = actingUserRoles || [];
         const actingUserIsAdmin = safeActingUserRoles.some(assignment => assignment.roles.role_type === "Admin");
 
         let finalParams: Partial<CreateUserAttributes> = {};
 
-        let canUpdate = false;
-
         if (actingUserIsAdmin) {
-            canUpdate = true;
-        }
-        
-        else if (actingUserId === userId) {
-            canUpdate = true;
-            const allowedFields: Array<keyof CreateUserAttributes> = ['name', 'avatar_url', 'bio', 'password'];
+            finalParams = params;
+        } else {
+
+            const fieldsAllowedForRegularUser: Array<keyof CreateUserAttributes> = ['name', 'avatar_url', 'bio', 'password'];
             const receivedFields = Object.keys(params) as Array<keyof Partial<CreateUserAttributes>>;
 
             const containsDisallowedFields = receivedFields.some(field =>
-                !allowedFields.includes(field as keyof CreateUserAttributes)
+                !fieldsAllowedForRegularUser.includes(field as keyof CreateUserAttributes)
             );
 
             if (containsDisallowedFields) {
-                throw new HttpError(403, `Permission denied. You can only update your own: ${allowedFields.join(', ')}`);
+                throw new HttpError(403, `Permission denied. You can only update your own: ${fieldsAllowedForRegularUser.join(', ')}`);
             }
 
-            finalParams = params; 
+            finalParams = params
         }
 
-        if (!canUpdate) {
-            throw new HttpError(403, "Permission denied. You can only update your own profile or be an Admin to update others.");
+        const receivedAnyValidParams = Object.keys(finalParams).length > 0;
+
+        if (!receivedAnyValidParams) {
+
+            const receivedAnyParamsAtAll = Object.keys(params).length > 0;
+            if (receivedAnyParamsAtAll && !actingUserIsAdmin) {
+                const fieldsAllowedForRegularUser: Array<keyof CreateUserAttributes> = ['name', 'avatar_url', 'bio', 'password']
+                throw new HttpError(400, `No allowed fields provided for update. You can only update your own: ${fieldsAllowedForRegularUser.join(', ')}`)
+            }
+
+            const userExists = await this.userRepository.findById(userId)
+            if (!userExists) {
+                throw new HttpError(404, "Target user not found");
+            }
+            return userExists
         }
-        
+
         const userExists = await this.userRepository.findById(userId);
         if (!userExists) {
-            throw new HttpError(404, "User not found"); 
+            throw new HttpError(404, "Target user not found");
+        }
+
+        if (finalParams.password) {
+            finalParams.password = await bcrypt.hash(finalParams.password, 10); // Use await com bcrypt.hash
         }
 
         const updatedUser = await this.userRepository.updateById(userId, finalParams);
 
-        return updatedUser;
+        return updatedUser
     }
 
-    
-    async deleteUser(actingUserId: number, userId: number) {
-        
-        const actingUserRoles = await this.rolesRepository.findByUserIdRoles(actingUserId);
-        const safeActingUserRoles = actingUserRoles || [];
-        const actingUserIsAdmin = safeActingUserRoles.some(assignment => assignment.roles.role_type === "Admin");
 
-        let canDelete = false;
+    async deleteUser(userId: number) {
 
-        if (actingUserIsAdmin) {
-            canDelete = true;
-        }
-        
-        if (actingUserId === userId) {
-             throw new HttpError(403, "Permission denied. You cannot delete your own account.");
-        }
-
-        if (!canDelete) { 
-             throw new HttpError(403, "Permission denied. Only Admin users can delete other users.");
-        }
-        
         const userExists = await this.userRepository.findById(userId);
         if (!userExists) {
-            throw new HttpError(404, "User not found"); 
+            throw new HttpError(404, "Target user not found");
         }
-
         const deletedUser = await this.userRepository.deleteById(userId);
-
-        return deletedUser;
+        return deletedUser
     }
 }
