@@ -137,18 +137,14 @@ export const authorizeAdminOrOwner = (paramUserIdName = 'id') => {
 
         let isAuthorized = false;
 
-        // --- Lógica de Autorização: Admin OU Dono (SIMPLES) ---
-        // A regra de auto-exclusão NÃO está mais aqui
         if (actingUserIsAdmin) {
             isAuthorized = true;
         } else if (actingUserId === targetUserId) {
             isAuthorized = true;
         }
-        // --- Fim da lógica ---
-
 
         if (isAuthorized) {
-            next(); // Permite se for Admin OU Dono
+            next(); 
         } else {
             res.status(403).json({ message: 'Access denied. Not authorized to access this resource.' });
             return;
@@ -158,35 +154,28 @@ export const authorizeAdminOrOwner = (paramUserIdName = 'id') => {
 
 export const ensureNotSelf = (paramUserIdName = 'id') => {
     return (req: Request, res: Response, next: NextFunction) => {
-        const user = req.user; // Usuário populado pelo ensureAuth
+        const user = req.user; 
 
-        // Este middleware deve rodar DEPOIS de ensureAuth
         if (!user) {
              console.error("Middleware configuration error: ensureNotSelf running before authentication.");
              res.status(500).json({ message: "Internal server error (authentication missing)." });
              return;
         }
 
-        const actingUserId = user.id; // ID do usuário logado
+        const actingUserId = user.id; 
         const targetUserIdParam = req.params[paramUserIdName];
-        const targetUserId = parseInt(targetUserIdParam, 10); // ID do usuário alvo na URL
+        const targetUserId = parseInt(targetUserIdParam, 10); 
 
          if (isNaN(targetUserId)) {
-             // Indica um problema na URL ou no uso do middleware
              console.error(`Validation error: Invalid target user ID parameter "${paramUserIdName}" for ensureNotSelf.`);
              res.status(400).json({ message: "Invalid request parameter (target user ID)." });
              return;
          }
 
-
-        // Se o usuário logado for o mesmo que o usuário alvo na URL, NEGA a requisição
         if (actingUserId === targetUserId) {
-            // Mensagem de erro específica para auto-operação negada
             res.status(403).json({ message: "Permission denied. You cannot perform this operation on your own account." });
-            return; // Nega a requisição
+            return; 
         }
-
-        // Se não for o próprio usuário, permite passar
         next();
     };
 };
