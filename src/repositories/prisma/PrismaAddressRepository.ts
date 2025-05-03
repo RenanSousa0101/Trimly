@@ -1,9 +1,9 @@
 import { prisma } from "../../database"
 import { Address, Prisma } from "../../generated/prisma"
-import { CreateAddressAttributes, FindAddressAttributes } from "../AddressRepository"
+import { CreateAddressAttributes, FindAddressAttributes, IaddressRepository } from "../AddressRepository"
 import { addressWithFullAddressSelect } from "./utils/addressWithFullAddressSelect"
 
-export class PrismaAddressRepository {
+export class PrismaAddressRepository implements IaddressRepository {
     async findByUserIdAddress(userId: number): Promise<FindAddressAttributes[]> {
         return prisma.address.findMany({
             where: { user_id: userId },

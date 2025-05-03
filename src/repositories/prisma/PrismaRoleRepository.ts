@@ -1,8 +1,8 @@
 import { prisma } from "../../database";
 import {Roles, RoleType, User_Roles } from "../../generated/prisma";
-import {FindRoleAttributes, UserRoleFull } from "../RolesRepository";
+import {FindRoleAttributes, IrolesRepository, UserRoleFull } from "../RolesRepository";
 
-export class PrismaRoleRepository {
+export class PrismaRoleRepository implements IrolesRepository {
     async findByRoleId(roleId: number): Promise<Roles | null> {
         return prisma.roles.findUnique({ 
             where: { id: roleId } 

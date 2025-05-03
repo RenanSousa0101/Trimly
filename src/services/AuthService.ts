@@ -1,13 +1,14 @@
 import { HttpError } from "../errors/HttpError";
 import { IuserRepository, LoginUser, RegisterUser } from "../repositories/UserRepository";
 import { IrolesRepository } from "../repositories/RolesRepository";
+import { ItokenRepository } from "../repositories/TokenRepository";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import * as crypto from "crypto";
 import { EmailService } from "./EmailService";
 import { PasswordService } from "./PasswordService";
 import { TokenType } from "../generated/prisma";
-import { prisma } from "../database";
+
 
 const EMAIL_VERIFICATION_TOKEN_EXPIRY_HOURS = 24;
 const PASSWORD_RESET_TOKEN_EXPIRY_HOURS = 1;
@@ -15,7 +16,9 @@ export class AuthService {
     constructor(
         private readonly userRepository: IuserRepository,
         private readonly rolesRepository: IrolesRepository,
-        private readonly emailService: EmailService
+        private readonly tokenRepository: ItokenRepository,
+        private readonly emailService: EmailService,
+        private readonly passwordService: PasswordService
     ) { }
 
     async registerUser(params: RegisterUser) {
@@ -35,17 +38,17 @@ export class AuthService {
             EMAIL_VERIFICATION_TOKEN_EXPIRY_HOURS
         );
 
-        await prisma.verificationToken.create({
-            data: {
-                token: verificationToken,
-                user_id: newUser.id,
-                type: TokenType.EMAIL_VERIFICATION, // Define o tipo
-                expiresAt: verificationTokenExpiresAt,
-            }
-        });
+        const newUserId = newUser.id
+        const token = {
+            token: verificationToken, 
+            type: TokenType.EMAIL_VERIFICATION, 
+            expiresAt: verificationTokenExpiresAt
+        }
+
+        await this.tokenRepository.createToken(newUserId, token)
 
         this.emailService.sendVerificationEmail(params.email, verificationToken)
-        .catch(err => console.error('Erro ao enviar email de verificação após registro:', err));
+            .catch(err => console.error('Erro ao enviar email de verificação após registro:', err));
         return newUser
     }
 
@@ -60,6 +63,31 @@ export class AuthService {
             { expiresIn: "1h" }
         );
         return token;
+    }
+
+    async verifyEmailUser(token: string) {
+        if (!token) throw new HttpError(400, 'Token de verificação inválido.');
+
+        const verificationToken = await this.tokenRepository.findToken(token)
+        if (!verificationToken || verificationToken.type !== TokenType.EMAIL_VERIFICATION) throw new HttpError(404, 'Token de verificação não encontrado ou inválido.');
+
+        const tokenId = verificationToken.id
+        const userId = verificationToken.user_id
+
+        if (verificationToken.expiresAt < new Date()) {
+            await this.tokenRepository.deleteToken(tokenId);
+            throw new HttpError(400, 'Token de verificação expirado. Por favor, solicite um novo link.');
+        }
+
+        if (verificationToken.user.isEmailVerified) {
+            await this.tokenRepository.deleteToken(tokenId);
+            throw new HttpError(200, 'Email já verificado anteriormente.');
+        }
+
+        await this.tokenRepository.updateTokenUser(userId);
+        await this.tokenRepository.deleteToken(tokenId);
+
+        return {message: 'Seu email foi verificado com sucesso! Você já pode fazer login.'}
     }
 }
 
