@@ -5,6 +5,7 @@ import { addressController, authController, phoneController, rolesController, us
 const router = Router()
 
 router.post("/auth/register", authController.register)
+router.post("/auth/resend-verification", authController.resendVerificationEmail);
 router.get("/auth/verify-email", authController.verifyEmail);
 router.post("/auth/login", authController.login)
 

@@ -1,7 +1,11 @@
-import { TokenType, VerificationToken } from "../generated/prisma";
+import { Prisma, TokenType, VerificationToken } from "../generated/prisma";
 
 export interface VerificationUserToken {
     isEmailVerified: boolean
+}
+
+export interface TokenId {
+    id: number
 }
 
 export interface ReturnFindToken {
@@ -26,4 +30,5 @@ export interface ItokenRepository {
     createToken: (userId: number, attributes: CreateToken ) => Promise<VerificationToken | null>
     updateTokenUser: (id: number) => Promise<VerificationUserToken | null>
     deleteToken: (tokenId: number) => Promise<VerificationToken | null>
+    deleteUserIdToken: (userId: number) => Promise< Prisma.BatchPayload >
 }

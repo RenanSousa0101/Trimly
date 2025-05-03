@@ -2,6 +2,7 @@ import { Handler, Request, Response, NextFunction } from "express";
 import { LoginUserSchema, RegisterUserSchema } from "./schemas/AuthRequestSchemas";
 import { AuthService } from "../services/AuthService";
 import { GetTokenRequestSchema } from "./schemas/TokenRequestSchemas";
+import { GetEmail } from "./schemas/VerifyEmailSchemas";
 
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
@@ -40,4 +41,15 @@ export class AuthController {
             next(error)
         }
     }
+
+    resendVerificationEmail: Handler = async (req: Request, res: Response, next: NextFunction) => {
+        const email = GetEmail.parse(req.body);
+        try {
+            const message = await this.authService.resendVerificationEmail(email.email);
+            res.status(200).json({ message });
+        } catch (error) {
+           next(error)
+        }
+    }
+
 }

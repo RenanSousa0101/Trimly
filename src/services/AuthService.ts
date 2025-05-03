@@ -52,6 +52,47 @@ export class AuthService {
         return newUser
     }
 
+    async resendVerificationEmail(email: string): Promise<string> {
+    
+        if (!email) {
+            throw new HttpError(400, "Email é obrigatório.");
+        }
+
+        const user = await this.userRepository.findByEmail(email);
+
+        if (!user) {
+            console.log(`Tentativa de reenviar email de verificação para email não encontrado: ${email}`);
+            return "Se o email estiver cadastrado, um novo link de verificação será enviado.";
+        }
+
+        if (user.isEmailVerified) {
+            return "Seu email já foi verificado anteriormente.";
+        }
+
+        const verificationToken = crypto.randomBytes(32).toString("hex");
+        const verificationTokenExpiresAt = new Date();
+        verificationTokenExpiresAt.setHours(
+            verificationTokenExpiresAt.getHours() +
+            EMAIL_VERIFICATION_TOKEN_EXPIRY_HOURS // Use a mesma expiração
+        );
+
+        const userId = user.id
+        const token = {
+            token: verificationToken, 
+            type: TokenType.EMAIL_VERIFICATION, 
+            expiresAt: verificationTokenExpiresAt
+        }
+
+        await this.tokenRepository.deleteUserIdToken(userId)
+
+        await this.tokenRepository.createToken(userId, token)
+
+        this.emailService.sendVerificationEmail(user.email, verificationToken)
+            .catch(err => console.error('Erro ao enviar novo email de verificação:', err));
+
+        return "Um novo link de verificação foi enviado para o seu email.";
+    }
+
     async loginUser(params: LoginUser) {
         const user = await this.userRepository.findByEmail(params.email);
         if (!user) throw new HttpError(401, "Invalid email or password");

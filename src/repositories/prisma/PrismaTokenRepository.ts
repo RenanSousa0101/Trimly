@@ -1,9 +1,10 @@
 import { prisma } from "../../database";
-import { VerificationToken } from "../../generated/prisma";
+import { Prisma, TokenType, VerificationToken } from "../../generated/prisma";
 import {
     CreateToken,
     ItokenRepository,
     ReturnFindToken,
+    TokenId,
     VerificationUserToken,
 } from "../TokenRepository";
 
@@ -21,7 +22,16 @@ export class PrismaTokenRepository implements ItokenRepository {
         });
     }
 
-    async createToken( userId: number, attributes: CreateToken): Promise<VerificationToken | null> {
+    async deleteUserIdToken(userId: number): Promise<Prisma.BatchPayload> {
+        return prisma.verificationToken.deleteMany({
+            where: {
+                user_id: userId,
+                type: TokenType.EMAIL_VERIFICATION,
+            },
+        });
+    }
+
+    async createToken(userId: number, attributes: CreateToken): Promise<VerificationToken | null> {
         return prisma.verificationToken.create({
             data: {
                 token: attributes.token,
@@ -34,7 +44,7 @@ export class PrismaTokenRepository implements ItokenRepository {
 
     async updateTokenUser(id: number): Promise<VerificationUserToken | null> {
         return prisma.user.update({
-            where: { id }, 
+            where: { id },
             data: { isEmailVerified: true },
         });
     }
