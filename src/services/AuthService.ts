@@ -73,7 +73,7 @@ export class AuthService {
         const verificationTokenExpiresAt = new Date();
         verificationTokenExpiresAt.setHours(
             verificationTokenExpiresAt.getHours() +
-            EMAIL_VERIFICATION_TOKEN_EXPIRY_HOURS // Use a mesma expiração
+            EMAIL_VERIFICATION_TOKEN_EXPIRY_HOURS 
         );
 
         const userId = user.id
@@ -83,7 +83,7 @@ export class AuthService {
             expiresAt: verificationTokenExpiresAt
         }
 
-        await this.tokenRepository.deleteUserIdToken(userId)
+        await this.tokenRepository.deleteUserIdToken(userId, token.type)
 
         await this.tokenRepository.createToken(userId, token)
 
@@ -130,6 +130,54 @@ export class AuthService {
         await this.tokenRepository.deleteToken(tokenId);
 
         return { status: 200, message: 'Seu email foi verificado com sucesso! Você já pode fazer login.'}
+    }
+
+    async forgotPassword(email: string): Promise<string> {
+        
+        if (!email) {
+            throw new HttpError(400, "Email é obrigatório.");
+        }
+
+        const user = await this.userRepository.findByEmail(email);
+        if (!user) {
+            console.log(`Tentativa de reset de senha para email não encontrado: ${email}`);
+            return "Se o email estiver cadastrado, um link de recuperação será enviado.";
+        }
+ 
+        const token = crypto.randomBytes(32).toString("hex");
+        const expiresAt = new Date();
+        expiresAt.setHours(expiresAt.getHours() + PASSWORD_RESET_TOKEN_EXPIRY_HOURS);
+
+        await this.tokenRepository.deleteUserIdToken(user.id, TokenType.PASSWORD_RESET)
+        await this.tokenRepository.createToken(user.id, {token, type: TokenType.PASSWORD_RESET, expiresAt})
+        this.passwordService.sendPasswordResetEmail(user.email, token)
+             .catch(err => console.error('Erro ao enviar email de reset de senha:', err));
+
+        return "Se o email estiver cadastrado, um link de recuperação será enviado.";
+    }
+
+    async resetPassword(token: string, newPassword: string): Promise<string> {
+        
+        if (!token || !newPassword) {
+            throw new HttpError(400, "Token e nova senha são obrigatórios.");
+        }
+        const verificationToken = await this.tokenRepository.findToken(token)
+
+        if (!verificationToken || verificationToken.type !== TokenType.PASSWORD_RESET) {
+            throw new HttpError(400, "Token de recuperação inválido ou já utilizado.");
+        }
+
+        if (verificationToken.expiresAt < new Date()) {
+            await this.tokenRepository.deleteToken(verificationToken.id)
+            throw new HttpError(400, "Token de recuperação expirado. Por favor, solicite um novo link.");
+        }
+
+        const newPasswordHash = await bcrypt.hash(newPassword, 10); 
+        
+        await this.tokenRepository.updateTokenUserPassword(verificationToken.user_id, newPasswordHash)
+        await this.tokenRepository.deleteToken(verificationToken.id)
+
+        return 'Senha atualizada com sucesso.';
     }
 }
 

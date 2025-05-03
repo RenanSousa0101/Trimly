@@ -3,6 +3,7 @@ import { LoginUserSchema, RegisterUserSchema } from "./schemas/AuthRequestSchema
 import { AuthService } from "../services/AuthService";
 import { GetTokenRequestSchema } from "./schemas/TokenRequestSchemas";
 import { GetEmail } from "./schemas/VerifyEmailSchemas";
+import { GetPassword } from "./schemas/VerifyPasswordShema";
 
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
@@ -43,12 +44,35 @@ export class AuthController {
     }
 
     resendVerificationEmail: Handler = async (req: Request, res: Response, next: NextFunction) => {
-        const email = GetEmail.parse(req.body);
         try {
+            const email = GetEmail.parse(req.body);
             const message = await this.authService.resendVerificationEmail(email.email);
             res.status(200).json({ message });
         } catch (error) {
            next(error)
+        }
+    }
+
+    forgotPassword: Handler = async (req: Request, res: Response, next: NextFunction) => {
+        
+        const email  = GetEmail.parse(req.body);
+
+        try {
+            const message = await this.authService.forgotPassword(email.email);
+            res.status(200).json({ message });
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    resetPassword: Handler = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const token = GetTokenRequestSchema.parse(req.query);
+            const newPassword = GetPassword.parse(req.body);   
+            const message = await this.authService.resetPassword(token.token, newPassword.password);
+            res.status(200).json({ message });
+        } catch (error) {
+          next(error)
         }
     }
 

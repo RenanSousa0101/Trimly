@@ -29,7 +29,13 @@ export const usersService = new UsersService(userRepository, rolesRepository)
 export const phoneService = new PhoneService(phoneRepository, userRepository)
 export const addressService = new AddressService(addressRepository, userRepository)
 export const rolesService = new RolesService(rolesRepository, userRepository)
-export const authService = new AuthService(userRepository, rolesRepository, tokenRepository, emailService, passwordService)
+export const authService = new AuthService(
+    userRepository, 
+    rolesRepository, 
+    tokenRepository, 
+    emailService, 
+    passwordService
+)
 
 export const userController = new UserController(usersService)
 export const phoneController = new PhoneController(phoneService)

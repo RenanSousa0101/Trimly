@@ -1,10 +1,9 @@
 import { prisma } from "../../database";
-import { Prisma, TokenType, VerificationToken } from "../../generated/prisma";
+import { Prisma, TokenType, User, VerificationToken } from "../../generated/prisma";
 import {
     CreateToken,
     ItokenRepository,
     ReturnFindToken,
-    TokenId,
     VerificationUserToken,
 } from "../TokenRepository";
 
@@ -22,11 +21,11 @@ export class PrismaTokenRepository implements ItokenRepository {
         });
     }
 
-    async deleteUserIdToken(userId: number): Promise<Prisma.BatchPayload> {
+    async deleteUserIdToken(userId: number, type: TokenType): Promise<Prisma.BatchPayload> {
         return prisma.verificationToken.deleteMany({
             where: {
                 user_id: userId,
-                type: TokenType.EMAIL_VERIFICATION,
+                type,
             },
         });
     }
@@ -51,5 +50,12 @@ export class PrismaTokenRepository implements ItokenRepository {
 
     async deleteToken(tokenId: number): Promise<VerificationToken | null> {
         return prisma.verificationToken.delete({ where: { id: tokenId } });
+    }
+
+    updateTokenUserPassword (id: number, newPassword: string): Promise<User | null> {
+        return prisma.user.update({
+            where: { id },
+            data: { password: newPassword },
+        });
     }
 }
