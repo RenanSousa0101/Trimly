@@ -12,17 +12,20 @@ import { PhoneService } from "./services/PhoneService";
 import { AddressService } from "./services/AddressService";
 import { RolesService } from "./services/RolesService";
 import { AuthService } from "./services/AuthService";
+import { EmailService } from "./services/EmailService";
 
 export const userRepository = new PrismaUserRepository
 export const phoneRepository = new PrismaPhoneRepository
 export const addressRepository = new PrismaAddressRepository
 export const rolesRepository = new PrismaRoleRepository
 
+export const emailService = new EmailService();
+
 export const usersService = new UsersService(userRepository, rolesRepository)
 export const phoneService = new PhoneService(phoneRepository, userRepository)
 export const addressService = new AddressService(addressRepository, userRepository)
 export const rolesService = new RolesService(rolesRepository, userRepository)
-export const authService = new AuthService(userRepository, rolesRepository)
+export const authService = new AuthService(userRepository, rolesRepository, emailService)
 
 export const userController = new UserController(usersService)
 export const phoneController = new PhoneController(phoneService)

@@ -15,20 +15,42 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  name       String       @db.VarChar(255)
-  email      String       @unique @db.VarChar(255)
-  password   String       @db.VarChar(255)
-  avatar_url String?      @db.VarChar(255)
-  bio        String?      @db.Text
-  created_at DateTime     @default(now())
-  updated_at DateTime     @updatedAt
-  Phone      Phone[]
-  Address    Address[]
-  User_Roles User_Roles[]
-  Admin      Admin[]
-  Provider   Provider[]
-  Client     Client[]
+  id              Int          @id @default(autoincrement())
+  name            String       @db.VarChar(255)
+  email           String       @unique @db.VarChar(255)
+  password        String       @db.VarChar(255)
+  avatar_url      String?      @db.VarChar(255)
+  bio             String?      @db.Text
+  isEmailVerified Boolean      @default(false)
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @updatedAt
+  Phone           Phone[]
+  Address         Address[]
+  User_Roles      User_Roles[]
+  Admin           Admin[]
+  Provider        Provider[]
+  Client          Client[]
+
+  VerificationToken VerificationToken[]
+}
+
+model VerificationToken {
+  id         Int       @id @default(autoincrement())
+  token      String    @unique
+  user_id    Int
+  type       TokenType
+  expiresAt  DateTime
+  created_at DateTime  @default(now())
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([token, type])
+  @@index([user_id])
+}
+
+enum TokenType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
 }
 
 model Phone {

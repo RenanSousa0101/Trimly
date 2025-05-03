@@ -76,9 +76,11 @@ export class PrismaUserRepository implements IuserRepository {
                     create: {
                         roles_id: roleId
                     }
-                }
+                },
+                isEmailVerified: false
             },
             select: {
+                id: true,
                 name: true,
                 email: true,
             }

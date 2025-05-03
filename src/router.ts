@@ -5,6 +5,7 @@ import { addressController, authController, phoneController, rolesController, us
 const router = Router()
 
 router.post("/auth/register", authController.register)
+router.get("/auth/verify-email", authController.verifyEmail);
 router.post("/auth/login", authController.login)
 
 router.get("/users", ensureAuth, ensureAdmin, userController.index)

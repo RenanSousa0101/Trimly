@@ -111,7 +111,7 @@ export class UsersService {
             finalParams = params;
         } else {
 
-            const fieldsAllowedForRegularUser: Array<keyof CreateUserAttributes> = ['name', 'avatar_url', 'bio', 'password'];
+            const fieldsAllowedForRegularUser: Array<keyof CreateUserAttributes> = ['name', 'avatar_url', 'bio'];
             const receivedFields = Object.keys(params) as Array<keyof Partial<CreateUserAttributes>>;
 
             const containsDisallowedFields = receivedFields.some(field =>
@@ -148,7 +148,7 @@ export class UsersService {
         }
 
         if (finalParams.password) {
-            finalParams.password = await bcrypt.hash(finalParams.password, 10); // Use await com bcrypt.hash
+            finalParams.password = await bcrypt.hash(finalParams.password, 10);
         }
 
         const updatedUser = await this.userRepository.updateById(userId, finalParams);

@@ -46,6 +46,7 @@ export interface LoginUser {
 }
 
 export interface ReturnRegisterUser {
+    id: number
     name: string
     email: string
 }
