@@ -57,6 +57,7 @@ export class AuthService {
         if (!user) throw new HttpError(401, "Invalid email or password");
         const isPasswordValid = bcrypt.compareSync(params.password, user.password);
         if (!isPasswordValid) throw new HttpError(401, "Invalid email or password");
+        if (user.isEmailVerified !== true) throw new HttpError(401, "Unverified email");
         const token = jwt.sign(
             { id: user.id, email: user.email },
             process.env.JWT_KEY!,
@@ -74,20 +75,20 @@ export class AuthService {
         const tokenId = verificationToken.id
         const userId = verificationToken.user_id
 
+        if (verificationToken.user.isEmailVerified) {
+            await this.tokenRepository.deleteToken(tokenId);
+            return { status: 200, message: 'Email já verificado anteriormente.'}
+        }
+
         if (verificationToken.expiresAt < new Date()) {
             await this.tokenRepository.deleteToken(tokenId);
             throw new HttpError(400, 'Token de verificação expirado. Por favor, solicite um novo link.');
         }
 
-        if (verificationToken.user.isEmailVerified) {
-            await this.tokenRepository.deleteToken(tokenId);
-            throw new HttpError(200, 'Email já verificado anteriormente.');
-        }
-
         await this.tokenRepository.updateTokenUser(userId);
         await this.tokenRepository.deleteToken(tokenId);
 
-        return {message: 'Seu email foi verificado com sucesso! Você já pode fazer login.'}
+        return { status: 200, message: 'Seu email foi verificado com sucesso! Você já pode fazer login.'}
     }
 }
 
