@@ -27,9 +27,9 @@ model User {
   Phone           Phone[]
   Address         Address[]
   User_Roles      User_Roles[]
-  Admin           Admin[]
-  Provider        Provider[]
-  Client          Client[]
+  Admin           Admin?
+  Provider        Provider?
+  Client          Client?
 
   VerificationToken VerificationToken[]
 }
@@ -148,6 +148,7 @@ model Roles {
 }
 
 enum RoleType {
+  User
   Client
   Provider
   Admin
@@ -167,7 +168,7 @@ model User_Roles {
 
 model Admin {
   id         Int      @id @default(autoincrement())
-  user_id    Int
+  user_id    Int      @unique
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -175,7 +176,7 @@ model Admin {
 
 model Provider {
   id                      Int                       @id @default(autoincrement())
-  user_id                 Int
+  user_id                 Int                       @unique
   business_name           String                    @db.VarChar(255)
   cnpj                    String?                   @db.VarChar(18)
   cpf                     String?                   @db.VarChar(14)
@@ -225,7 +226,7 @@ model Time {
 
 model Client {
   id            Int          @id @default(autoincrement())
-  user_id       Int
+  user_id       Int          @unique
   date_of_birth DateTime
   is_active     Boolean      @default(true)
   created_at    DateTime     @default(now())

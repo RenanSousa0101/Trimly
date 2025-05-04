@@ -351,6 +351,7 @@ exports.AddressType = exports.$Enums.AddressType = {
 };
 
 exports.RoleType = exports.$Enums.RoleType = {
+  User: 'User',
   Client: 'Client',
   Provider: 'Provider',
   Admin: 'Admin'

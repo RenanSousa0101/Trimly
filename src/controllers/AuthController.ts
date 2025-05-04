@@ -16,6 +16,7 @@ export class AuthController {
                 message:
                     "Usuário cadastrado com sucesso. Verifique seu email para ativar sua conta.",
                 ...newUser,
+                id: undefined,
                 password: undefined,
             });
         } catch (error) {

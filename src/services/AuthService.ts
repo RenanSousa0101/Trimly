@@ -25,7 +25,7 @@ export class AuthService {
         const userExists = await this.userRepository.findByEmail(params.email);
         if (userExists) throw new HttpError(409, "Email already exists");
 
-        const role = await this.rolesRepository.findByRoleType("Client");
+        const role = await this.rolesRepository.findByRoleType("User");
         if (!role) throw new HttpError(404, "Role not found!");
 
         const newUser = await this.userRepository.register(role.id, params);

@@ -152,6 +152,7 @@ export type AddressType = (typeof AddressType)[keyof typeof AddressType]
 
 
 export const RoleType: {
+  User: 'User',
   Client: 'Client',
   Provider: 'Provider',
   Admin: 'Admin'
@@ -2764,9 +2765,6 @@ export namespace Prisma {
     Phone: number
     Address: number
     User_Roles: number
-    Admin: number
-    Provider: number
-    Client: number
     VerificationToken: number
   }
 
@@ -2774,9 +2772,6 @@ export namespace Prisma {
     Phone?: boolean | UserCountOutputTypeCountPhoneArgs
     Address?: boolean | UserCountOutputTypeCountAddressArgs
     User_Roles?: boolean | UserCountOutputTypeCountUser_RolesArgs
-    Admin?: boolean | UserCountOutputTypeCountAdminArgs
-    Provider?: boolean | UserCountOutputTypeCountProviderArgs
-    Client?: boolean | UserCountOutputTypeCountClientArgs
     VerificationToken?: boolean | UserCountOutputTypeCountVerificationTokenArgs
   }
 
@@ -2810,27 +2805,6 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountUser_RolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: User_RolesWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountAdminArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AdminWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountProviderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProviderWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountClientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ClientWhereInput
   }
 
   /**
@@ -3536,9 +3510,9 @@ export namespace Prisma {
       Phone: Prisma.$PhonePayload<ExtArgs>[]
       Address: Prisma.$AddressPayload<ExtArgs>[]
       User_Roles: Prisma.$User_RolesPayload<ExtArgs>[]
-      Admin: Prisma.$AdminPayload<ExtArgs>[]
-      Provider: Prisma.$ProviderPayload<ExtArgs>[]
-      Client: Prisma.$ClientPayload<ExtArgs>[]
+      Admin: Prisma.$AdminPayload<ExtArgs> | null
+      Provider: Prisma.$ProviderPayload<ExtArgs> | null
+      Client: Prisma.$ClientPayload<ExtArgs> | null
       VerificationToken: Prisma.$VerificationTokenPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -3948,9 +3922,9 @@ export namespace Prisma {
     Phone<T extends User$PhoneArgs<ExtArgs> = {}>(args?: Subset<T, User$PhoneArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Address<T extends User$AddressArgs<ExtArgs> = {}>(args?: Subset<T, User$AddressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     User_Roles<T extends User$User_RolesArgs<ExtArgs> = {}>(args?: Subset<T, User$User_RolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$User_RolesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Admin<T extends User$AdminArgs<ExtArgs> = {}>(args?: Subset<T, User$AdminArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Provider<T extends User$ProviderArgs<ExtArgs> = {}>(args?: Subset<T, User$ProviderArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProviderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Client<T extends User$ClientArgs<ExtArgs> = {}>(args?: Subset<T, User$ClientArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Admin<T extends User$AdminArgs<ExtArgs> = {}>(args?: Subset<T, User$AdminArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    Provider<T extends User$ProviderArgs<ExtArgs> = {}>(args?: Subset<T, User$ProviderArgs<ExtArgs>>): Prisma__ProviderClient<$Result.GetResult<Prisma.$ProviderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    Client<T extends User$ClientArgs<ExtArgs> = {}>(args?: Subset<T, User$ClientArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     VerificationToken<T extends User$VerificationTokenArgs<ExtArgs> = {}>(args?: Subset<T, User$VerificationTokenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4466,11 +4440,6 @@ export namespace Prisma {
      */
     include?: AdminInclude<ExtArgs> | null
     where?: AdminWhereInput
-    orderBy?: AdminOrderByWithRelationInput | AdminOrderByWithRelationInput[]
-    cursor?: AdminWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AdminScalarFieldEnum | AdminScalarFieldEnum[]
   }
 
   /**
@@ -4490,11 +4459,6 @@ export namespace Prisma {
      */
     include?: ProviderInclude<ExtArgs> | null
     where?: ProviderWhereInput
-    orderBy?: ProviderOrderByWithRelationInput | ProviderOrderByWithRelationInput[]
-    cursor?: ProviderWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ProviderScalarFieldEnum | ProviderScalarFieldEnum[]
   }
 
   /**
@@ -4514,11 +4478,6 @@ export namespace Prisma {
      */
     include?: ClientInclude<ExtArgs> | null
     where?: ClientWhereInput
-    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
-    cursor?: ClientWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
   }
 
   /**
@@ -27790,9 +27749,9 @@ export namespace Prisma {
     Phone?: PhoneListRelationFilter
     Address?: AddressListRelationFilter
     User_Roles?: User_RolesListRelationFilter
-    Admin?: AdminListRelationFilter
-    Provider?: ProviderListRelationFilter
-    Client?: ClientListRelationFilter
+    Admin?: XOR<AdminNullableScalarRelationFilter, AdminWhereInput> | null
+    Provider?: XOR<ProviderNullableScalarRelationFilter, ProviderWhereInput> | null
+    Client?: XOR<ClientNullableScalarRelationFilter, ClientWhereInput> | null
     VerificationToken?: VerificationTokenListRelationFilter
   }
 
@@ -27809,9 +27768,9 @@ export namespace Prisma {
     Phone?: PhoneOrderByRelationAggregateInput
     Address?: AddressOrderByRelationAggregateInput
     User_Roles?: User_RolesOrderByRelationAggregateInput
-    Admin?: AdminOrderByRelationAggregateInput
-    Provider?: ProviderOrderByRelationAggregateInput
-    Client?: ClientOrderByRelationAggregateInput
+    Admin?: AdminOrderByWithRelationInput
+    Provider?: ProviderOrderByWithRelationInput
+    Client?: ClientOrderByWithRelationInput
     VerificationToken?: VerificationTokenOrderByRelationAggregateInput
   }
 
@@ -27831,9 +27790,9 @@ export namespace Prisma {
     Phone?: PhoneListRelationFilter
     Address?: AddressListRelationFilter
     User_Roles?: User_RolesListRelationFilter
-    Admin?: AdminListRelationFilter
-    Provider?: ProviderListRelationFilter
-    Client?: ClientListRelationFilter
+    Admin?: XOR<AdminNullableScalarRelationFilter, AdminWhereInput> | null
+    Provider?: XOR<ProviderNullableScalarRelationFilter, ProviderWhereInput> | null
+    Client?: XOR<ClientNullableScalarRelationFilter, ClientWhereInput> | null
     VerificationToken?: VerificationTokenListRelationFilter
   }, "id" | "email">
 
@@ -28463,14 +28422,14 @@ export namespace Prisma {
 
   export type AdminWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    user_id?: number
     AND?: AdminWhereInput | AdminWhereInput[]
     OR?: AdminWhereInput[]
     NOT?: AdminWhereInput | AdminWhereInput[]
-    user_id?: IntFilter<"Admin"> | number
     created_at?: DateTimeFilter<"Admin"> | Date | string
     updated_at?: DateTimeFilter<"Admin"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "user_id">
 
   export type AdminOrderByWithAggregationInput = {
     id?: SortOrder
@@ -28539,10 +28498,10 @@ export namespace Prisma {
 
   export type ProviderWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    user_id?: number
     AND?: ProviderWhereInput | ProviderWhereInput[]
     OR?: ProviderWhereInput[]
     NOT?: ProviderWhereInput | ProviderWhereInput[]
-    user_id?: IntFilter<"Provider"> | number
     business_name?: StringFilter<"Provider"> | string
     cnpj?: StringNullableFilter<"Provider"> | string | null
     cpf?: StringNullableFilter<"Provider"> | string | null
@@ -28558,7 +28517,7 @@ export namespace Prisma {
     Scheduling?: SchedulingListRelationFilter
     Rating?: RatingListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "user_id">
 
   export type ProviderOrderByWithAggregationInput = {
     id?: SortOrder
@@ -28809,10 +28768,10 @@ export namespace Prisma {
 
   export type ClientWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    user_id?: number
     AND?: ClientWhereInput | ClientWhereInput[]
     OR?: ClientWhereInput[]
     NOT?: ClientWhereInput | ClientWhereInput[]
-    user_id?: IntFilter<"Client"> | number
     date_of_birth?: DateTimeFilter<"Client"> | Date | string
     is_active?: BoolFilter<"Client"> | boolean
     created_at?: DateTimeFilter<"Client"> | Date | string
@@ -28820,7 +28779,7 @@ export namespace Prisma {
     Scheduling?: SchedulingListRelationFilter
     Rating?: RatingListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "user_id">
 
   export type ClientOrderByWithAggregationInput = {
     id?: SortOrder
@@ -29214,9 +29173,9 @@ export namespace Prisma {
     Phone?: PhoneCreateNestedManyWithoutUserInput
     Address?: AddressCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesCreateNestedManyWithoutUserInput
-    Admin?: AdminCreateNestedManyWithoutUserInput
-    Provider?: ProviderCreateNestedManyWithoutUserInput
-    Client?: ClientCreateNestedManyWithoutUserInput
+    Admin?: AdminCreateNestedOneWithoutUserInput
+    Provider?: ProviderCreateNestedOneWithoutUserInput
+    Client?: ClientCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenCreateNestedManyWithoutUserInput
   }
 
@@ -29233,9 +29192,9 @@ export namespace Prisma {
     Phone?: PhoneUncheckedCreateNestedManyWithoutUserInput
     Address?: AddressUncheckedCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesUncheckedCreateNestedManyWithoutUserInput
-    Admin?: AdminUncheckedCreateNestedManyWithoutUserInput
-    Provider?: ProviderUncheckedCreateNestedManyWithoutUserInput
-    Client?: ClientUncheckedCreateNestedManyWithoutUserInput
+    Admin?: AdminUncheckedCreateNestedOneWithoutUserInput
+    Provider?: ProviderUncheckedCreateNestedOneWithoutUserInput
+    Client?: ClientUncheckedCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -29251,9 +29210,9 @@ export namespace Prisma {
     Phone?: PhoneUpdateManyWithoutUserNestedInput
     Address?: AddressUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUpdateManyWithoutUserNestedInput
-    Admin?: AdminUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUpdateManyWithoutUserNestedInput
-    Client?: ClientUpdateManyWithoutUserNestedInput
+    Admin?: AdminUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUpdateOneWithoutUserNestedInput
+    Client?: ClientUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUpdateManyWithoutUserNestedInput
   }
 
@@ -29270,9 +29229,9 @@ export namespace Prisma {
     Phone?: PhoneUncheckedUpdateManyWithoutUserNestedInput
     Address?: AddressUncheckedUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUncheckedUpdateManyWithoutUserNestedInput
-    Admin?: AdminUncheckedUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUncheckedUpdateManyWithoutUserNestedInput
-    Client?: ClientUncheckedUpdateManyWithoutUserNestedInput
+    Admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUncheckedUpdateOneWithoutUserNestedInput
+    Client?: ClientUncheckedUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -30665,22 +30624,19 @@ export namespace Prisma {
     none?: User_RolesWhereInput
   }
 
-  export type AdminListRelationFilter = {
-    every?: AdminWhereInput
-    some?: AdminWhereInput
-    none?: AdminWhereInput
+  export type AdminNullableScalarRelationFilter = {
+    is?: AdminWhereInput | null
+    isNot?: AdminWhereInput | null
   }
 
-  export type ProviderListRelationFilter = {
-    every?: ProviderWhereInput
-    some?: ProviderWhereInput
-    none?: ProviderWhereInput
+  export type ProviderNullableScalarRelationFilter = {
+    is?: ProviderWhereInput | null
+    isNot?: ProviderWhereInput | null
   }
 
-  export type ClientListRelationFilter = {
-    every?: ClientWhereInput
-    some?: ClientWhereInput
-    none?: ClientWhereInput
+  export type ClientNullableScalarRelationFilter = {
+    is?: ClientWhereInput | null
+    isNot?: ClientWhereInput | null
   }
 
   export type VerificationTokenListRelationFilter = {
@@ -30703,18 +30659,6 @@ export namespace Prisma {
   }
 
   export type User_RolesOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AdminOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ProviderOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ClientOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -31948,25 +31892,22 @@ export namespace Prisma {
     connect?: User_RolesWhereUniqueInput | User_RolesWhereUniqueInput[]
   }
 
-  export type AdminCreateNestedManyWithoutUserInput = {
-    create?: XOR<AdminCreateWithoutUserInput, AdminUncheckedCreateWithoutUserInput> | AdminCreateWithoutUserInput[] | AdminUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: AdminCreateOrConnectWithoutUserInput | AdminCreateOrConnectWithoutUserInput[]
-    createMany?: AdminCreateManyUserInputEnvelope
-    connect?: AdminWhereUniqueInput | AdminWhereUniqueInput[]
+  export type AdminCreateNestedOneWithoutUserInput = {
+    create?: XOR<AdminCreateWithoutUserInput, AdminUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutUserInput
+    connect?: AdminWhereUniqueInput
   }
 
-  export type ProviderCreateNestedManyWithoutUserInput = {
-    create?: XOR<ProviderCreateWithoutUserInput, ProviderUncheckedCreateWithoutUserInput> | ProviderCreateWithoutUserInput[] | ProviderUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProviderCreateOrConnectWithoutUserInput | ProviderCreateOrConnectWithoutUserInput[]
-    createMany?: ProviderCreateManyUserInputEnvelope
-    connect?: ProviderWhereUniqueInput | ProviderWhereUniqueInput[]
+  export type ProviderCreateNestedOneWithoutUserInput = {
+    create?: XOR<ProviderCreateWithoutUserInput, ProviderUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ProviderCreateOrConnectWithoutUserInput
+    connect?: ProviderWhereUniqueInput
   }
 
-  export type ClientCreateNestedManyWithoutUserInput = {
-    create?: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput> | ClientCreateWithoutUserInput[] | ClientUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ClientCreateOrConnectWithoutUserInput | ClientCreateOrConnectWithoutUserInput[]
-    createMany?: ClientCreateManyUserInputEnvelope
-    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+  export type ClientCreateNestedOneWithoutUserInput = {
+    create?: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClientCreateOrConnectWithoutUserInput
+    connect?: ClientWhereUniqueInput
   }
 
   export type VerificationTokenCreateNestedManyWithoutUserInput = {
@@ -31997,25 +31938,22 @@ export namespace Prisma {
     connect?: User_RolesWhereUniqueInput | User_RolesWhereUniqueInput[]
   }
 
-  export type AdminUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<AdminCreateWithoutUserInput, AdminUncheckedCreateWithoutUserInput> | AdminCreateWithoutUserInput[] | AdminUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: AdminCreateOrConnectWithoutUserInput | AdminCreateOrConnectWithoutUserInput[]
-    createMany?: AdminCreateManyUserInputEnvelope
-    connect?: AdminWhereUniqueInput | AdminWhereUniqueInput[]
+  export type AdminUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<AdminCreateWithoutUserInput, AdminUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutUserInput
+    connect?: AdminWhereUniqueInput
   }
 
-  export type ProviderUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<ProviderCreateWithoutUserInput, ProviderUncheckedCreateWithoutUserInput> | ProviderCreateWithoutUserInput[] | ProviderUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProviderCreateOrConnectWithoutUserInput | ProviderCreateOrConnectWithoutUserInput[]
-    createMany?: ProviderCreateManyUserInputEnvelope
-    connect?: ProviderWhereUniqueInput | ProviderWhereUniqueInput[]
+  export type ProviderUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<ProviderCreateWithoutUserInput, ProviderUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ProviderCreateOrConnectWithoutUserInput
+    connect?: ProviderWhereUniqueInput
   }
 
-  export type ClientUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput> | ClientCreateWithoutUserInput[] | ClientUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ClientCreateOrConnectWithoutUserInput | ClientCreateOrConnectWithoutUserInput[]
-    createMany?: ClientCreateManyUserInputEnvelope
-    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+  export type ClientUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClientCreateOrConnectWithoutUserInput
+    connect?: ClientWhereUniqueInput
   }
 
   export type VerificationTokenUncheckedCreateNestedManyWithoutUserInput = {
@@ -32083,46 +32021,34 @@ export namespace Prisma {
     deleteMany?: User_RolesScalarWhereInput | User_RolesScalarWhereInput[]
   }
 
-  export type AdminUpdateManyWithoutUserNestedInput = {
-    create?: XOR<AdminCreateWithoutUserInput, AdminUncheckedCreateWithoutUserInput> | AdminCreateWithoutUserInput[] | AdminUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: AdminCreateOrConnectWithoutUserInput | AdminCreateOrConnectWithoutUserInput[]
-    upsert?: AdminUpsertWithWhereUniqueWithoutUserInput | AdminUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: AdminCreateManyUserInputEnvelope
-    set?: AdminWhereUniqueInput | AdminWhereUniqueInput[]
-    disconnect?: AdminWhereUniqueInput | AdminWhereUniqueInput[]
-    delete?: AdminWhereUniqueInput | AdminWhereUniqueInput[]
-    connect?: AdminWhereUniqueInput | AdminWhereUniqueInput[]
-    update?: AdminUpdateWithWhereUniqueWithoutUserInput | AdminUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: AdminUpdateManyWithWhereWithoutUserInput | AdminUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: AdminScalarWhereInput | AdminScalarWhereInput[]
+  export type AdminUpdateOneWithoutUserNestedInput = {
+    create?: XOR<AdminCreateWithoutUserInput, AdminUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutUserInput
+    upsert?: AdminUpsertWithoutUserInput
+    disconnect?: AdminWhereInput | boolean
+    delete?: AdminWhereInput | boolean
+    connect?: AdminWhereUniqueInput
+    update?: XOR<XOR<AdminUpdateToOneWithWhereWithoutUserInput, AdminUpdateWithoutUserInput>, AdminUncheckedUpdateWithoutUserInput>
   }
 
-  export type ProviderUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ProviderCreateWithoutUserInput, ProviderUncheckedCreateWithoutUserInput> | ProviderCreateWithoutUserInput[] | ProviderUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProviderCreateOrConnectWithoutUserInput | ProviderCreateOrConnectWithoutUserInput[]
-    upsert?: ProviderUpsertWithWhereUniqueWithoutUserInput | ProviderUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ProviderCreateManyUserInputEnvelope
-    set?: ProviderWhereUniqueInput | ProviderWhereUniqueInput[]
-    disconnect?: ProviderWhereUniqueInput | ProviderWhereUniqueInput[]
-    delete?: ProviderWhereUniqueInput | ProviderWhereUniqueInput[]
-    connect?: ProviderWhereUniqueInput | ProviderWhereUniqueInput[]
-    update?: ProviderUpdateWithWhereUniqueWithoutUserInput | ProviderUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ProviderUpdateManyWithWhereWithoutUserInput | ProviderUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ProviderScalarWhereInput | ProviderScalarWhereInput[]
+  export type ProviderUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ProviderCreateWithoutUserInput, ProviderUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ProviderCreateOrConnectWithoutUserInput
+    upsert?: ProviderUpsertWithoutUserInput
+    disconnect?: ProviderWhereInput | boolean
+    delete?: ProviderWhereInput | boolean
+    connect?: ProviderWhereUniqueInput
+    update?: XOR<XOR<ProviderUpdateToOneWithWhereWithoutUserInput, ProviderUpdateWithoutUserInput>, ProviderUncheckedUpdateWithoutUserInput>
   }
 
-  export type ClientUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput> | ClientCreateWithoutUserInput[] | ClientUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ClientCreateOrConnectWithoutUserInput | ClientCreateOrConnectWithoutUserInput[]
-    upsert?: ClientUpsertWithWhereUniqueWithoutUserInput | ClientUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ClientCreateManyUserInputEnvelope
-    set?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
-    disconnect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
-    delete?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
-    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
-    update?: ClientUpdateWithWhereUniqueWithoutUserInput | ClientUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ClientUpdateManyWithWhereWithoutUserInput | ClientUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ClientScalarWhereInput | ClientScalarWhereInput[]
+  export type ClientUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClientCreateOrConnectWithoutUserInput
+    upsert?: ClientUpsertWithoutUserInput
+    disconnect?: ClientWhereInput | boolean
+    delete?: ClientWhereInput | boolean
+    connect?: ClientWhereUniqueInput
+    update?: XOR<XOR<ClientUpdateToOneWithWhereWithoutUserInput, ClientUpdateWithoutUserInput>, ClientUncheckedUpdateWithoutUserInput>
   }
 
   export type VerificationTokenUpdateManyWithoutUserNestedInput = {
@@ -32189,46 +32115,34 @@ export namespace Prisma {
     deleteMany?: User_RolesScalarWhereInput | User_RolesScalarWhereInput[]
   }
 
-  export type AdminUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<AdminCreateWithoutUserInput, AdminUncheckedCreateWithoutUserInput> | AdminCreateWithoutUserInput[] | AdminUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: AdminCreateOrConnectWithoutUserInput | AdminCreateOrConnectWithoutUserInput[]
-    upsert?: AdminUpsertWithWhereUniqueWithoutUserInput | AdminUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: AdminCreateManyUserInputEnvelope
-    set?: AdminWhereUniqueInput | AdminWhereUniqueInput[]
-    disconnect?: AdminWhereUniqueInput | AdminWhereUniqueInput[]
-    delete?: AdminWhereUniqueInput | AdminWhereUniqueInput[]
-    connect?: AdminWhereUniqueInput | AdminWhereUniqueInput[]
-    update?: AdminUpdateWithWhereUniqueWithoutUserInput | AdminUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: AdminUpdateManyWithWhereWithoutUserInput | AdminUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: AdminScalarWhereInput | AdminScalarWhereInput[]
+  export type AdminUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<AdminCreateWithoutUserInput, AdminUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutUserInput
+    upsert?: AdminUpsertWithoutUserInput
+    disconnect?: AdminWhereInput | boolean
+    delete?: AdminWhereInput | boolean
+    connect?: AdminWhereUniqueInput
+    update?: XOR<XOR<AdminUpdateToOneWithWhereWithoutUserInput, AdminUpdateWithoutUserInput>, AdminUncheckedUpdateWithoutUserInput>
   }
 
-  export type ProviderUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ProviderCreateWithoutUserInput, ProviderUncheckedCreateWithoutUserInput> | ProviderCreateWithoutUserInput[] | ProviderUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProviderCreateOrConnectWithoutUserInput | ProviderCreateOrConnectWithoutUserInput[]
-    upsert?: ProviderUpsertWithWhereUniqueWithoutUserInput | ProviderUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ProviderCreateManyUserInputEnvelope
-    set?: ProviderWhereUniqueInput | ProviderWhereUniqueInput[]
-    disconnect?: ProviderWhereUniqueInput | ProviderWhereUniqueInput[]
-    delete?: ProviderWhereUniqueInput | ProviderWhereUniqueInput[]
-    connect?: ProviderWhereUniqueInput | ProviderWhereUniqueInput[]
-    update?: ProviderUpdateWithWhereUniqueWithoutUserInput | ProviderUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ProviderUpdateManyWithWhereWithoutUserInput | ProviderUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ProviderScalarWhereInput | ProviderScalarWhereInput[]
+  export type ProviderUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ProviderCreateWithoutUserInput, ProviderUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ProviderCreateOrConnectWithoutUserInput
+    upsert?: ProviderUpsertWithoutUserInput
+    disconnect?: ProviderWhereInput | boolean
+    delete?: ProviderWhereInput | boolean
+    connect?: ProviderWhereUniqueInput
+    update?: XOR<XOR<ProviderUpdateToOneWithWhereWithoutUserInput, ProviderUpdateWithoutUserInput>, ProviderUncheckedUpdateWithoutUserInput>
   }
 
-  export type ClientUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput> | ClientCreateWithoutUserInput[] | ClientUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ClientCreateOrConnectWithoutUserInput | ClientCreateOrConnectWithoutUserInput[]
-    upsert?: ClientUpsertWithWhereUniqueWithoutUserInput | ClientUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ClientCreateManyUserInputEnvelope
-    set?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
-    disconnect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
-    delete?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
-    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
-    update?: ClientUpdateWithWhereUniqueWithoutUserInput | ClientUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ClientUpdateManyWithWhereWithoutUserInput | ClientUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ClientScalarWhereInput | ClientScalarWhereInput[]
+  export type ClientUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClientCreateOrConnectWithoutUserInput
+    upsert?: ClientUpsertWithoutUserInput
+    disconnect?: ClientWhereInput | boolean
+    delete?: ClientWhereInput | boolean
+    connect?: ClientWhereUniqueInput
+    update?: XOR<XOR<ClientUpdateToOneWithWhereWithoutUserInput, ClientUpdateWithoutUserInput>, ClientUncheckedUpdateWithoutUserInput>
   }
 
   export type VerificationTokenUncheckedUpdateManyWithoutUserNestedInput = {
@@ -33707,11 +33621,6 @@ export namespace Prisma {
     create: XOR<AdminCreateWithoutUserInput, AdminUncheckedCreateWithoutUserInput>
   }
 
-  export type AdminCreateManyUserInputEnvelope = {
-    data: AdminCreateManyUserInput | AdminCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
   export type ProviderCreateWithoutUserInput = {
     business_name: string
     cnpj?: string | null
@@ -33752,11 +33661,6 @@ export namespace Prisma {
     create: XOR<ProviderCreateWithoutUserInput, ProviderUncheckedCreateWithoutUserInput>
   }
 
-  export type ProviderCreateManyUserInputEnvelope = {
-    data: ProviderCreateManyUserInput | ProviderCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
   export type ClientCreateWithoutUserInput = {
     date_of_birth: Date | string
     is_active?: boolean
@@ -33779,11 +33683,6 @@ export namespace Prisma {
   export type ClientCreateOrConnectWithoutUserInput = {
     where: ClientWhereUniqueInput
     create: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput>
-  }
-
-  export type ClientCreateManyUserInputEnvelope = {
-    data: ClientCreateManyUserInput | ClientCreateManyUserInput[]
-    skipDuplicates?: boolean
   }
 
   export type VerificationTokenCreateWithoutUserInput = {
@@ -33899,91 +33798,102 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"User_Roles"> | Date | string
   }
 
-  export type AdminUpsertWithWhereUniqueWithoutUserInput = {
-    where: AdminWhereUniqueInput
+  export type AdminUpsertWithoutUserInput = {
     update: XOR<AdminUpdateWithoutUserInput, AdminUncheckedUpdateWithoutUserInput>
     create: XOR<AdminCreateWithoutUserInput, AdminUncheckedCreateWithoutUserInput>
+    where?: AdminWhereInput
   }
 
-  export type AdminUpdateWithWhereUniqueWithoutUserInput = {
-    where: AdminWhereUniqueInput
+  export type AdminUpdateToOneWithWhereWithoutUserInput = {
+    where?: AdminWhereInput
     data: XOR<AdminUpdateWithoutUserInput, AdminUncheckedUpdateWithoutUserInput>
   }
 
-  export type AdminUpdateManyWithWhereWithoutUserInput = {
-    where: AdminScalarWhereInput
-    data: XOR<AdminUpdateManyMutationInput, AdminUncheckedUpdateManyWithoutUserInput>
+  export type AdminUpdateWithoutUserInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AdminScalarWhereInput = {
-    AND?: AdminScalarWhereInput | AdminScalarWhereInput[]
-    OR?: AdminScalarWhereInput[]
-    NOT?: AdminScalarWhereInput | AdminScalarWhereInput[]
-    id?: IntFilter<"Admin"> | number
-    user_id?: IntFilter<"Admin"> | number
-    created_at?: DateTimeFilter<"Admin"> | Date | string
-    updated_at?: DateTimeFilter<"Admin"> | Date | string
+  export type AdminUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ProviderUpsertWithWhereUniqueWithoutUserInput = {
-    where: ProviderWhereUniqueInput
+  export type ProviderUpsertWithoutUserInput = {
     update: XOR<ProviderUpdateWithoutUserInput, ProviderUncheckedUpdateWithoutUserInput>
     create: XOR<ProviderCreateWithoutUserInput, ProviderUncheckedCreateWithoutUserInput>
+    where?: ProviderWhereInput
   }
 
-  export type ProviderUpdateWithWhereUniqueWithoutUserInput = {
-    where: ProviderWhereUniqueInput
+  export type ProviderUpdateToOneWithWhereWithoutUserInput = {
+    where?: ProviderWhereInput
     data: XOR<ProviderUpdateWithoutUserInput, ProviderUncheckedUpdateWithoutUserInput>
   }
 
-  export type ProviderUpdateManyWithWhereWithoutUserInput = {
-    where: ProviderScalarWhereInput
-    data: XOR<ProviderUpdateManyMutationInput, ProviderUncheckedUpdateManyWithoutUserInput>
+  export type ProviderUpdateWithoutUserInput = {
+    business_name?: StringFieldUpdateOperationsInput | string
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    cpf?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    banner_url?: NullableStringFieldUpdateOperationsInput | string | null
+    avarage_rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    Provider_specialization?: Provider_SpecializationUpdateManyWithoutProviderNestedInput
+    Time?: TimeUpdateManyWithoutProviderNestedInput
+    Provider_Service?: Provider_ServiceUpdateManyWithoutProviderNestedInput
+    Scheduling?: SchedulingUpdateManyWithoutProviderNestedInput
+    Rating?: RatingUpdateManyWithoutProviderNestedInput
   }
 
-  export type ProviderScalarWhereInput = {
-    AND?: ProviderScalarWhereInput | ProviderScalarWhereInput[]
-    OR?: ProviderScalarWhereInput[]
-    NOT?: ProviderScalarWhereInput | ProviderScalarWhereInput[]
-    id?: IntFilter<"Provider"> | number
-    user_id?: IntFilter<"Provider"> | number
-    business_name?: StringFilter<"Provider"> | string
-    cnpj?: StringNullableFilter<"Provider"> | string | null
-    cpf?: StringNullableFilter<"Provider"> | string | null
-    description?: StringNullableFilter<"Provider"> | string | null
-    logo_url?: StringNullableFilter<"Provider"> | string | null
-    banner_url?: StringNullableFilter<"Provider"> | string | null
-    avarage_rating?: FloatNullableFilter<"Provider"> | number | null
-    created_at?: DateTimeFilter<"Provider"> | Date | string
-    updated_at?: DateTimeFilter<"Provider"> | Date | string
+  export type ProviderUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    business_name?: StringFieldUpdateOperationsInput | string
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    cpf?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    banner_url?: NullableStringFieldUpdateOperationsInput | string | null
+    avarage_rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    Provider_specialization?: Provider_SpecializationUncheckedUpdateManyWithoutProviderNestedInput
+    Time?: TimeUncheckedUpdateManyWithoutProviderNestedInput
+    Provider_Service?: Provider_ServiceUncheckedUpdateManyWithoutProviderNestedInput
+    Scheduling?: SchedulingUncheckedUpdateManyWithoutProviderNestedInput
+    Rating?: RatingUncheckedUpdateManyWithoutProviderNestedInput
   }
 
-  export type ClientUpsertWithWhereUniqueWithoutUserInput = {
-    where: ClientWhereUniqueInput
+  export type ClientUpsertWithoutUserInput = {
     update: XOR<ClientUpdateWithoutUserInput, ClientUncheckedUpdateWithoutUserInput>
     create: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput>
+    where?: ClientWhereInput
   }
 
-  export type ClientUpdateWithWhereUniqueWithoutUserInput = {
-    where: ClientWhereUniqueInput
+  export type ClientUpdateToOneWithWhereWithoutUserInput = {
+    where?: ClientWhereInput
     data: XOR<ClientUpdateWithoutUserInput, ClientUncheckedUpdateWithoutUserInput>
   }
 
-  export type ClientUpdateManyWithWhereWithoutUserInput = {
-    where: ClientScalarWhereInput
-    data: XOR<ClientUpdateManyMutationInput, ClientUncheckedUpdateManyWithoutUserInput>
+  export type ClientUpdateWithoutUserInput = {
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    Scheduling?: SchedulingUpdateManyWithoutClientNestedInput
+    Rating?: RatingUpdateManyWithoutClientNestedInput
   }
 
-  export type ClientScalarWhereInput = {
-    AND?: ClientScalarWhereInput | ClientScalarWhereInput[]
-    OR?: ClientScalarWhereInput[]
-    NOT?: ClientScalarWhereInput | ClientScalarWhereInput[]
-    id?: IntFilter<"Client"> | number
-    user_id?: IntFilter<"Client"> | number
-    date_of_birth?: DateTimeFilter<"Client"> | Date | string
-    is_active?: BoolFilter<"Client"> | boolean
-    created_at?: DateTimeFilter<"Client"> | Date | string
-    updated_at?: DateTimeFilter<"Client"> | Date | string
+  export type ClientUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    Scheduling?: SchedulingUncheckedUpdateManyWithoutClientNestedInput
+    Rating?: RatingUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type VerificationTokenUpsertWithWhereUniqueWithoutUserInput = {
@@ -34026,9 +33936,9 @@ export namespace Prisma {
     Phone?: PhoneCreateNestedManyWithoutUserInput
     Address?: AddressCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesCreateNestedManyWithoutUserInput
-    Admin?: AdminCreateNestedManyWithoutUserInput
-    Provider?: ProviderCreateNestedManyWithoutUserInput
-    Client?: ClientCreateNestedManyWithoutUserInput
+    Admin?: AdminCreateNestedOneWithoutUserInput
+    Provider?: ProviderCreateNestedOneWithoutUserInput
+    Client?: ClientCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVerificationTokenInput = {
@@ -34044,9 +33954,9 @@ export namespace Prisma {
     Phone?: PhoneUncheckedCreateNestedManyWithoutUserInput
     Address?: AddressUncheckedCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesUncheckedCreateNestedManyWithoutUserInput
-    Admin?: AdminUncheckedCreateNestedManyWithoutUserInput
-    Provider?: ProviderUncheckedCreateNestedManyWithoutUserInput
-    Client?: ClientUncheckedCreateNestedManyWithoutUserInput
+    Admin?: AdminUncheckedCreateNestedOneWithoutUserInput
+    Provider?: ProviderUncheckedCreateNestedOneWithoutUserInput
+    Client?: ClientUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVerificationTokenInput = {
@@ -34077,9 +33987,9 @@ export namespace Prisma {
     Phone?: PhoneUpdateManyWithoutUserNestedInput
     Address?: AddressUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUpdateManyWithoutUserNestedInput
-    Admin?: AdminUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUpdateManyWithoutUserNestedInput
-    Client?: ClientUpdateManyWithoutUserNestedInput
+    Admin?: AdminUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUpdateOneWithoutUserNestedInput
+    Client?: ClientUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVerificationTokenInput = {
@@ -34095,9 +34005,9 @@ export namespace Prisma {
     Phone?: PhoneUncheckedUpdateManyWithoutUserNestedInput
     Address?: AddressUncheckedUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUncheckedUpdateManyWithoutUserNestedInput
-    Admin?: AdminUncheckedUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUncheckedUpdateManyWithoutUserNestedInput
-    Client?: ClientUncheckedUpdateManyWithoutUserNestedInput
+    Admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUncheckedUpdateOneWithoutUserNestedInput
+    Client?: ClientUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPhoneInput = {
@@ -34111,9 +34021,9 @@ export namespace Prisma {
     updated_at?: Date | string
     Address?: AddressCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesCreateNestedManyWithoutUserInput
-    Admin?: AdminCreateNestedManyWithoutUserInput
-    Provider?: ProviderCreateNestedManyWithoutUserInput
-    Client?: ClientCreateNestedManyWithoutUserInput
+    Admin?: AdminCreateNestedOneWithoutUserInput
+    Provider?: ProviderCreateNestedOneWithoutUserInput
+    Client?: ClientCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenCreateNestedManyWithoutUserInput
   }
 
@@ -34129,9 +34039,9 @@ export namespace Prisma {
     updated_at?: Date | string
     Address?: AddressUncheckedCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesUncheckedCreateNestedManyWithoutUserInput
-    Admin?: AdminUncheckedCreateNestedManyWithoutUserInput
-    Provider?: ProviderUncheckedCreateNestedManyWithoutUserInput
-    Client?: ClientUncheckedCreateNestedManyWithoutUserInput
+    Admin?: AdminUncheckedCreateNestedOneWithoutUserInput
+    Provider?: ProviderUncheckedCreateNestedOneWithoutUserInput
+    Client?: ClientUncheckedCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -34162,9 +34072,9 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Address?: AddressUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUpdateManyWithoutUserNestedInput
-    Admin?: AdminUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUpdateManyWithoutUserNestedInput
-    Client?: ClientUpdateManyWithoutUserNestedInput
+    Admin?: AdminUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUpdateOneWithoutUserNestedInput
+    Client?: ClientUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUpdateManyWithoutUserNestedInput
   }
 
@@ -34180,9 +34090,9 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Address?: AddressUncheckedUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUncheckedUpdateManyWithoutUserNestedInput
-    Admin?: AdminUncheckedUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUncheckedUpdateManyWithoutUserNestedInput
-    Client?: ClientUncheckedUpdateManyWithoutUserNestedInput
+    Admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUncheckedUpdateOneWithoutUserNestedInput
+    Client?: ClientUncheckedUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -34197,9 +34107,9 @@ export namespace Prisma {
     updated_at?: Date | string
     Phone?: PhoneCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesCreateNestedManyWithoutUserInput
-    Admin?: AdminCreateNestedManyWithoutUserInput
-    Provider?: ProviderCreateNestedManyWithoutUserInput
-    Client?: ClientCreateNestedManyWithoutUserInput
+    Admin?: AdminCreateNestedOneWithoutUserInput
+    Provider?: ProviderCreateNestedOneWithoutUserInput
+    Client?: ClientCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenCreateNestedManyWithoutUserInput
   }
 
@@ -34215,9 +34125,9 @@ export namespace Prisma {
     updated_at?: Date | string
     Phone?: PhoneUncheckedCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesUncheckedCreateNestedManyWithoutUserInput
-    Admin?: AdminUncheckedCreateNestedManyWithoutUserInput
-    Provider?: ProviderUncheckedCreateNestedManyWithoutUserInput
-    Client?: ClientUncheckedCreateNestedManyWithoutUserInput
+    Admin?: AdminUncheckedCreateNestedOneWithoutUserInput
+    Provider?: ProviderUncheckedCreateNestedOneWithoutUserInput
+    Client?: ClientUncheckedCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -34268,9 +34178,9 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Phone?: PhoneUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUpdateManyWithoutUserNestedInput
-    Admin?: AdminUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUpdateManyWithoutUserNestedInput
-    Client?: ClientUpdateManyWithoutUserNestedInput
+    Admin?: AdminUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUpdateOneWithoutUserNestedInput
+    Client?: ClientUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUpdateManyWithoutUserNestedInput
   }
 
@@ -34286,9 +34196,9 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Phone?: PhoneUncheckedUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUncheckedUpdateManyWithoutUserNestedInput
-    Admin?: AdminUncheckedUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUncheckedUpdateManyWithoutUserNestedInput
-    Client?: ClientUncheckedUpdateManyWithoutUserNestedInput
+    Admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUncheckedUpdateOneWithoutUserNestedInput
+    Client?: ClientUncheckedUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -34718,9 +34628,9 @@ export namespace Prisma {
     updated_at?: Date | string
     Phone?: PhoneCreateNestedManyWithoutUserInput
     Address?: AddressCreateNestedManyWithoutUserInput
-    Admin?: AdminCreateNestedManyWithoutUserInput
-    Provider?: ProviderCreateNestedManyWithoutUserInput
-    Client?: ClientCreateNestedManyWithoutUserInput
+    Admin?: AdminCreateNestedOneWithoutUserInput
+    Provider?: ProviderCreateNestedOneWithoutUserInput
+    Client?: ClientCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenCreateNestedManyWithoutUserInput
   }
 
@@ -34736,9 +34646,9 @@ export namespace Prisma {
     updated_at?: Date | string
     Phone?: PhoneUncheckedCreateNestedManyWithoutUserInput
     Address?: AddressUncheckedCreateNestedManyWithoutUserInput
-    Admin?: AdminUncheckedCreateNestedManyWithoutUserInput
-    Provider?: ProviderUncheckedCreateNestedManyWithoutUserInput
-    Client?: ClientUncheckedCreateNestedManyWithoutUserInput
+    Admin?: AdminUncheckedCreateNestedOneWithoutUserInput
+    Provider?: ProviderUncheckedCreateNestedOneWithoutUserInput
+    Client?: ClientUncheckedCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -34787,9 +34697,9 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Phone?: PhoneUpdateManyWithoutUserNestedInput
     Address?: AddressUpdateManyWithoutUserNestedInput
-    Admin?: AdminUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUpdateManyWithoutUserNestedInput
-    Client?: ClientUpdateManyWithoutUserNestedInput
+    Admin?: AdminUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUpdateOneWithoutUserNestedInput
+    Client?: ClientUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUpdateManyWithoutUserNestedInput
   }
 
@@ -34805,9 +34715,9 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     Phone?: PhoneUncheckedUpdateManyWithoutUserNestedInput
     Address?: AddressUncheckedUpdateManyWithoutUserNestedInput
-    Admin?: AdminUncheckedUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUncheckedUpdateManyWithoutUserNestedInput
-    Client?: ClientUncheckedUpdateManyWithoutUserNestedInput
+    Admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUncheckedUpdateOneWithoutUserNestedInput
+    Client?: ClientUncheckedUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -34847,8 +34757,8 @@ export namespace Prisma {
     Phone?: PhoneCreateNestedManyWithoutUserInput
     Address?: AddressCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesCreateNestedManyWithoutUserInput
-    Provider?: ProviderCreateNestedManyWithoutUserInput
-    Client?: ClientCreateNestedManyWithoutUserInput
+    Provider?: ProviderCreateNestedOneWithoutUserInput
+    Client?: ClientCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenCreateNestedManyWithoutUserInput
   }
 
@@ -34865,8 +34775,8 @@ export namespace Prisma {
     Phone?: PhoneUncheckedCreateNestedManyWithoutUserInput
     Address?: AddressUncheckedCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesUncheckedCreateNestedManyWithoutUserInput
-    Provider?: ProviderUncheckedCreateNestedManyWithoutUserInput
-    Client?: ClientUncheckedCreateNestedManyWithoutUserInput
+    Provider?: ProviderUncheckedCreateNestedOneWithoutUserInput
+    Client?: ClientUncheckedCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -34898,8 +34808,8 @@ export namespace Prisma {
     Phone?: PhoneUpdateManyWithoutUserNestedInput
     Address?: AddressUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUpdateManyWithoutUserNestedInput
-    Client?: ClientUpdateManyWithoutUserNestedInput
+    Provider?: ProviderUpdateOneWithoutUserNestedInput
+    Client?: ClientUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUpdateManyWithoutUserNestedInput
   }
 
@@ -34916,8 +34826,8 @@ export namespace Prisma {
     Phone?: PhoneUncheckedUpdateManyWithoutUserNestedInput
     Address?: AddressUncheckedUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUncheckedUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUncheckedUpdateManyWithoutUserNestedInput
-    Client?: ClientUncheckedUpdateManyWithoutUserNestedInput
+    Provider?: ProviderUncheckedUpdateOneWithoutUserNestedInput
+    Client?: ClientUncheckedUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -35070,8 +34980,8 @@ export namespace Prisma {
     Phone?: PhoneCreateNestedManyWithoutUserInput
     Address?: AddressCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesCreateNestedManyWithoutUserInput
-    Admin?: AdminCreateNestedManyWithoutUserInput
-    Client?: ClientCreateNestedManyWithoutUserInput
+    Admin?: AdminCreateNestedOneWithoutUserInput
+    Client?: ClientCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenCreateNestedManyWithoutUserInput
   }
 
@@ -35088,8 +34998,8 @@ export namespace Prisma {
     Phone?: PhoneUncheckedCreateNestedManyWithoutUserInput
     Address?: AddressUncheckedCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesUncheckedCreateNestedManyWithoutUserInput
-    Admin?: AdminUncheckedCreateNestedManyWithoutUserInput
-    Client?: ClientUncheckedCreateNestedManyWithoutUserInput
+    Admin?: AdminUncheckedCreateNestedOneWithoutUserInput
+    Client?: ClientUncheckedCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -35266,8 +35176,8 @@ export namespace Prisma {
     Phone?: PhoneUpdateManyWithoutUserNestedInput
     Address?: AddressUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUpdateManyWithoutUserNestedInput
-    Admin?: AdminUpdateManyWithoutUserNestedInput
-    Client?: ClientUpdateManyWithoutUserNestedInput
+    Admin?: AdminUpdateOneWithoutUserNestedInput
+    Client?: ClientUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUpdateManyWithoutUserNestedInput
   }
 
@@ -35284,8 +35194,8 @@ export namespace Prisma {
     Phone?: PhoneUncheckedUpdateManyWithoutUserNestedInput
     Address?: AddressUncheckedUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUncheckedUpdateManyWithoutUserNestedInput
-    Admin?: AdminUncheckedUpdateManyWithoutUserNestedInput
-    Client?: ClientUncheckedUpdateManyWithoutUserNestedInput
+    Admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
+    Client?: ClientUncheckedUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -35618,8 +35528,8 @@ export namespace Prisma {
     Phone?: PhoneCreateNestedManyWithoutUserInput
     Address?: AddressCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesCreateNestedManyWithoutUserInput
-    Admin?: AdminCreateNestedManyWithoutUserInput
-    Provider?: ProviderCreateNestedManyWithoutUserInput
+    Admin?: AdminCreateNestedOneWithoutUserInput
+    Provider?: ProviderCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenCreateNestedManyWithoutUserInput
   }
 
@@ -35636,8 +35546,8 @@ export namespace Prisma {
     Phone?: PhoneUncheckedCreateNestedManyWithoutUserInput
     Address?: AddressUncheckedCreateNestedManyWithoutUserInput
     User_Roles?: User_RolesUncheckedCreateNestedManyWithoutUserInput
-    Admin?: AdminUncheckedCreateNestedManyWithoutUserInput
-    Provider?: ProviderUncheckedCreateNestedManyWithoutUserInput
+    Admin?: AdminUncheckedCreateNestedOneWithoutUserInput
+    Provider?: ProviderUncheckedCreateNestedOneWithoutUserInput
     VerificationToken?: VerificationTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -35701,8 +35611,8 @@ export namespace Prisma {
     Phone?: PhoneUpdateManyWithoutUserNestedInput
     Address?: AddressUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUpdateManyWithoutUserNestedInput
-    Admin?: AdminUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUpdateManyWithoutUserNestedInput
+    Admin?: AdminUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUpdateManyWithoutUserNestedInput
   }
 
@@ -35719,8 +35629,8 @@ export namespace Prisma {
     Phone?: PhoneUncheckedUpdateManyWithoutUserNestedInput
     Address?: AddressUncheckedUpdateManyWithoutUserNestedInput
     User_Roles?: User_RolesUncheckedUpdateManyWithoutUserNestedInput
-    Admin?: AdminUncheckedUpdateManyWithoutUserNestedInput
-    Provider?: ProviderUncheckedUpdateManyWithoutUserNestedInput
+    Admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
+    Provider?: ProviderUncheckedUpdateOneWithoutUserNestedInput
     VerificationToken?: VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -36526,33 +36436,6 @@ export namespace Prisma {
     updated_at?: Date | string
   }
 
-  export type AdminCreateManyUserInput = {
-    id?: number
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type ProviderCreateManyUserInput = {
-    id?: number
-    business_name: string
-    cnpj?: string | null
-    cpf?: string | null
-    description?: string | null
-    logo_url?: string | null
-    banner_url?: string | null
-    avarage_rating?: number | null
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type ClientCreateManyUserInput = {
-    id?: number
-    date_of_birth: Date | string
-    is_active?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
   export type VerificationTokenCreateManyUserInput = {
     id?: number
     token: string
@@ -36638,98 +36521,6 @@ export namespace Prisma {
   export type User_RolesUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     roles_id?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AdminUpdateWithoutUserInput = {
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AdminUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AdminUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ProviderUpdateWithoutUserInput = {
-    business_name?: StringFieldUpdateOperationsInput | string
-    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
-    cpf?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
-    banner_url?: NullableStringFieldUpdateOperationsInput | string | null
-    avarage_rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    Provider_specialization?: Provider_SpecializationUpdateManyWithoutProviderNestedInput
-    Time?: TimeUpdateManyWithoutProviderNestedInput
-    Provider_Service?: Provider_ServiceUpdateManyWithoutProviderNestedInput
-    Scheduling?: SchedulingUpdateManyWithoutProviderNestedInput
-    Rating?: RatingUpdateManyWithoutProviderNestedInput
-  }
-
-  export type ProviderUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    business_name?: StringFieldUpdateOperationsInput | string
-    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
-    cpf?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
-    banner_url?: NullableStringFieldUpdateOperationsInput | string | null
-    avarage_rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    Provider_specialization?: Provider_SpecializationUncheckedUpdateManyWithoutProviderNestedInput
-    Time?: TimeUncheckedUpdateManyWithoutProviderNestedInput
-    Provider_Service?: Provider_ServiceUncheckedUpdateManyWithoutProviderNestedInput
-    Scheduling?: SchedulingUncheckedUpdateManyWithoutProviderNestedInput
-    Rating?: RatingUncheckedUpdateManyWithoutProviderNestedInput
-  }
-
-  export type ProviderUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    business_name?: StringFieldUpdateOperationsInput | string
-    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
-    cpf?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
-    banner_url?: NullableStringFieldUpdateOperationsInput | string | null
-    avarage_rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ClientUpdateWithoutUserInput = {
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    Scheduling?: SchedulingUpdateManyWithoutClientNestedInput
-    Rating?: RatingUpdateManyWithoutClientNestedInput
-  }
-
-  export type ClientUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    Scheduling?: SchedulingUncheckedUpdateManyWithoutClientNestedInput
-    Rating?: RatingUncheckedUpdateManyWithoutClientNestedInput
-  }
-
-  export type ClientUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
