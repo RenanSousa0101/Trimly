@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ensureAdmin, ensureAuth, ensureProvider, authorizeAdminOrOwner, ensureNotSelf} from "./middlewares/auth-middleware";
-import { addressController, authController, phoneController, rolesController, userController } from "./container";
+import { addressController, authController, phoneController, providerController, rolesController, userController } from "./container";
 
 const router = Router()
 
@@ -32,5 +32,7 @@ router.get("/users/:id/roles", ensureAuth, authorizeAdminOrOwner('id'), rolesCon
 router.post("/users/:id/roles", ensureAuth, authorizeAdminOrOwner('id'), rolesController.create)
 router.put("/users/:id/roles/:roleId", ensureAuth, ensureAdmin, authorizeAdminOrOwner('id'), rolesController.update)
 router.delete("/users/:id/roles/:roleId", ensureAuth, ensureAdmin, rolesController.delete)
+
+router.post("/user/:id/provider", ensureAuth, authorizeAdminOrOwner('id'), providerController.create)
 
 export { router };

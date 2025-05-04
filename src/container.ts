@@ -15,12 +15,16 @@ import { AuthService } from "./services/AuthService";
 import { EmailService } from "./services/EmailService";
 import { PrismaTokenRepository } from "./repositories/prisma/PrismaTokenRepository";
 import { PasswordService } from "./services/PasswordService";
+import { PrismaProviderRepository } from "./repositories/prisma/PrismaProviderRepository";
+import { ProviderService } from "./services/ProviderService";
+import { ProviderController } from "./controllers/ProviderController";
 
 export const userRepository = new PrismaUserRepository
 export const phoneRepository = new PrismaPhoneRepository
 export const addressRepository = new PrismaAddressRepository
 export const rolesRepository = new PrismaRoleRepository
 export const tokenRepository = new PrismaTokenRepository
+export const providerRepository = new PrismaProviderRepository
 
 export const emailService = new EmailService;
 export const passwordService = new PasswordService;
@@ -30,11 +34,10 @@ export const phoneService = new PhoneService(phoneRepository, userRepository)
 export const addressService = new AddressService(addressRepository, userRepository)
 export const rolesService = new RolesService(rolesRepository, userRepository)
 export const authService = new AuthService(
-    userRepository, 
-    rolesRepository, 
-    tokenRepository, 
-    emailService, 
-    passwordService
+    userRepository, rolesRepository, tokenRepository, emailService, passwordService
+)
+export const providerService = new ProviderService(
+    userRepository, phoneRepository, addressRepository, rolesRepository, providerRepository
 )
 
 export const userController = new UserController(usersService)
@@ -42,3 +45,4 @@ export const phoneController = new PhoneController(phoneService)
 export const addressController = new AddressController(addressService)
 export const rolesController = new RolesController(rolesService)
 export const authController = new AuthController(authService)
+export const providerController = new ProviderController(providerService)
