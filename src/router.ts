@@ -33,6 +33,7 @@ router.post("/users/:id/roles", ensureAuth, authorizeAdminOrOwner('id'), rolesCo
 router.put("/users/:id/roles/:roleId", ensureAuth, ensureAdmin, authorizeAdminOrOwner('id'), rolesController.update)
 router.delete("/users/:id/roles/:roleId", ensureAuth, ensureAdmin, rolesController.delete)
 
-router.post("/user/:id/provider", ensureAuth, authorizeAdminOrOwner('id'), providerController.create)
+router.get("/users/:id/provider", ensureAuth, ensureAdmin, providerController.index)
+router.post("/users/:id/provider", ensureAuth, authorizeAdminOrOwner('id'), providerController.create)
 
 export { router };

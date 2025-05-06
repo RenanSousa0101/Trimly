@@ -1,6 +1,14 @@
 import { z } from "zod";
 import { cpf, cnpj } from 'cpf-cnpj-validator';
 
+export const GetProviderRequestSchema = z.object({
+    page: z.string().optional(),
+    pageSize: z.string().optional(),
+    name: z.string().optional(),
+    sortBy: z.enum(['business_name']).optional(),
+    order: z.enum(['asc', 'desc']).optional()
+})
+
 export const CreateProviderRequestSchema = z.object({
     // Informações do Provedor
     business_name: z.string(),

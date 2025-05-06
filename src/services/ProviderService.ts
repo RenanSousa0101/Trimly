@@ -2,11 +2,19 @@ import { HttpError } from "../errors/HttpError";
 import { AddressType, PhoneType, Prisma, PrismaClient } from "../generated/prisma";
 import { IaddressRepository } from "../repositories/AddressRepository";
 import { IphoneRepository } from "../repositories/PhoneRepository";
-import { FullProviderAttributes, IproviderRepository } from "../repositories/ProviderRepository";
+import { FullProviderAttributes, IproviderRepository, ProviderWhereParams } from "../repositories/ProviderRepository";
 import { IrolesRepository } from "../repositories/RolesRepository";
 import { IuserRepository } from "../repositories/UserRepository";
 import { removeMask } from "./functions/mask";
 import { cpf, cnpj } from 'cpf-cnpj-validator';
+
+interface GetProviderWithPaginationParams {
+    page?: number
+    pageSize?: number
+    business_name?: string
+    sortBy?: "business_name"
+    order?: "asc" | "desc"
+}
 
 export class ProviderService {
     constructor(
@@ -17,6 +25,39 @@ export class ProviderService {
         private readonly rolesRepository: IrolesRepository,
         private readonly providerRepository: IproviderRepository
     ) { }
+
+    async getAllProvidersPaginated(params: GetProviderWithPaginationParams) {
+            const { business_name, page = 1, pageSize = 10, sortBy, order } = params;
+    
+            const take = pageSize;
+            const skip = (page - 1) * take;
+    
+            const where: ProviderWhereParams = {};
+    
+            if (business_name) {
+                where.business_name = { contains: business_name, mode: "insensitive" };
+            }
+    
+            const providers = await this.providerRepository.findProvider({ where, sortBy, order, skip, take });
+            const totalProviders = await this.providerRepository.countProvider(where);
+            
+            const formattedProviders = providers.map((provider) => {
+                const newProvider = {...provider}
+                if (newProvider.cnpj) newProvider.cnpj = cnpj.format(newProvider.cnpj)
+                if (newProvider.cpf) newProvider.cpf = cpf.format(newProvider.cpf)
+                return newProvider
+            });
+
+            return {
+                formattedProviders,
+                meta: {
+                    page,
+                    pageSize,
+                    total: totalProviders,
+                    totalPages: Math.ceil(totalProviders / pageSize)
+                }
+            };
+        }
 
     async createProvider(userId: number, params: FullProviderAttributes) {
         const userExist = await this.userRepository.findById(userId);
