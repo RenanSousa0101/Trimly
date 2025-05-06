@@ -14,7 +14,9 @@ export class PrismaProviderRepository implements IproviderRepository {
                     contains: params.where?.business_name?.contains,
                     equals: params.where?.business_name?.equals,
                     mode: params.where?.business_name?.mode,
-                }
+                },
+                cnpj: params.where?.cnpj,
+                cpf: params.where?.cpf
             },
             orderBy: { [params.sortBy ?? "business_name"]: params.order || "asc" },
             skip: params.skip,
@@ -44,7 +46,9 @@ export class PrismaProviderRepository implements IproviderRepository {
                     contains: where.business_name?.contains,
                     equals: where.business_name?.equals,
                     mode: where.business_name?.mode,
-                }
+                },
+                cnpj: where?.cnpj,
+                cpf: where?.cpf
             }
         })
     }

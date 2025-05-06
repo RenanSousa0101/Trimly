@@ -5,7 +5,15 @@ export const GetProviderRequestSchema = z.object({
     page: z.string().optional(),
     pageSize: z.string().optional(),
     name: z.string().optional(),
-    sortBy: z.enum(['business_name']).optional(),
+    cnpj: z.string().min(14).max(18).nullable().optional().refine((val) => {
+        if (!val) return true;
+        return cnpj.isValid(val);
+    }, { message: "CNPJ inválido. Verifique o número." }),
+    cpf: z.string().min(11).max(14).nullable().optional().refine((val) => {
+       if (!val) return true;
+       return cpf.isValid(val);
+   }, { message: "CPF inválido. Verifique o número." }),
+    sortBy: z.enum(['business_name', 'cpf', 'cnpj']).optional(),
     order: z.enum(['asc', 'desc']).optional()
 })
 

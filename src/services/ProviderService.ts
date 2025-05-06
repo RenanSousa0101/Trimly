@@ -8,10 +8,14 @@ import { IuserRepository } from "../repositories/UserRepository";
 import { removeMask } from "./functions/mask";
 import { cpf, cnpj } from 'cpf-cnpj-validator';
 
+const cpfFormat = cpf
+const cnpjFormat = cnpj
 interface GetProviderWithPaginationParams {
     page?: number
     pageSize?: number
     business_name?: string
+    cnpj?: string
+    cpf?: string
     sortBy?: "business_name"
     order?: "asc" | "desc"
 }
@@ -27,24 +31,28 @@ export class ProviderService {
     ) { }
 
     async getAllProvidersPaginated(params: GetProviderWithPaginationParams) {
-            const { business_name, page = 1, pageSize = 10, sortBy, order } = params;
-    
+            const { business_name, cpf, cnpj, page = 1, pageSize = 10, sortBy, order } = params;
+
+            const cpfMask = removeMask(cpf)
+            const cnpjMask = removeMask(cnpj)
+
             const take = pageSize;
             const skip = (page - 1) * take;
     
             const where: ProviderWhereParams = {};
     
-            if (business_name) {
-                where.business_name = { contains: business_name, mode: "insensitive" };
-            }
+            if (business_name) where.business_name = { contains: business_name, mode: "insensitive" };
+            
+            if (cpfMask) where.cpf = cpfMask
+            if (cnpjMask) where.cnpj = cnpjMask
     
             const providers = await this.providerRepository.findProvider({ where, sortBy, order, skip, take });
             const totalProviders = await this.providerRepository.countProvider(where);
-            
+
             const formattedProviders = providers.map((provider) => {
                 const newProvider = {...provider}
-                if (newProvider.cnpj) newProvider.cnpj = cnpj.format(newProvider.cnpj)
-                if (newProvider.cpf) newProvider.cpf = cpf.format(newProvider.cpf)
+                if (newProvider.cnpj) newProvider.cnpj = cnpjFormat.format(newProvider.cnpj)
+                if (newProvider.cpf) newProvider.cpf = cpfFormat.format(newProvider.cpf)
                 return newProvider
             });
 

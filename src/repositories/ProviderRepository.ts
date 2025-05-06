@@ -6,7 +6,9 @@ export interface ProviderWhereParams {
         contains?: string
         equals?: string
         mode?: "default" | "insensitive"
-    }
+    },
+    cpf?: string,
+    cnpj?: string
 }
 
 export interface FindProviderParams {
