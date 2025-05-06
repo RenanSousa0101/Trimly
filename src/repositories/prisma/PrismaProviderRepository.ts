@@ -1,4 +1,4 @@
-import { PrismaClient, Provider } from "../../generated/prisma";
+import { PrismaClient, Provider } from "../../generated/prisma/client";
 import { PrismaClientOrTransaction } from "../ClientTransaction";
 import { CreateProviderAttributes, FindProviderParams, IproviderRepository, ProviderWhereParams } from "../ProviderRepository";
 

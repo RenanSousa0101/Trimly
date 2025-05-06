@@ -28499,12 +28499,12 @@ export namespace Prisma {
   export type ProviderWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     user_id?: number
+    cnpj?: string
+    cpf?: string
     AND?: ProviderWhereInput | ProviderWhereInput[]
     OR?: ProviderWhereInput[]
     NOT?: ProviderWhereInput | ProviderWhereInput[]
     business_name?: StringFilter<"Provider"> | string
-    cnpj?: StringNullableFilter<"Provider"> | string | null
-    cpf?: StringNullableFilter<"Provider"> | string | null
     description?: StringNullableFilter<"Provider"> | string | null
     logo_url?: StringNullableFilter<"Provider"> | string | null
     banner_url?: StringNullableFilter<"Provider"> | string | null
@@ -28517,7 +28517,7 @@ export namespace Prisma {
     Scheduling?: SchedulingListRelationFilter
     Rating?: RatingListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "user_id">
+  }, "id" | "user_id" | "cnpj" | "cpf">
 
   export type ProviderOrderByWithAggregationInput = {
     id?: SortOrder

@@ -1,5 +1,5 @@
 import { prisma } from "../../database";
-import { Prisma, PrismaClient, TokenType, User, VerificationToken } from "../../generated/prisma";
+import { Prisma, PrismaClient, TokenType, User, VerificationToken } from "../../generated/prisma/client";
 import { PrismaClientOrTransaction } from "../ClientTransaction";
 import {
     CreateToken,

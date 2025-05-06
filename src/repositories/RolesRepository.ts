@@ -1,4 +1,4 @@
-import { Roles, RoleType, User_Roles } from "../generated/prisma";
+import { Roles, RoleType, User_Roles } from "../generated/prisma/client";
 import { PrismaClientOrTransaction } from "./ClientTransaction";
 
 export interface FindRoleAttributes {

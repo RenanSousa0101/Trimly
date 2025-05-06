@@ -1,5 +1,5 @@
 import { prisma } from "../../database"
-import { Address, Prisma, PrismaClient } from "../../generated/prisma"
+import { Address, Prisma, PrismaClient } from "../../generated/prisma/client"
 import { CreateAddressAttributes, FindAddressAttributes, IaddressRepository } from "../AddressRepository"
 import { PrismaClientOrTransaction } from "../ClientTransaction"
 import { addressWithFullAddressSelect } from "./utils/addressWithFullAddressSelect"

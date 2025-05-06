@@ -1,5 +1,5 @@
 import { prisma } from "../../database"
-import { Phone, PrismaClient } from "../../generated/prisma"
+import { Phone, PrismaClient } from "../../generated/prisma/client"
 import { PrismaClientOrTransaction } from "../ClientTransaction"
 import { CreatePhoneAttributes, FindPhoneAttributes, IphoneRepository } from "../PhoneRepository"
 

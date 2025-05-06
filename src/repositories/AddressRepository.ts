@@ -1,4 +1,4 @@
-import { Address, AddressType } from "../generated/prisma"
+import { Address, AddressType } from "../generated/prisma/client"
 import { PrismaClientOrTransaction } from "./ClientTransaction"
 
 export interface CreateAddressAttributes {

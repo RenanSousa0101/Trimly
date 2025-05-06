@@ -1,4 +1,4 @@
-import { Phone, PhoneType } from "../generated/prisma";
+import { Phone, PhoneType } from "../generated/prisma/client";
 import { PrismaClientOrTransaction } from "./ClientTransaction";
 
 export interface CreatePhoneAttributes {

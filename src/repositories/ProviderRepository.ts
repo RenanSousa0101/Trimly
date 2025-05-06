@@ -1,4 +1,4 @@
-import { Provider } from "../generated/prisma"
+import { Provider } from "../generated/prisma/client"
 import { PrismaClientOrTransaction } from "./ClientTransaction"
 
 export interface ProviderWhereParams {

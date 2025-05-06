@@ -178,8 +178,8 @@ model Provider {
   id                      Int                       @id @default(autoincrement())
   user_id                 Int                       @unique
   business_name           String                    @db.VarChar(255)
-  cnpj                    String?                   @db.VarChar(14)
-  cpf                     String?                   @db.VarChar(11)
+  cnpj                    String?                   @unique @db.VarChar(14)
+  cpf                     String?                   @unique @db.VarChar(11)
   description             String?                   @db.Text
   logo_url                String?                   @db.VarChar(255)
   banner_url              String?                   @db.VarChar(255)

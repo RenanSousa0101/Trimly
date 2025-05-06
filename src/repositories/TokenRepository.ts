@@ -1,4 +1,4 @@
-import { Prisma, TokenType, User, VerificationToken } from "../generated/prisma";
+import { Prisma, TokenType, User, VerificationToken } from "../generated/prisma/client";
 import { PrismaClientOrTransaction } from "./ClientTransaction";
 
 export interface VerificationUserToken {

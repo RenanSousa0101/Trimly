@@ -1,5 +1,5 @@
 import { HttpError } from "../errors/HttpError";
-import { AddressType, PhoneType, Prisma, PrismaClient } from "../generated/prisma";
+import { AddressType, PhoneType, Prisma, PrismaClient } from "../generated/prisma/client";
 import { IaddressRepository } from "../repositories/AddressRepository";
 import { IphoneRepository } from "../repositories/PhoneRepository";
 import { FullProviderAttributes, IproviderRepository, ProviderWhereParams } from "../repositories/ProviderRepository";

@@ -1,5 +1,5 @@
 import { prisma } from "../../database";
-import { PrismaClient, Roles, RoleType, User_Roles } from "../../generated/prisma";
+import { PrismaClient, Roles, RoleType, User_Roles } from "../../generated/prisma/client";
 import { PrismaClientOrTransaction } from "../ClientTransaction";
 import {FindRoleAttributes, IrolesRepository, UserRoleFull } from "../RolesRepository";
 

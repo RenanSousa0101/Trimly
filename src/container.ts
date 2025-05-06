@@ -18,7 +18,7 @@ import { PasswordService } from "./services/PasswordService";
 import { PrismaProviderRepository } from "./repositories/prisma/PrismaProviderRepository";
 import { ProviderService } from "./services/ProviderService";
 import { ProviderController } from "./controllers/ProviderController";
-import { PrismaClient } from "./generated/prisma";
+import { PrismaClient } from "./generated/prisma/client";
 
 export const prismaClient = new PrismaClient();
 

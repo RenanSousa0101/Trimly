@@ -1,6 +1,6 @@
 import { userWithFullAddressSelect } from "../prisma/utils/userWithFullAddressSelect";
 import { prisma } from "../../database";
-import { PrismaClient, User } from "../../generated/prisma";
+import { PrismaClient, User } from "../../generated/prisma/client";
 import { CreateUserAttributes, FindUserParams, FullUserDate, IuserRepository, RegisterUser, ReturnRegisterUser, returnUser, UserWhereParams } from "../UserRepository";
 import bcrypt from "bcrypt";
 import { PrismaClientOrTransaction } from "../ClientTransaction";

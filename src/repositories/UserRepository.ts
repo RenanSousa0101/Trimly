@@ -1,4 +1,4 @@
-import { User } from "../generated/prisma";
+import { User } from "../generated/prisma/client";
 import { PrismaClientOrTransaction } from "./ClientTransaction";
 
 export interface UserWhereParams {
