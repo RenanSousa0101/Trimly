@@ -1,4 +1,5 @@
 import { Prisma, TokenType, User, VerificationToken } from "../generated/prisma";
+import { PrismaClientOrTransaction } from "./ClientTransaction";
 
 export interface VerificationUserToken {
     isEmailVerified: boolean
@@ -26,10 +27,10 @@ export interface CreateToken {
 }
 
 export interface ItokenRepository {
-    findToken: (token: string) => Promise<ReturnFindToken | null>
-    createToken: (userId: number, attributes: CreateToken ) => Promise<VerificationToken | null>
-    updateTokenUser: (id: number) => Promise<VerificationUserToken | null>
-    updateTokenUserPassword: (id: number, newPassword: string) => Promise<User | null>
-    deleteToken: (tokenId: number) => Promise<VerificationToken | null>
-    deleteUserIdToken: (userId: number, type: TokenType) => Promise< Prisma.BatchPayload >
+    findToken: (token: string, client?: PrismaClientOrTransaction) => Promise<ReturnFindToken | null>
+    createToken: (userId: number, attributes: CreateToken, client?: PrismaClientOrTransaction) => Promise<VerificationToken | null>
+    updateTokenUser: (id: number, client?: PrismaClientOrTransaction) => Promise<VerificationUserToken | null>
+    updateTokenUserPassword: (id: number, newPassword: string, client?: PrismaClientOrTransaction) => Promise<User | null>
+    deleteToken: (tokenId: number, client?: PrismaClientOrTransaction) => Promise<VerificationToken | null>
+    deleteUserIdToken: (userId: number, type: TokenType, client?: PrismaClientOrTransaction) => Promise< Prisma.BatchPayload >
 }

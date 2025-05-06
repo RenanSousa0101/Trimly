@@ -1,5 +1,6 @@
 import { prisma } from "../../database";
-import { Prisma, TokenType, User, VerificationToken } from "../../generated/prisma";
+import { Prisma, PrismaClient, TokenType, User, VerificationToken } from "../../generated/prisma";
+import { PrismaClientOrTransaction } from "../ClientTransaction";
 import {
     CreateToken,
     ItokenRepository,
@@ -8,8 +9,13 @@ import {
 } from "../TokenRepository";
 
 export class PrismaTokenRepository implements ItokenRepository {
-    async findToken(token: string): Promise<ReturnFindToken | null> {
-        return prisma.verificationToken.findUnique({
+
+    constructor(private readonly prisma: PrismaClient) {}
+
+    async findToken(token: string, client?: PrismaClientOrTransaction): Promise<ReturnFindToken | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.verificationToken.findUnique({
             where: { token: token },
             include: {
                 user: {
@@ -21,8 +27,10 @@ export class PrismaTokenRepository implements ItokenRepository {
         });
     }
 
-    async deleteUserIdToken(userId: number, type: TokenType): Promise<Prisma.BatchPayload> {
-        return prisma.verificationToken.deleteMany({
+    async deleteUserIdToken(userId: number, type: TokenType, client?: PrismaClientOrTransaction): Promise<Prisma.BatchPayload> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.verificationToken.deleteMany({
             where: {
                 user_id: userId,
                 type,
@@ -30,8 +38,10 @@ export class PrismaTokenRepository implements ItokenRepository {
         });
     }
 
-    async createToken(userId: number, attributes: CreateToken): Promise<VerificationToken | null> {
-        return prisma.verificationToken.create({
+    async createToken(userId: number, attributes: CreateToken, client?: PrismaClientOrTransaction): Promise<VerificationToken | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.verificationToken.create({
             data: {
                 token: attributes.token,
                 user_id: userId,
@@ -41,19 +51,25 @@ export class PrismaTokenRepository implements ItokenRepository {
         });
     }
 
-    async updateTokenUser(id: number): Promise<VerificationUserToken | null> {
-        return prisma.user.update({
+    async updateTokenUser(id: number, client?: PrismaClientOrTransaction): Promise<VerificationUserToken | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user.update({
             where: { id },
             data: { isEmailVerified: true },
         });
     }
 
-    async deleteToken(tokenId: number): Promise<VerificationToken | null> {
-        return prisma.verificationToken.delete({ where: { id: tokenId } });
+    async deleteToken(tokenId: number, client?: PrismaClientOrTransaction): Promise<VerificationToken | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.verificationToken.delete({ where: { id: tokenId } });
     }
 
-    updateTokenUserPassword (id: number, newPassword: string): Promise<User | null> {
-        return prisma.user.update({
+    updateTokenUserPassword (id: number, newPassword: string, client?: PrismaClientOrTransaction): Promise<User | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user.update({
             where: { id },
             data: { password: newPassword },
         });

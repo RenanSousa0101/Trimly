@@ -1,12 +1,18 @@
 import { userWithFullAddressSelect } from "../prisma/utils/userWithFullAddressSelect";
 import { prisma } from "../../database";
-import { User } from "../../generated/prisma";
+import { PrismaClient, User } from "../../generated/prisma";
 import { CreateUserAttributes, FindUserParams, FullUserDate, IuserRepository, RegisterUser, ReturnRegisterUser, returnUser, UserWhereParams } from "../UserRepository";
 import bcrypt from "bcrypt";
+import { PrismaClientOrTransaction } from "../ClientTransaction";
 
 export class PrismaUserRepository implements IuserRepository {
-    async find(params: FindUserParams): Promise<returnUser[]> {
-        return prisma.user.findMany({
+
+    constructor(private readonly prisma: PrismaClient) {}
+
+    async find(params: FindUserParams, client?: PrismaClientOrTransaction): Promise<returnUser[]> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user.findMany({
             where: {
                 name: {
                     contains: params.where?.name?.contains,
@@ -29,15 +35,19 @@ export class PrismaUserRepository implements IuserRepository {
         })
     }
 
-    async findById(id: number): Promise<FullUserDate | null> {
-        return prisma.user.findUnique({
+    async findById(id: number, client?: PrismaClientOrTransaction): Promise<FullUserDate | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user.findUnique({
             where: { id },
             select: userWithFullAddressSelect
         })
     }
 
-    async count(where: UserWhereParams): Promise<number> {
-        return prisma.user.count({
+    async count(where: UserWhereParams, client?: PrismaClientOrTransaction): Promise<number> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user.count({
             where: {
                 name: {
                     contains: where.name?.contains,
@@ -48,14 +58,18 @@ export class PrismaUserRepository implements IuserRepository {
         })
     }
 
-    async findByEmail(email: string): Promise<User | null> {
-        return prisma.user.findUnique({
+    async findByEmail(email: string, client?: PrismaClientOrTransaction): Promise<User | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user.findUnique({
             where: { email }
         })
     }
 
-    async create(roleId: number, attributes: CreateUserAttributes): Promise<User> {
-        return await prisma.user.create({ 
+    async create(roleId: number, attributes: CreateUserAttributes, client?: PrismaClientOrTransaction): Promise<User> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user.create({ 
             data: {...attributes, 
                 password: bcrypt.hashSync(attributes.password, 10),
                 User_Roles: {
@@ -67,8 +81,10 @@ export class PrismaUserRepository implements IuserRepository {
         })
     }
 
-    async register(roleId: number, attributes: RegisterUser): Promise<ReturnRegisterUser> {
-        return await prisma.user.create({
+    async register(roleId: number, attributes: RegisterUser, client?: PrismaClientOrTransaction): Promise<ReturnRegisterUser> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user.create({
             data: {
                 ...attributes,
                 password: bcrypt.hashSync(attributes.password, 10),
@@ -87,14 +103,18 @@ export class PrismaUserRepository implements IuserRepository {
         });
     }
 
-    async updateById(id: number, attributes: Partial<CreateUserAttributes>): Promise<User> {
-        return prisma.user.update({
+    async updateById(id: number, attributes: Partial<CreateUserAttributes>, client?: PrismaClientOrTransaction): Promise<User> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user.update({
             where: { id },
             data: attributes
         })
     }
 
-    async deleteById(id: number): Promise<User> {
-        return prisma.user.delete({ where: { id } })
+    async deleteById(id: number, client?: PrismaClientOrTransaction): Promise<User> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user.delete({ where: { id } })
     }
 }

@@ -1,4 +1,5 @@
-import { AddressType, Provider } from "../generated/prisma"
+import { Provider } from "../generated/prisma"
+import { PrismaClientOrTransaction } from "./ClientTransaction"
 
 export interface CreateProviderAttributes {
     business_name: string
@@ -36,7 +37,6 @@ export interface FullProviderAttributes {
     }
 }
 
-
 export interface IproviderRepository {
-    createProvider: (userId: number, attributes: CreateProviderAttributes) => Promise<Provider>
+    createProvider: (userId: number, attributes: CreateProviderAttributes, client?: PrismaClientOrTransaction) => Promise<Provider>
 }

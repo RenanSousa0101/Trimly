@@ -1,10 +1,14 @@
-import { prisma } from "../../database";
-import { Provider } from "../../generated/prisma";
+import { PrismaClient, Provider } from "../../generated/prisma";
+import { PrismaClientOrTransaction } from "../ClientTransaction";
 import { CreateProviderAttributes, IproviderRepository } from "../ProviderRepository";
 
 export class PrismaProviderRepository implements IproviderRepository {
-    async createProvider(userId: number, attributes: CreateProviderAttributes): Promise<Provider> {
-        return prisma.provider.create({
+    constructor(private readonly prisma: PrismaClient) {}
+    
+    async createProvider(userId: number, attributes: CreateProviderAttributes, client?: PrismaClientOrTransaction): Promise<Provider> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.provider.create({
             data: {
                 ...attributes,
                 user_id: userId

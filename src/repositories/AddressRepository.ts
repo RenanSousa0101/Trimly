@@ -1,4 +1,5 @@
 import { Address, AddressType } from "../generated/prisma"
+import { PrismaClientOrTransaction } from "./ClientTransaction"
 
 export interface CreateAddressAttributes {
     street: string
@@ -46,9 +47,9 @@ export interface FindAddressAttributes {
 }[]
 
 export interface IaddressRepository {
-    findByUserIdAddress:(userId: number) => Promise<FindAddressAttributes[]>
-    findByUserIdAddressId:(userId: number, addressId: number) => Promise<Address | null>
-    createAddress:(userId: number, attributes: CreateAddressAttributes) => Promise<Address>
-    updateByIdAddress:(userId: number, addressId: number, attributes: Partial<CreateAddressAttributes>) => Promise<Address | null>
-    deleteByIdAddress:(userId: number, addressId: number) => Promise<Address | null>
+    findByUserIdAddress:(userId: number, client?: PrismaClientOrTransaction) => Promise<FindAddressAttributes[]>
+    findByUserIdAddressId:(userId: number, addressId: number, client?: PrismaClientOrTransaction) => Promise<Address | null>
+    createAddress:(userId: number, attributes: CreateAddressAttributes, client?: PrismaClientOrTransaction) => Promise<Address>
+    updateByIdAddress:(userId: number, addressId: number, attributes: Partial<CreateAddressAttributes>, client?: PrismaClientOrTransaction) => Promise<Address | null>
+    deleteByIdAddress:(userId: number, addressId: number, client?: PrismaClientOrTransaction) => Promise<Address | null>
 }

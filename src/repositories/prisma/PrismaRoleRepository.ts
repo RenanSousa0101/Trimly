@@ -1,20 +1,30 @@
 import { prisma } from "../../database";
-import {Roles, RoleType, User_Roles } from "../../generated/prisma";
+import { PrismaClient, Roles, RoleType, User_Roles } from "../../generated/prisma";
+import { PrismaClientOrTransaction } from "../ClientTransaction";
 import {FindRoleAttributes, IrolesRepository, UserRoleFull } from "../RolesRepository";
 
 export class PrismaRoleRepository implements IrolesRepository {
-    async findByRoleId(roleId: number): Promise<Roles | null> {
-        return prisma.roles.findUnique({ 
+
+    constructor(private readonly prisma: PrismaClient) {}
+
+    async findByRoleId(roleId: number, client?: PrismaClientOrTransaction): Promise<Roles | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.roles.findUnique({ 
             where: { id: roleId } 
         })
     }
-    async findByRoleType(roleType: RoleType): Promise<Roles | null> {
-        return await prisma.roles.findUnique({
+    async findByRoleType(roleType: RoleType, client?: PrismaClientOrTransaction): Promise<Roles | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.roles.findUnique({
             where: { role_type: roleType },      
         });
     }
-    async findByUserIdRoles(userId: number): Promise<FindRoleAttributes[] | null> {
-        return prisma.user_Roles.findMany({
+    async findByUserIdRoles(userId: number, client?: PrismaClientOrTransaction): Promise<FindRoleAttributes[] | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user_Roles.findMany({
             where: { user_id: userId },
             select: {
                 roles: {
@@ -25,16 +35,20 @@ export class PrismaRoleRepository implements IrolesRepository {
             }
         })
     }
-    async findByUserRoleExist(userId: number, roleId: number): Promise<User_Roles | null> {
-        return prisma.user_Roles.findFirst({
+    async findByUserRoleExist(userId: number, roleId: number, client?: PrismaClientOrTransaction): Promise<User_Roles | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user_Roles.findFirst({
             where: {
                 user_id: userId,
                 roles_id: roleId
             }
         })
     }
-    async findByUserIdRoleId(userId: number, roleId: number): Promise<User_Roles | null> {
-        return prisma.user_Roles.findUnique({
+    async findByUserIdRoleId(userId: number, roleId: number, client?: PrismaClientOrTransaction): Promise<User_Roles | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user_Roles.findUnique({
             where: {
                 user_id_roles_id: {
                     user_id: userId,
@@ -43,8 +57,10 @@ export class PrismaRoleRepository implements IrolesRepository {
             }
         })
     }
-    async addUserRole(userId: number, roleId: number): Promise<UserRoleFull> {
-        return prisma.user_Roles.create({
+    async addUserRole(userId: number, roleId: number, client?: PrismaClientOrTransaction): Promise<UserRoleFull> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user_Roles.create({
             data: {
                 user_id: userId,
                 roles_id: roleId 
@@ -60,8 +76,10 @@ export class PrismaRoleRepository implements IrolesRepository {
             }
         });
     }
-    async updateByUserIdRoleId(userId: number, roleId: number, newRoleId: Partial<number>): Promise<UserRoleFull | null> {
-        return await prisma.user_Roles.update({
+    async updateByUserIdRoleId(userId: number, roleId: number, newRoleId: Partial<number>, client?: PrismaClientOrTransaction): Promise<UserRoleFull | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user_Roles.update({
              where: {
                  user_id_roles_id: {
                      user_id: userId,
@@ -82,8 +100,10 @@ export class PrismaRoleRepository implements IrolesRepository {
              }
          });
     }
-    async deletedByUserIdRoleId(userId: number, roleId: number): Promise<UserRoleFull | null> {
-        return await prisma.user_Roles.delete({
+    async deletedByUserIdRoleId(userId: number, roleId: number, client?: PrismaClientOrTransaction): Promise<UserRoleFull | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.user_Roles.delete({
             where: {
                 user_id_roles_id: {
                     user_id: userId,

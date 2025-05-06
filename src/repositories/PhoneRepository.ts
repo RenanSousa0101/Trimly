@@ -1,4 +1,5 @@
 import { Phone, PhoneType } from "../generated/prisma";
+import { PrismaClientOrTransaction } from "./ClientTransaction";
 
 export interface CreatePhoneAttributes {
     phone_number: string
@@ -13,9 +14,9 @@ export interface FindPhoneAttributes {
     is_primary: boolean
 }[]
 export interface IphoneRepository {
-    findByUserIdPhone:(userId: number) => Promise<FindPhoneAttributes[]>
-    findByUserIdPhoneId:(userId: number, phoneId: number) => Promise<Phone | null>
-    createPhone:(userId: number, attributes: CreatePhoneAttributes) => Promise<Phone>
-    updateByIdPhone:(userId: number, phoneId: number, attributes: Partial<CreatePhoneAttributes>) => Promise<Phone | null>
-    deleteByIdPhone:(userId: number, phoneId: number) => Promise<Phone | null>
+    findByUserIdPhone:(userId: number, client?: PrismaClientOrTransaction) => Promise<FindPhoneAttributes[]>
+    findByUserIdPhoneId:(userId: number, phoneId: number, client?: PrismaClientOrTransaction) => Promise<Phone | null>
+    createPhone:(userId: number, attributes: CreatePhoneAttributes, client?: PrismaClientOrTransaction) => Promise<Phone>
+    updateByIdPhone:(userId: number, phoneId: number, attributes: Partial<CreatePhoneAttributes>, client?: PrismaClientOrTransaction) => Promise<Phone | null>
+    deleteByIdPhone:(userId: number, phoneId: number, client?: PrismaClientOrTransaction) => Promise<Phone | null>
 }

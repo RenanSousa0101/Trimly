@@ -13,8 +13,8 @@ export const CreateProviderRequestSchema = z.object({
        return cpf.isValid(val);
    }, { message: "CPF inválido. Verifique o número." }),
     description: z.string().optional(),
-    logo_url: z.string().optional(),
-    banner_url: z.string().optional(),
+    logo_url: z.string().url().optional(),
+    banner_url: z.string().url().optional(),
 
     // Número de telefone do Provedor 
     phone_number: z.string().min(10).max(15),

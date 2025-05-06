@@ -1,4 +1,5 @@
 import { Roles, RoleType, User_Roles } from "../generated/prisma";
+import { PrismaClientOrTransaction } from "./ClientTransaction";
 
 export interface FindRoleAttributes {
     roles: {
@@ -19,12 +20,12 @@ export interface RoleTypeAttributes {
 }
 
 export interface IrolesRepository {
-    findByRoleId:(roleId: number) => Promise<Roles | null>
-    findByRoleType:(roleType: RoleType) => Promise<Roles | null> 
-    findByUserIdRoles:(userId: number) => Promise<FindRoleAttributes[] | null>
-    findByUserRoleExist:(userId: number, roleId: number) => Promise<User_Roles | null> 
-    findByUserIdRoleId:(userId: number, roleId: number) => Promise<User_Roles | null>
-    addUserRole:(userId: number, roleId: number) => Promise<UserRoleFull>
-    updateByUserIdRoleId:(userId: number, roleId: number, newRoleId: Partial<number>) => Promise<UserRoleFull | null>
-    deletedByUserIdRoleId:(userId: number, roleId: number) => Promise<UserRoleFull | null>
+    findByRoleId:(roleId: number, client?: PrismaClientOrTransaction) => Promise<Roles | null>
+    findByRoleType:(roleType: RoleType, client?: PrismaClientOrTransaction) => Promise<Roles | null> 
+    findByUserIdRoles:(userId: number, client?: PrismaClientOrTransaction) => Promise<FindRoleAttributes[] | null>
+    findByUserRoleExist:(userId: number, roleId: number, client?: PrismaClientOrTransaction) => Promise<User_Roles | null> 
+    findByUserIdRoleId:(userId: number, roleId: number, client?: PrismaClientOrTransaction) => Promise<User_Roles | null>
+    addUserRole:(userId: number, roleId: number, client?: PrismaClientOrTransaction) => Promise<UserRoleFull>
+    updateByUserIdRoleId:(userId: number, roleId: number, newRoleId: Partial<number>, client?: PrismaClientOrTransaction) => Promise<UserRoleFull | null>
+    deletedByUserIdRoleId:(userId: number, roleId: number, client?: PrismaClientOrTransaction) => Promise<UserRoleFull | null>
 }

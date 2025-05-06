@@ -1,24 +1,33 @@
 import { prisma } from "../../database"
-import { Address, Prisma } from "../../generated/prisma"
+import { Address, Prisma, PrismaClient } from "../../generated/prisma"
 import { CreateAddressAttributes, FindAddressAttributes, IaddressRepository } from "../AddressRepository"
+import { PrismaClientOrTransaction } from "../ClientTransaction"
 import { addressWithFullAddressSelect } from "./utils/addressWithFullAddressSelect"
 
 export class PrismaAddressRepository implements IaddressRepository {
-    async findByUserIdAddress(userId: number): Promise<FindAddressAttributes[]> {
-        return prisma.address.findMany({
+
+    constructor(private readonly prisma: PrismaClient) {}
+
+    async findByUserIdAddress(userId: number, client?: PrismaClientOrTransaction): Promise<FindAddressAttributes[]> {
+        const prismaClient = client || this.prisma;
+        return prismaClient.address.findMany({
             where: { user_id: userId },
             select: addressWithFullAddressSelect
         })
     }
 
-    async findByUserIdAddressId(userId: number, addressId: number): Promise<Address | null> {
-        return prisma.address.findUnique({
+    async findByUserIdAddressId(userId: number, addressId: number, client?: PrismaClientOrTransaction): Promise<Address | null> {
+        const prismaClient = client || this.prisma;
+        return prismaClient.address.findUnique({
             where: { user_id: userId, id: addressId }
         })
     }
 
-    async createAddress(userId: number, attributes: CreateAddressAttributes): Promise<Address> {
-        const country = await prisma.country.upsert({
+    async createAddress(userId: number, attributes: CreateAddressAttributes, client?: PrismaClientOrTransaction): Promise<Address> {
+        
+        const prismaClient = client || this.prisma;
+        
+        const country = await prismaClient.country.upsert({
             where: {
                 acronym: attributes.district.city.state.country.acronym,
             },
@@ -34,7 +43,7 @@ export class PrismaAddressRepository implements IaddressRepository {
             },
         });
 
-        const state = await prisma.state.upsert({
+        const state = await prismaClient.state.upsert({
             where: {
                 uf_country_id: {
                     uf: attributes.district.city.state.uf,
@@ -56,7 +65,7 @@ export class PrismaAddressRepository implements IaddressRepository {
             },
         });
 
-        const city = await prisma.city.upsert({
+        const city = await prismaClient.city.upsert({
             where: {
                 name_state_id: {
                     name: attributes.district.city.name,
@@ -77,7 +86,7 @@ export class PrismaAddressRepository implements IaddressRepository {
             },
         });
 
-        const district = await prisma.district.upsert({
+        const district = await prismaClient.district.upsert({
             where: {
                 name_city_id: {
                     name: attributes.district.name,
@@ -98,7 +107,7 @@ export class PrismaAddressRepository implements IaddressRepository {
             },
         });
 
-        const newAddress = await prisma.address.create({
+        const newAddress = await prismaClient.address.create({
             data: {
                 street: attributes.street,
                 number: attributes.number,
@@ -119,7 +128,8 @@ export class PrismaAddressRepository implements IaddressRepository {
         return newAddress;
     }
 
-    async updateByIdAddress(userId: number, addressId: number, attributes: Partial<CreateAddressAttributes>): Promise<Address | null> {
+    async updateByIdAddress(userId: number, addressId: number, attributes: Partial<CreateAddressAttributes>, client?: PrismaClientOrTransaction): Promise<Address | null> {
+        const prismaClient = client || this.prisma;
         const updateData: Prisma.AddressUpdateInput = {
             street: attributes.street,
             number: attributes.number,
@@ -132,7 +142,7 @@ export class PrismaAddressRepository implements IaddressRepository {
 
         if (attributes.district) {
             
-            const country = await prisma.country.upsert({
+            const country = await prismaClient.country.upsert({
                 where: {
                     acronym: attributes.district.city.state.country.acronym,
                 },
@@ -148,7 +158,7 @@ export class PrismaAddressRepository implements IaddressRepository {
                 },
             });
 
-            const state = await prisma.state.upsert({
+            const state = await prismaClient.state.upsert({
                 where: {
                     uf_country_id: {
                         uf: attributes.district.city.state.uf,
@@ -170,7 +180,7 @@ export class PrismaAddressRepository implements IaddressRepository {
                 },
             });
 
-            const city = await prisma.city.upsert({
+            const city = await prismaClient.city.upsert({
                 where: {
                     name_state_id: {
                         name: attributes.district.city.name,
@@ -189,7 +199,7 @@ export class PrismaAddressRepository implements IaddressRepository {
                 },
             });
 
-            const district = await prisma.district.upsert({
+            const district = await prismaClient.district.upsert({
                 where: {
                     name_city_id: {
                         name: attributes.district.name,
@@ -217,7 +227,7 @@ export class PrismaAddressRepository implements IaddressRepository {
         }
 
         try {
-            return prisma.address.update({
+            return prismaClient.address.update({
                 where: {
                     id: addressId,
                     user_id: userId, 
@@ -235,9 +245,10 @@ export class PrismaAddressRepository implements IaddressRepository {
             throw error;
         }
     }
-    async deleteByIdAddress(userId: number, addressId: number): Promise<Address | null> {
+    async deleteByIdAddress(userId: number, addressId: number, client?: PrismaClientOrTransaction): Promise<Address | null> {
+        const prismaClient = client || this.prisma;
         try {
-            const addressToDelete = await prisma.address.findFirst({
+            const addressToDelete = await prismaClient.address.findFirst({
                 where: {
                     id: addressId,
                     user_id: userId,
@@ -249,7 +260,7 @@ export class PrismaAddressRepository implements IaddressRepository {
                 return null;
             }
     
-            const deletedAddress = await prisma.address.delete({
+            const deletedAddress = await prismaClient.address.delete({
                 where: {
                     id: addressId, 
                 },
