@@ -24,6 +24,17 @@ export class ProviderController {
         }
     }
 
+    show: Handler = async (req, res, next) => {
+        try {
+            const userId = Number(req.params.id);
+            const providerId = Number(req.params.providerId)
+            const findByIdProvider = await this.providerService.findProvider(userId, providerId)
+            res.status(200).json(findByIdProvider)
+        } catch (error) {
+            next(error)
+        } 
+    }
+
     create: Handler = async (req, res, next) => {
         try {
             const userId = Number(req.params.id);

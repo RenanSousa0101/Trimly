@@ -35,5 +35,6 @@ router.delete("/users/:id/roles/:roleId", ensureAuth, ensureAdmin, rolesControll
 
 router.get("/users/:id/provider", ensureAuth, ensureAdmin, providerController.index)
 router.post("/users/:id/provider", ensureAuth, authorizeAdminOrOwner('id'), providerController.create)
+router.post("/users/:id/provider/:providerId", ensureAuth, authorizeAdminOrOwner('id'), providerController.show)
 
 export { router };
