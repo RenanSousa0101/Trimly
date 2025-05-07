@@ -5,7 +5,7 @@ import { CreateProviderAttributes, FindProviderParams, IproviderRepository, Prov
 export class PrismaProviderRepository implements IproviderRepository {
     constructor(private readonly prisma: PrismaClient) { }
 
-    async findProvider(params: FindProviderParams, client?: PrismaClientOrTransaction): Promise<Provider[]> {
+    async findProviders(params: FindProviderParams, client?: PrismaClientOrTransaction): Promise<Provider[]> {
         const prismaClient = client || this.prisma;
 
         return prismaClient.provider.findMany({
@@ -37,7 +37,7 @@ export class PrismaProviderRepository implements IproviderRepository {
         })
     }
 
-    countProvider(where: ProviderWhereParams, client?: PrismaClientOrTransaction): Promise<number> {
+    async countProvider(where: ProviderWhereParams, client?: PrismaClientOrTransaction): Promise<number> {
         const prismaClient = client || this.prisma;
 
         return prismaClient.provider.count({
@@ -50,6 +50,14 @@ export class PrismaProviderRepository implements IproviderRepository {
                 cnpj: where?.cnpj,
                 cpf: where?.cpf
             }
+        })
+    }
+
+    async findByIdProvider(userId: number, providerId: number, client?: PrismaClientOrTransaction): Promise<Provider | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.provider.findUnique({
+            where: {user_id: userId, id: providerId}
         })
     }
 

@@ -14,9 +14,9 @@ interface GetProviderWithPaginationParams {
     page?: number
     pageSize?: number
     business_name?: string
-    cnpj?: string
-    cpf?: string
-    sortBy?: "business_name"
+    cnpj?: string | null
+    cpf?: string | null
+    sortBy?: "business_name" | "cpf" | "cnpj"
     order?: "asc" | "desc"
 }
 
@@ -31,41 +31,60 @@ export class ProviderService {
     ) { }
 
     async getAllProvidersPaginated(params: GetProviderWithPaginationParams) {
-            const { business_name, cpf, cnpj, page = 1, pageSize = 10, sortBy, order } = params;
+        const { business_name, cpf, cnpj, page = 1, pageSize = 10, sortBy, order } = params;
 
-            const cpfMask = removeMask(cpf)
-            const cnpjMask = removeMask(cnpj)
+        const cpfMask = removeMask(cpf)
+        const cnpjMask = removeMask(cnpj)
 
-            const take = pageSize;
-            const skip = (page - 1) * take;
-    
-            const where: ProviderWhereParams = {};
-    
-            if (business_name) where.business_name = { contains: business_name, mode: "insensitive" };
-            
-            if (cpfMask) where.cpf = cpfMask
-            if (cnpjMask) where.cnpj = cnpjMask
-    
-            const providers = await this.providerRepository.findProvider({ where, sortBy, order, skip, take });
-            const totalProviders = await this.providerRepository.countProvider(where);
+        const take = pageSize;
+        const skip = (page - 1) * take;
 
-            const formattedProviders = providers.map((provider) => {
-                const newProvider = {...provider}
-                if (newProvider.cnpj) newProvider.cnpj = cnpjFormat.format(newProvider.cnpj)
-                if (newProvider.cpf) newProvider.cpf = cpfFormat.format(newProvider.cpf)
-                return newProvider
-            });
+        const where: ProviderWhereParams = {};
 
-            return {
-                formattedProviders,
-                meta: {
-                    page,
-                    pageSize,
-                    total: totalProviders,
-                    totalPages: Math.ceil(totalProviders / pageSize)
-                }
-            };
+        if (business_name) where.business_name = { contains: business_name, mode: "insensitive" };
+
+        if (cpfMask) where.cpf = cpfMask
+        if (cnpjMask) where.cnpj = cnpjMask
+
+        const providers = await this.providerRepository.findProviders({ where, sortBy, order, skip, take });
+        const totalProviders = await this.providerRepository.countProvider(where);
+
+        const formattedProviders = providers.map((provider) => {
+            const newProvider = { ...provider }
+            if (newProvider.cnpj) newProvider.cnpj = cnpjFormat.format(newProvider.cnpj)
+            if (newProvider.cpf) newProvider.cpf = cpfFormat.format(newProvider.cpf)
+            return newProvider
+        });
+
+        return {
+            formattedProviders,
+            meta: {
+                page,
+                pageSize,
+                total: totalProviders,
+                totalPages: Math.ceil(totalProviders / pageSize)
+            }
+        };
+    }
+
+    async findProvider(userId: number, providerId: number) {
+        const userExist = await this.userRepository.findById(userId);
+        if (!userExist) throw new HttpError(404, "User not found");
+
+        const providerExist = await this.providerRepository.findByIdProvider(userId, providerId);
+        if (!providerExist) throw new HttpError(404, "Provider not found")
+
+        const formattedProviderData = {
+            id: userExist.id,
+            name: userExist.name,
+            provider: { ...providerExist }
         }
+
+        if (formattedProviderData.provider.cpf) formattedProviderData.provider.cpf = cpfFormat.format(formattedProviderData.provider.cpf)
+        if (formattedProviderData.provider.cnpj) formattedProviderData.provider.cnpj = cnpjFormat.format(formattedProviderData.provider.cnpj)
+        
+        return formattedProviderData
+    }
 
     async createProvider(userId: number, params: FullProviderAttributes) {
         const userExist = await this.userRepository.findById(userId);

@@ -13,7 +13,7 @@ export interface ProviderWhereParams {
 
 export interface FindProviderParams {
     where?: ProviderWhereParams
-    sortBy?: "business_name"
+    sortBy?: "business_name" | "cpf" | "cnpj"
     order?: "asc" | "desc"
     skip?: number
     take?: number
@@ -56,7 +56,8 @@ export interface FullProviderAttributes {
 }
 
 export interface IproviderRepository {
-    findProvider: (params: FindProviderParams, client?: PrismaClientOrTransaction) => Promise<Provider[]>
+    findProviders: (params: FindProviderParams, client?: PrismaClientOrTransaction) => Promise<Provider[]>
+    findByIdProvider: (userId: number, providerId: number, client?: PrismaClientOrTransaction) => Promise<Provider | null>
     createProvider: (userId: number, attributes: CreateProviderAttributes, client?: PrismaClientOrTransaction) => Promise<Provider>
     countProvider: (where: ProviderWhereParams, client?: PrismaClientOrTransaction) => Promise<number>;
 }
