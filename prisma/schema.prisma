@@ -56,7 +56,7 @@ enum TokenType {
 model Phone {
   id           Int       @id @default(autoincrement())
   user_id      Int
-  phone_number String    @db.VarChar(255)
+  phone_number String    @db.VarChar(16)
   phone_type   PhoneType @default(Mobile)
   is_primary   Boolean   @default(false)
   created_at   DateTime  @default(now())

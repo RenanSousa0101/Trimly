@@ -7,6 +7,7 @@ import { IrolesRepository } from "../repositories/RolesRepository";
 import { IuserRepository } from "../repositories/UserRepository";
 import { removeMask } from "./functions/mask";
 import { cpf, cnpj } from 'cpf-cnpj-validator';
+import { isPhoneValid, phoneFormated } from "./functions/phone";
 
 const cpfFormat = cpf
 const cnpjFormat = cnpj
@@ -100,9 +101,10 @@ export class ProviderService {
 
         const formattedProvider = await this.prismaClient.$transaction(async (transactionClient: Prisma.TransactionClient) => {
 
+            const phoneValid = isPhoneValid(params.phone_number);
 
             const userProviderPhone = {
-                phone_number: params.phone_number,
+                phone_number: phoneValid,
                 phone_type: PhoneType.Work,
                 is_primary: true
             }
@@ -150,12 +152,14 @@ export class ProviderService {
             if (newUserProvider.cnpj) newUserProvider.cnpj = cnpj.format(newUserProvider.cnpj)
             if (newUserProvider.cpf) newUserProvider.cpf = cpf.format(newUserProvider.cpf)
 
+            const formatPhone = phoneFormated(createUserProviderPhone.phone_number)
+
             const formattedProvider = {
                 name: userExist.name,
                 roles: addUserRole.roles.role_type,
                 business_name: newUserProvider.business_name,
                 description: newUserProvider.description,
-                phone: createUserProviderPhone.phone_number,
+                phone: formatPhone,
                 phoneType: createUserProviderPhone.phone_type,
                 cnpj: newUserProvider.cnpj,
                 cpf: newUserProvider.cpf,
@@ -187,8 +191,16 @@ export class ProviderService {
 
         const formattedProvider = await this.prismaClient.$transaction(async (transactionClient: Prisma.TransactionClient) => { 
 
+            let phoneValid 
+
+            if (params.phone_number) {
+                phoneValid = isPhoneValid(params.phone_number)
+            } else {
+                phoneValid = params?.phone_number
+            }
+
             const userProviderPhone = {
-                phone_number: params?.phone_number,
+                phone_number: phoneValid,
                 phone_type: PhoneType.Work,
                 is_primary: true
             }
@@ -231,11 +243,13 @@ export class ProviderService {
             const findPhone = await this.phoneRepository.findByUserIdPhoneId(updateProvider.user_id, updateProvider.phone_id, transactionClient as any)
             const findAddress = await this.addressRepository.findByUserIdAddressId(updateProvider.user_id, updateProvider.address_id, transactionClient as any)
 
+            const formatedPhone = phoneFormated(findPhone!.phone_number);
+
             const formattedProvider = { 
                 name: userExist.name,
                 business_name: updateProvider.business_name,
                 description: updateProvider.description,
-                phone: findPhone!.phone_number,
+                phone: formatedPhone,
                 phoneType: findPhone!.phone_type,
                 cnpj: updateProvider.cnpj,
                 cpf: updateProvider.cpf,

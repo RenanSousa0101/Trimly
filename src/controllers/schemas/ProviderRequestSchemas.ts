@@ -33,7 +33,7 @@ export const CreateProviderRequestSchema = z.object({
     banner_url: z.string().url().optional(),
 
     // Número de telefone do Provedor 
-    phone_number: z.string().min(10).max(15),
+    phone_number: z.string().min(10).max(25),
 
     // Endereço do Provedor
     street: z.string().min(1),
@@ -80,7 +80,7 @@ export const UpdateProviderRequestSchema = z.object({
     banner_url: z.string().url().optional(),
 
     // Número de telefone do Provedor 
-    phone_number: z.string().min(10).max(15).optional(),
+    phone_number: z.string().min(10).max(25).optional(),
 
     // Endereço do Provedor
     street: z.string().min(1).optional(),
