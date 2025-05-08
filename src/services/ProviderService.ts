@@ -244,10 +244,14 @@ export class ProviderService {
             const findAddress = await this.addressRepository.findByUserIdAddressId(updateProvider.user_id, updateProvider.address_id, transactionClient as any)
 
             const formatedPhone = validateAndFormatPhoneInternational(findPhone!.phone_number);
+            if (updateProvider.cnpj) updateProvider.cnpj = cnpjFormat.format(updateProvider.cnpj)
+            if (updateProvider.cpf) updateProvider.cpf = cpfFormat.format(updateProvider.cpf)
 
             const formattedProvider = { 
                 name: userExist.name,
                 business_name: updateProvider.business_name,
+                logo_url: updateProvider.logo_url,
+                banner_url: updateProvider.banner_url,
                 description: updateProvider.description,
                 phone: formatedPhone,
                 phoneType: findPhone!.phone_type,
@@ -282,6 +286,8 @@ export class ProviderService {
         const roleExist = await this.rolesRepository.findByRoleType("Provider");
         if (!roleExist) throw new HttpError(404, "Role not found");
 
+        const findAddress =  await this.addressRepository.findByUserIdAddressId(providerExist.user_id, providerExist.address_id)
+
         const roleId = roleExist.id
 
         const transactionProvider = await this.prismaClient.$transaction(async (transactionClient: Prisma.TransactionClient) => { 
@@ -290,12 +296,33 @@ export class ProviderService {
             const role = await this.rolesRepository.deletedByUserIdRoleId(providerExist.user_id, roleId, transactionClient as any);
             const provider = await this.providerRepository.deleteProvider(providerExist.user_id, providerExist.id, transactionClient as any);
             
+            const formatedPhone = validateAndFormatPhoneInternational(phone!.phone_number);
+            if (provider.cnpj) provider.cnpj = cnpjFormat.format(provider.cnpj)
+            if (provider.cpf) provider.cpf = cpfFormat.format(provider.cpf)
+
             const result = {
-                id: provider.id,
-                role: role?.roles.role_type,
                 name: userExist.name,
                 business_name: provider.business_name,
-                description: provider.description
+                logo_url: provider.logo_url,
+                banner_url: provider.banner_url,
+                description: provider.description,
+                phone: formatedPhone,
+                phoneType: phone!.phone_type,
+                cnpj: provider.cnpj,
+                cpf: provider.cpf,
+                address: {
+                    addressType: findAddress!.address_type,
+                    country: findAddress!.district.city.state.country.name,
+                    acronym: findAddress!.district.city.state.country.acronym,
+                    state: findAddress!.district.city.state.name,
+                    uf: findAddress!.district.city.state.uf,
+                    city: findAddress!.district.city.name,
+                    district: findAddress!.district.name,
+                    street: findAddress!.street,
+                    number: findAddress!.number,
+                    cep: findAddress!.cep_street,
+                    complement: findAddress!.complement
+                }
             }
 
             return result
