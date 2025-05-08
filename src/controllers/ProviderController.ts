@@ -57,4 +57,15 @@ export class ProviderController {
             next(error)
         }
     }
+
+    delete: Handler = async (req, res, next) => { 
+        try {
+            const userId = Number(req.params.id);
+            const providerId = Number(req.params.providerId);
+            const deletedProvider = await this.providerService.deleteProvider(userId, providerId);
+            res.status(201).json({ message: "Provider deleted successfully!", deletedProvider });
+        } catch (error) {
+            next(error)
+        }
+    }
 }

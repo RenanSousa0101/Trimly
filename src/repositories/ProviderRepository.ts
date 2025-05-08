@@ -61,4 +61,5 @@ export interface IproviderRepository {
     createProvider: (userId: number, addressId: number, phoneId: number, attributes: CreateProviderAttributes, client?: PrismaClientOrTransaction) => Promise<Provider>
     countProvider: (where: ProviderWhereParams, client?: PrismaClientOrTransaction) => Promise<number>;
     updateProvider: (userId: number, providerId: number, attributes: Partial<CreateProviderAttributes>, client?: PrismaClientOrTransaction) => Promise<Provider>
+    deleteProvider: (userId: number, providerId: number, client?: PrismaClientOrTransaction) => Promise<Provider>
 }

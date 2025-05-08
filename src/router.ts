@@ -21,12 +21,12 @@ router.delete("/users/:id", ensureAuth, ensureAdmin, authorizeAdminOrOwner('id')
 router.get("/users/:id/phones", ensureAuth, authorizeAdminOrOwner('id'), phoneController.show)
 router.post("/users/:id/phones", ensureAuth, authorizeAdminOrOwner('id'), phoneController.create)
 router.put("/users/:id/phones/:phoneId", ensureAuth, authorizeAdminOrOwner('id'), phoneController.update)
-router.delete("/users/:id/phones/:phoneId", ensureAuth, authorizeAdminOrOwner('id'), phoneController.delete)
+router.delete("/users/:id/phones/:phoneId", ensureAuth, ensureAdmin, authorizeAdminOrOwner('id'), phoneController.delete)
 
 router.get("/users/:id/addresses", ensureAuth, authorizeAdminOrOwner('id'), addressController.show)
 router.post("/users/:id/addresses", ensureAuth, authorizeAdminOrOwner('id'), addressController.create)
 router.put("/users/:id/addresses/:addressId", ensureAuth, authorizeAdminOrOwner('id'), addressController.update)
-router.delete("/users/:id/addresses/:addressId", ensureAuth, authorizeAdminOrOwner('id'), addressController.delete)
+router.delete("/users/:id/addresses/:addressId", ensureAuth, ensureAdmin, authorizeAdminOrOwner('id'), addressController.delete)
 
 router.get("/users/:id/roles", ensureAuth, authorizeAdminOrOwner('id'), rolesController.show)
 router.post("/users/:id/roles", ensureAuth, authorizeAdminOrOwner('id'), rolesController.create)
@@ -37,6 +37,7 @@ router.get("/users/:id/provider", ensureAuth, ensureAdmin, providerController.in
 router.post("/users/:id/provider", ensureAuth, authorizeAdminOrOwner('id'), providerController.create)
 router.get("/users/:id/provider/:providerId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), providerController.show)
 router.put("/users/:id/provider/:providerId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), providerController.update)
+router.delete("/users/:id/provider/:providerId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), providerController.delete)
 
 
 export { router };

@@ -7,7 +7,7 @@ import { IrolesRepository } from "../repositories/RolesRepository";
 import { IuserRepository } from "../repositories/UserRepository";
 import { removeMask } from "./functions/mask";
 import { cpf, cnpj } from 'cpf-cnpj-validator';
-import { isPhoneValid, phoneFormated } from "./functions/phone";
+import { validateAndFormatPhoneE164, validateAndFormatPhoneInternational } from "./functions/phone";
 
 const cpfFormat = cpf
 const cnpjFormat = cnpj
@@ -99,12 +99,12 @@ export class ProviderService {
         const userRoleExist = await this.rolesRepository.findByUserIdRoleId(userId, roleId);
         if (userRoleExist) throw new HttpError(409, "User is already a Provider");
 
-        const formattedProvider = await this.prismaClient.$transaction(async (transactionClient: Prisma.TransactionClient) => {
+        const transactionProvider = await this.prismaClient.$transaction(async (transactionClient: Prisma.TransactionClient) => {
 
-            const phoneValid = isPhoneValid(params.phone_number);
+            const phoneNumberFormated = validateAndFormatPhoneE164(params.phone_number);
 
             const userProviderPhone = {
-                phone_number: phoneValid,
+                phone_number: phoneNumberFormated,
                 phone_type: PhoneType.Work,
                 is_primary: true
             }
@@ -152,7 +152,7 @@ export class ProviderService {
             if (newUserProvider.cnpj) newUserProvider.cnpj = cnpj.format(newUserProvider.cnpj)
             if (newUserProvider.cpf) newUserProvider.cpf = cpf.format(newUserProvider.cpf)
 
-            const formatPhone = phoneFormated(createUserProviderPhone.phone_number)
+            const formatPhone = validateAndFormatPhoneInternational(createUserProviderPhone.phone_number)
 
             const formattedProvider = {
                 name: userExist.name,
@@ -179,7 +179,7 @@ export class ProviderService {
             }
             return formattedProvider;
         })
-        return formattedProvider;
+        return transactionProvider;
     }
 
     async updateProvider(userId: number, providerId: number, params: Partial<FullProviderAttributes>) {
@@ -189,18 +189,18 @@ export class ProviderService {
         const providerExist = await this.providerRepository.findByIdProvider(userId, providerId);
         if (!providerExist) throw new HttpError(404, "Provider not found");
 
-        const formattedProvider = await this.prismaClient.$transaction(async (transactionClient: Prisma.TransactionClient) => { 
+        const transactionProvider = await this.prismaClient.$transaction(async (transactionClient: Prisma.TransactionClient) => { 
 
-            let phoneValid 
+            let phoneNumberFormated 
 
             if (params.phone_number) {
-                phoneValid = isPhoneValid(params.phone_number)
+                phoneNumberFormated = validateAndFormatPhoneE164(params.phone_number)
             } else {
-                phoneValid = params?.phone_number
+                phoneNumberFormated = params?.phone_number
             }
 
             const userProviderPhone = {
-                phone_number: phoneValid,
+                phone_number: phoneNumberFormated,
                 phone_type: PhoneType.Work,
                 is_primary: true
             }
@@ -243,7 +243,7 @@ export class ProviderService {
             const findPhone = await this.phoneRepository.findByUserIdPhoneId(updateProvider.user_id, updateProvider.phone_id, transactionClient as any)
             const findAddress = await this.addressRepository.findByUserIdAddressId(updateProvider.user_id, updateProvider.address_id, transactionClient as any)
 
-            const formatedPhone = phoneFormated(findPhone!.phone_number);
+            const formatedPhone = validateAndFormatPhoneInternational(findPhone!.phone_number);
 
             const formattedProvider = { 
                 name: userExist.name,
@@ -269,6 +269,37 @@ export class ProviderService {
             }
             return formattedProvider
         })
-        return formattedProvider
+        return transactionProvider
+    }
+
+    async deleteProvider(userId: number, providerId: number) {
+        const userExist = await this.userRepository.findById(userId);
+        if (!userExist) throw new HttpError(404, "User not found");
+
+        const providerExist = await this.providerRepository.findByIdProvider(userId, providerId);
+        if (!providerExist) throw new HttpError(404, "Provider not found");
+
+        const roleExist = await this.rolesRepository.findByRoleType("Provider");
+        if (!roleExist) throw new HttpError(404, "Role not found");
+
+        const roleId = roleExist.id
+
+        const transactionProvider = await this.prismaClient.$transaction(async (transactionClient: Prisma.TransactionClient) => { 
+            const address = await this.addressRepository.deleteByIdAddress(providerExist.user_id, providerExist.address_id, transactionClient as any);
+            const phone = await this.phoneRepository.deleteByIdPhone(providerExist.user_id, providerExist.phone_id, transactionClient as any);
+            const role = await this.rolesRepository.deletedByUserIdRoleId(providerExist.user_id, roleId, transactionClient as any);
+            const provider = await this.providerRepository.deleteProvider(providerExist.user_id, providerExist.id, transactionClient as any);
+            
+            const result = {
+                id: provider.id,
+                role: role?.roles.role_type,
+                name: userExist.name,
+                business_name: provider.business_name,
+                description: provider.description
+            }
+
+            return result
+        })
+        return transactionProvider
     }
 }

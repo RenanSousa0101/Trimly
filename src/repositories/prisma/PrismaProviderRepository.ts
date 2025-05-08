@@ -86,4 +86,12 @@ export class PrismaProviderRepository implements IproviderRepository {
             }
         })
     }
+
+    async deleteProvider(userId: number, providerId: number, client?: PrismaClientOrTransaction): Promise<Provider> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.provider.delete({
+            where: {user_id: userId, id: providerId}
+        })
+    }
 }

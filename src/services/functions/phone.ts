@@ -2,7 +2,7 @@ import parsePhoneNumberFromString, { PhoneNumber } from "libphonenumber-js";
 import { HttpError } from "../../errors/HttpError";
 
 
-export function isPhoneValid(number: string) {
+export function validateAndFormatPhoneE164(number: string) {
     if (number !== undefined && number !== null) { 
 
         const phoneNumber = parsePhoneNumberFromString(number, 'BR'); // Ou undefined para inferir
@@ -18,7 +18,7 @@ export function isPhoneValid(number: string) {
     }
 }
 
-export function phoneFormated(number: string) {
+export function validateAndFormatPhoneInternational(number: string) {
     if (number !== undefined && number !== null) { 
         const phoneNumber = parsePhoneNumberFromString(number, 'BR');
 
