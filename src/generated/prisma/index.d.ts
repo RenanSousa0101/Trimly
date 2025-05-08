@@ -17081,7 +17081,7 @@ export namespace Prisma {
   export type SpecializationMinAggregateOutputType = {
     id: number | null
     name: string | null
-    Description: string | null
+    description: string | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -17089,7 +17089,7 @@ export namespace Prisma {
   export type SpecializationMaxAggregateOutputType = {
     id: number | null
     name: string | null
-    Description: string | null
+    description: string | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -17097,7 +17097,7 @@ export namespace Prisma {
   export type SpecializationCountAggregateOutputType = {
     id: number
     name: number
-    Description: number
+    description: number
     created_at: number
     updated_at: number
     _all: number
@@ -17115,7 +17115,7 @@ export namespace Prisma {
   export type SpecializationMinAggregateInputType = {
     id?: true
     name?: true
-    Description?: true
+    description?: true
     created_at?: true
     updated_at?: true
   }
@@ -17123,7 +17123,7 @@ export namespace Prisma {
   export type SpecializationMaxAggregateInputType = {
     id?: true
     name?: true
-    Description?: true
+    description?: true
     created_at?: true
     updated_at?: true
   }
@@ -17131,7 +17131,7 @@ export namespace Prisma {
   export type SpecializationCountAggregateInputType = {
     id?: true
     name?: true
-    Description?: true
+    description?: true
     created_at?: true
     updated_at?: true
     _all?: true
@@ -17226,7 +17226,7 @@ export namespace Prisma {
   export type SpecializationGroupByOutputType = {
     id: number
     name: string
-    Description: string | null
+    description: string | null
     created_at: Date
     updated_at: Date
     _count: SpecializationCountAggregateOutputType | null
@@ -17253,7 +17253,7 @@ export namespace Prisma {
   export type SpecializationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    Description?: boolean
+    description?: boolean
     created_at?: boolean
     updated_at?: boolean
     provider_specialization?: boolean | Specialization$provider_specializationArgs<ExtArgs>
@@ -17263,7 +17263,7 @@ export namespace Prisma {
   export type SpecializationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    Description?: boolean
+    description?: boolean
     created_at?: boolean
     updated_at?: boolean
   }, ExtArgs["result"]["specialization"]>
@@ -17271,7 +17271,7 @@ export namespace Prisma {
   export type SpecializationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    Description?: boolean
+    description?: boolean
     created_at?: boolean
     updated_at?: boolean
   }, ExtArgs["result"]["specialization"]>
@@ -17279,12 +17279,12 @@ export namespace Prisma {
   export type SpecializationSelectScalar = {
     id?: boolean
     name?: boolean
-    Description?: boolean
+    description?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type SpecializationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "Description" | "created_at" | "updated_at", ExtArgs["result"]["specialization"]>
+  export type SpecializationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "created_at" | "updated_at", ExtArgs["result"]["specialization"]>
   export type SpecializationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     provider_specialization?: boolean | Specialization$provider_specializationArgs<ExtArgs>
     _count?: boolean | SpecializationCountOutputTypeDefaultArgs<ExtArgs>
@@ -17300,7 +17300,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
-      Description: string | null
+      description: string | null
       created_at: Date
       updated_at: Date
     }, ExtArgs["result"]["specialization"]>
@@ -17729,7 +17729,7 @@ export namespace Prisma {
   interface SpecializationFieldRefs {
     readonly id: FieldRef<"Specialization", 'Int'>
     readonly name: FieldRef<"Specialization", 'String'>
-    readonly Description: FieldRef<"Specialization", 'String'>
+    readonly description: FieldRef<"Specialization", 'String'>
     readonly created_at: FieldRef<"Specialization", 'DateTime'>
     readonly updated_at: FieldRef<"Specialization", 'DateTime'>
   }
@@ -27496,7 +27496,7 @@ export namespace Prisma {
   export const SpecializationScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    Description: 'Description',
+    description: 'description',
     created_at: 'created_at',
     updated_at: 'updated_at'
   };
@@ -28607,7 +28607,7 @@ export namespace Prisma {
     NOT?: SpecializationWhereInput | SpecializationWhereInput[]
     id?: IntFilter<"Specialization"> | number
     name?: StringFilter<"Specialization"> | string
-    Description?: StringNullableFilter<"Specialization"> | string | null
+    description?: StringNullableFilter<"Specialization"> | string | null
     created_at?: DateTimeFilter<"Specialization"> | Date | string
     updated_at?: DateTimeFilter<"Specialization"> | Date | string
     provider_specialization?: Provider_SpecializationListRelationFilter
@@ -28616,7 +28616,7 @@ export namespace Prisma {
   export type SpecializationOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    Description?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     provider_specialization?: Provider_SpecializationOrderByRelationAggregateInput
@@ -28628,7 +28628,7 @@ export namespace Prisma {
     OR?: SpecializationWhereInput[]
     NOT?: SpecializationWhereInput | SpecializationWhereInput[]
     name?: StringFilter<"Specialization"> | string
-    Description?: StringNullableFilter<"Specialization"> | string | null
+    description?: StringNullableFilter<"Specialization"> | string | null
     created_at?: DateTimeFilter<"Specialization"> | Date | string
     updated_at?: DateTimeFilter<"Specialization"> | Date | string
     provider_specialization?: Provider_SpecializationListRelationFilter
@@ -28637,7 +28637,7 @@ export namespace Prisma {
   export type SpecializationOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    Description?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     _count?: SpecializationCountOrderByAggregateInput
@@ -28653,7 +28653,7 @@ export namespace Prisma {
     NOT?: SpecializationScalarWhereWithAggregatesInput | SpecializationScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Specialization"> | number
     name?: StringWithAggregatesFilter<"Specialization"> | string
-    Description?: StringNullableWithAggregatesFilter<"Specialization"> | string | null
+    description?: StringNullableWithAggregatesFilter<"Specialization"> | string | null
     created_at?: DateTimeWithAggregatesFilter<"Specialization"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Specialization"> | Date | string
   }
@@ -28683,6 +28683,7 @@ export namespace Prisma {
 
   export type Provider_SpecializationWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    provider_id_specialization_id?: Provider_SpecializationProvider_idSpecialization_idCompoundUniqueInput
     AND?: Provider_SpecializationWhereInput | Provider_SpecializationWhereInput[]
     OR?: Provider_SpecializationWhereInput[]
     NOT?: Provider_SpecializationWhereInput | Provider_SpecializationWhereInput[]
@@ -28692,7 +28693,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Provider_Specialization"> | Date | string
     provider?: XOR<ProviderScalarRelationFilter, ProviderWhereInput>
     specialization?: XOR<SpecializationScalarRelationFilter, SpecializationWhereInput>
-  }, "id">
+  }, "id" | "provider_id_specialization_id">
 
   export type Provider_SpecializationOrderByWithAggregationInput = {
     id?: SortOrder
@@ -30035,7 +30036,7 @@ export namespace Prisma {
 
   export type SpecializationCreateInput = {
     name: string
-    Description?: string | null
+    description?: string | null
     created_at?: Date | string
     updated_at?: Date | string
     provider_specialization?: Provider_SpecializationCreateNestedManyWithoutSpecializationInput
@@ -30044,7 +30045,7 @@ export namespace Prisma {
   export type SpecializationUncheckedCreateInput = {
     id?: number
     name: string
-    Description?: string | null
+    description?: string | null
     created_at?: Date | string
     updated_at?: Date | string
     provider_specialization?: Provider_SpecializationUncheckedCreateNestedManyWithoutSpecializationInput
@@ -30052,7 +30053,7 @@ export namespace Prisma {
 
   export type SpecializationUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    Description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     provider_specialization?: Provider_SpecializationUpdateManyWithoutSpecializationNestedInput
@@ -30061,7 +30062,7 @@ export namespace Prisma {
   export type SpecializationUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    Description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     provider_specialization?: Provider_SpecializationUncheckedUpdateManyWithoutSpecializationNestedInput
@@ -30070,14 +30071,14 @@ export namespace Prisma {
   export type SpecializationCreateManyInput = {
     id?: number
     name: string
-    Description?: string | null
+    description?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type SpecializationUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    Description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30085,7 +30086,7 @@ export namespace Prisma {
   export type SpecializationUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    Description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31502,7 +31503,7 @@ export namespace Prisma {
   export type SpecializationCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    Description?: SortOrder
+    description?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -31514,7 +31515,7 @@ export namespace Prisma {
   export type SpecializationMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    Description?: SortOrder
+    description?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -31522,7 +31523,7 @@ export namespace Prisma {
   export type SpecializationMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    Description?: SortOrder
+    description?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -31539,6 +31540,11 @@ export namespace Prisma {
   export type SpecializationScalarRelationFilter = {
     is?: SpecializationWhereInput
     isNot?: SpecializationWhereInput
+  }
+
+  export type Provider_SpecializationProvider_idSpecialization_idCompoundUniqueInput = {
+    provider_id: number
+    specialization_id: number
   }
 
   export type Provider_SpecializationCountOrderByAggregateInput = {
@@ -35362,7 +35368,7 @@ export namespace Prisma {
 
   export type SpecializationCreateWithoutProvider_specializationInput = {
     name: string
-    Description?: string | null
+    description?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -35370,7 +35376,7 @@ export namespace Prisma {
   export type SpecializationUncheckedCreateWithoutProvider_specializationInput = {
     id?: number
     name: string
-    Description?: string | null
+    description?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -35443,7 +35449,7 @@ export namespace Prisma {
 
   export type SpecializationUpdateWithoutProvider_specializationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    Description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -35451,7 +35457,7 @@ export namespace Prisma {
   export type SpecializationUncheckedUpdateWithoutProvider_specializationInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    Description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -238,7 +238,7 @@ exports.Prisma.ProviderScalarFieldEnum = {
 exports.Prisma.SpecializationScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  Description: 'Description',
+  description: 'description',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };

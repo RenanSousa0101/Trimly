@@ -199,7 +199,7 @@ model Provider {
 model Specialization {
   id                      Int                       @id @default(autoincrement())
   name                    String                    @db.VarChar(255)
-  Description             String?                   @db.Text
+  description             String?                   @db.Text
   created_at              DateTime                  @default(now())
   updated_at              DateTime                  @updatedAt
   provider_specialization Provider_Specialization[]
@@ -213,6 +213,8 @@ model Provider_Specialization {
   updated_at        DateTime       @updatedAt
   provider          Provider       @relation(fields: [provider_id], references: [id], onDelete: Cascade)
   specialization    Specialization @relation(fields: [specialization_id], references: [id], onDelete: Cascade)
+
+  @@unique([provider_id, specialization_id])
 }
 
 model Time {
