@@ -222,6 +222,8 @@ exports.Prisma.AdminScalarFieldEnum = {
 exports.Prisma.ProviderScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
+  phone_id: 'phone_id',
+  address_id: 'address_id',
   business_name: 'business_name',
   cnpj: 'cnpj',
   cpf: 'cpf',

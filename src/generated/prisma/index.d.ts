@@ -15719,18 +15719,24 @@ export namespace Prisma {
   export type ProviderAvgAggregateOutputType = {
     id: number | null
     user_id: number | null
+    phone_id: number | null
+    address_id: number | null
     avarage_rating: number | null
   }
 
   export type ProviderSumAggregateOutputType = {
     id: number | null
     user_id: number | null
+    phone_id: number | null
+    address_id: number | null
     avarage_rating: number | null
   }
 
   export type ProviderMinAggregateOutputType = {
     id: number | null
     user_id: number | null
+    phone_id: number | null
+    address_id: number | null
     business_name: string | null
     cnpj: string | null
     cpf: string | null
@@ -15745,6 +15751,8 @@ export namespace Prisma {
   export type ProviderMaxAggregateOutputType = {
     id: number | null
     user_id: number | null
+    phone_id: number | null
+    address_id: number | null
     business_name: string | null
     cnpj: string | null
     cpf: string | null
@@ -15759,6 +15767,8 @@ export namespace Prisma {
   export type ProviderCountAggregateOutputType = {
     id: number
     user_id: number
+    phone_id: number
+    address_id: number
     business_name: number
     cnpj: number
     cpf: number
@@ -15775,18 +15785,24 @@ export namespace Prisma {
   export type ProviderAvgAggregateInputType = {
     id?: true
     user_id?: true
+    phone_id?: true
+    address_id?: true
     avarage_rating?: true
   }
 
   export type ProviderSumAggregateInputType = {
     id?: true
     user_id?: true
+    phone_id?: true
+    address_id?: true
     avarage_rating?: true
   }
 
   export type ProviderMinAggregateInputType = {
     id?: true
     user_id?: true
+    phone_id?: true
+    address_id?: true
     business_name?: true
     cnpj?: true
     cpf?: true
@@ -15801,6 +15817,8 @@ export namespace Prisma {
   export type ProviderMaxAggregateInputType = {
     id?: true
     user_id?: true
+    phone_id?: true
+    address_id?: true
     business_name?: true
     cnpj?: true
     cpf?: true
@@ -15815,6 +15833,8 @@ export namespace Prisma {
   export type ProviderCountAggregateInputType = {
     id?: true
     user_id?: true
+    phone_id?: true
+    address_id?: true
     business_name?: true
     cnpj?: true
     cpf?: true
@@ -15916,6 +15936,8 @@ export namespace Prisma {
   export type ProviderGroupByOutputType = {
     id: number
     user_id: number
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj: string | null
     cpf: string | null
@@ -15949,6 +15971,8 @@ export namespace Prisma {
   export type ProviderSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     user_id?: boolean
+    phone_id?: boolean
+    address_id?: boolean
     business_name?: boolean
     cnpj?: boolean
     cpf?: boolean
@@ -15970,6 +15994,8 @@ export namespace Prisma {
   export type ProviderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     user_id?: boolean
+    phone_id?: boolean
+    address_id?: boolean
     business_name?: boolean
     cnpj?: boolean
     cpf?: boolean
@@ -15985,6 +16011,8 @@ export namespace Prisma {
   export type ProviderSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     user_id?: boolean
+    phone_id?: boolean
+    address_id?: boolean
     business_name?: boolean
     cnpj?: boolean
     cpf?: boolean
@@ -16000,6 +16028,8 @@ export namespace Prisma {
   export type ProviderSelectScalar = {
     id?: boolean
     user_id?: boolean
+    phone_id?: boolean
+    address_id?: boolean
     business_name?: boolean
     cnpj?: boolean
     cpf?: boolean
@@ -16011,7 +16041,7 @@ export namespace Prisma {
     updated_at?: boolean
   }
 
-  export type ProviderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "business_name" | "cnpj" | "cpf" | "description" | "logo_url" | "banner_url" | "avarage_rating" | "created_at" | "updated_at", ExtArgs["result"]["provider"]>
+  export type ProviderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "phone_id" | "address_id" | "business_name" | "cnpj" | "cpf" | "description" | "logo_url" | "banner_url" | "avarage_rating" | "created_at" | "updated_at", ExtArgs["result"]["provider"]>
   export type ProviderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Provider_specialization?: boolean | Provider$Provider_specializationArgs<ExtArgs>
     Time?: boolean | Provider$TimeArgs<ExtArgs>
@@ -16041,6 +16071,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       user_id: number
+      phone_id: number
+      address_id: number
       business_name: string
       cnpj: string | null
       cpf: string | null
@@ -16481,6 +16513,8 @@ export namespace Prisma {
   interface ProviderFieldRefs {
     readonly id: FieldRef<"Provider", 'Int'>
     readonly user_id: FieldRef<"Provider", 'Int'>
+    readonly phone_id: FieldRef<"Provider", 'Int'>
+    readonly address_id: FieldRef<"Provider", 'Int'>
     readonly business_name: FieldRef<"Provider", 'String'>
     readonly cnpj: FieldRef<"Provider", 'String'>
     readonly cpf: FieldRef<"Provider", 'String'>
@@ -27443,6 +27477,8 @@ export namespace Prisma {
   export const ProviderScalarFieldEnum: {
     id: 'id',
     user_id: 'user_id',
+    phone_id: 'phone_id',
+    address_id: 'address_id',
     business_name: 'business_name',
     cnpj: 'cnpj',
     cpf: 'cpf',
@@ -28459,6 +28495,8 @@ export namespace Prisma {
     NOT?: ProviderWhereInput | ProviderWhereInput[]
     id?: IntFilter<"Provider"> | number
     user_id?: IntFilter<"Provider"> | number
+    phone_id?: IntFilter<"Provider"> | number
+    address_id?: IntFilter<"Provider"> | number
     business_name?: StringFilter<"Provider"> | string
     cnpj?: StringNullableFilter<"Provider"> | string | null
     cpf?: StringNullableFilter<"Provider"> | string | null
@@ -28479,6 +28517,8 @@ export namespace Prisma {
   export type ProviderOrderByWithRelationInput = {
     id?: SortOrder
     user_id?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
     business_name?: SortOrder
     cnpj?: SortOrderInput | SortOrder
     cpf?: SortOrderInput | SortOrder
@@ -28499,6 +28539,8 @@ export namespace Prisma {
   export type ProviderWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     user_id?: number
+    phone_id?: number
+    address_id?: number
     cnpj?: string
     cpf?: string
     AND?: ProviderWhereInput | ProviderWhereInput[]
@@ -28517,11 +28559,13 @@ export namespace Prisma {
     Scheduling?: SchedulingListRelationFilter
     Rating?: RatingListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "user_id" | "cnpj" | "cpf">
+  }, "id" | "user_id" | "phone_id" | "address_id" | "cnpj" | "cpf">
 
   export type ProviderOrderByWithAggregationInput = {
     id?: SortOrder
     user_id?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
     business_name?: SortOrder
     cnpj?: SortOrderInput | SortOrder
     cpf?: SortOrderInput | SortOrder
@@ -28544,6 +28588,8 @@ export namespace Prisma {
     NOT?: ProviderScalarWhereWithAggregatesInput | ProviderScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Provider"> | number
     user_id?: IntWithAggregatesFilter<"Provider"> | number
+    phone_id?: IntWithAggregatesFilter<"Provider"> | number
+    address_id?: IntWithAggregatesFilter<"Provider"> | number
     business_name?: StringWithAggregatesFilter<"Provider"> | string
     cnpj?: StringNullableWithAggregatesFilter<"Provider"> | string | null
     cpf?: StringNullableWithAggregatesFilter<"Provider"> | string | null
@@ -29860,6 +29906,8 @@ export namespace Prisma {
   }
 
   export type ProviderCreateInput = {
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -29880,6 +29928,8 @@ export namespace Prisma {
   export type ProviderUncheckedCreateInput = {
     id?: number
     user_id: number
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -29897,6 +29947,8 @@ export namespace Prisma {
   }
 
   export type ProviderUpdateInput = {
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29917,6 +29969,8 @@ export namespace Prisma {
   export type ProviderUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29936,6 +29990,8 @@ export namespace Prisma {
   export type ProviderCreateManyInput = {
     id?: number
     user_id: number
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -29948,6 +30004,8 @@ export namespace Prisma {
   }
 
   export type ProviderUpdateManyMutationInput = {
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29962,6 +30020,8 @@ export namespace Prisma {
   export type ProviderUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31362,6 +31422,8 @@ export namespace Prisma {
   export type ProviderCountOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
     business_name?: SortOrder
     cnpj?: SortOrder
     cpf?: SortOrder
@@ -31376,12 +31438,16 @@ export namespace Prisma {
   export type ProviderAvgOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
     avarage_rating?: SortOrder
   }
 
   export type ProviderMaxOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
     business_name?: SortOrder
     cnpj?: SortOrder
     cpf?: SortOrder
@@ -31396,6 +31462,8 @@ export namespace Prisma {
   export type ProviderMinOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
     business_name?: SortOrder
     cnpj?: SortOrder
     cpf?: SortOrder
@@ -31410,6 +31478,8 @@ export namespace Prisma {
   export type ProviderSumOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
     avarage_rating?: SortOrder
   }
 
@@ -33622,6 +33692,8 @@ export namespace Prisma {
   }
 
   export type ProviderCreateWithoutUserInput = {
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -33640,6 +33712,8 @@ export namespace Prisma {
 
   export type ProviderUncheckedCreateWithoutUserInput = {
     id?: number
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -33832,6 +33906,8 @@ export namespace Prisma {
   }
 
   export type ProviderUpdateWithoutUserInput = {
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33850,6 +33926,8 @@ export namespace Prisma {
 
   export type ProviderUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35239,6 +35317,8 @@ export namespace Prisma {
   }
 
   export type ProviderCreateWithoutProvider_specializationInput = {
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -35258,6 +35338,8 @@ export namespace Prisma {
   export type ProviderUncheckedCreateWithoutProvider_specializationInput = {
     id?: number
     user_id: number
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -35310,6 +35392,8 @@ export namespace Prisma {
   }
 
   export type ProviderUpdateWithoutProvider_specializationInput = {
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35329,6 +35413,8 @@ export namespace Prisma {
   export type ProviderUncheckedUpdateWithoutProvider_specializationInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35371,6 +35457,8 @@ export namespace Prisma {
   }
 
   export type ProviderCreateWithoutTimeInput = {
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -35390,6 +35478,8 @@ export namespace Prisma {
   export type ProviderUncheckedCreateWithoutTimeInput = {
     id?: number
     user_id: number
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -35422,6 +35512,8 @@ export namespace Prisma {
   }
 
   export type ProviderUpdateWithoutTimeInput = {
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35441,6 +35533,8 @@ export namespace Prisma {
   export type ProviderUncheckedUpdateWithoutTimeInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35830,6 +35924,8 @@ export namespace Prisma {
   }
 
   export type ProviderCreateWithoutProvider_ServiceInput = {
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -35849,6 +35945,8 @@ export namespace Prisma {
   export type ProviderUncheckedCreateWithoutProvider_ServiceInput = {
     id?: number
     user_id: number
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -35905,6 +36003,8 @@ export namespace Prisma {
   }
 
   export type ProviderUpdateWithoutProvider_ServiceInput = {
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35924,6 +36024,8 @@ export namespace Prisma {
   export type ProviderUncheckedUpdateWithoutProvider_ServiceInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36021,6 +36123,8 @@ export namespace Prisma {
   }
 
   export type ProviderCreateWithoutSchedulingInput = {
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -36040,6 +36144,8 @@ export namespace Prisma {
   export type ProviderUncheckedCreateWithoutSchedulingInput = {
     id?: number
     user_id: number
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -36142,6 +36248,8 @@ export namespace Prisma {
   }
 
   export type ProviderUpdateWithoutSchedulingInput = {
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36161,6 +36269,8 @@ export namespace Prisma {
   export type ProviderUncheckedUpdateWithoutSchedulingInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36259,6 +36369,8 @@ export namespace Prisma {
   }
 
   export type ProviderCreateWithoutRatingInput = {
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -36278,6 +36390,8 @@ export namespace Prisma {
   export type ProviderUncheckedCreateWithoutRatingInput = {
     id?: number
     user_id: number
+    phone_id: number
+    address_id: number
     business_name: string
     cnpj?: string | null
     cpf?: string | null
@@ -36374,6 +36488,8 @@ export namespace Prisma {
   }
 
   export type ProviderUpdateWithoutRatingInput = {
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36393,6 +36509,8 @@ export namespace Prisma {
   export type ProviderUncheckedUpdateWithoutRatingInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
     business_name?: StringFieldUpdateOperationsInput | string
     cnpj?: NullableStringFieldUpdateOperationsInput | string | null
     cpf?: NullableStringFieldUpdateOperationsInput | string | null

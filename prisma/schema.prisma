@@ -177,6 +177,8 @@ model Admin {
 model Provider {
   id                      Int                       @id @default(autoincrement())
   user_id                 Int                       @unique
+  phone_id                Int                       @unique
+  address_id              Int                       @unique
   business_name           String                    @db.VarChar(255)
   cnpj                    String?                   @unique @db.VarChar(14)
   cpf                     String?                   @unique @db.VarChar(11)

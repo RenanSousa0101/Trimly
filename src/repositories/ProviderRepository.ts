@@ -58,6 +58,7 @@ export interface FullProviderAttributes {
 export interface IproviderRepository {
     findProviders: (params: FindProviderParams, client?: PrismaClientOrTransaction) => Promise<Provider[]>
     findByIdProvider: (userId: number, providerId: number, client?: PrismaClientOrTransaction) => Promise<Provider | null>
-    createProvider: (userId: number, attributes: CreateProviderAttributes, client?: PrismaClientOrTransaction) => Promise<Provider>
+    createProvider: (userId: number, addressId: number, phoneId: number, attributes: CreateProviderAttributes, client?: PrismaClientOrTransaction) => Promise<Provider>
     countProvider: (where: ProviderWhereParams, client?: PrismaClientOrTransaction) => Promise<number>;
+    updateProvider: (userId: number, providerId: number, attributes: Partial<CreateProviderAttributes>, client?: PrismaClientOrTransaction) => Promise<Provider>
 }

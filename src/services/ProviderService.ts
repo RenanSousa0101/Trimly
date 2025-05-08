@@ -100,17 +100,6 @@ export class ProviderService {
 
         const formattedProvider = await this.prismaClient.$transaction(async (transactionClient: Prisma.TransactionClient) => {
 
-            const userProviderData = {
-                business_name: params.business_name,
-                cnpj: removeMask(params.cnpj),
-                cpf: removeMask(params.cpf),
-                description: params.description,
-                logo_url: params.logo_url,
-                banner_url: params.banner_url
-            }
-
-            const newUserProvider = await this.providerRepository.createProvider(userId, userProviderData, transactionClient as any)
-            const addUserRole = await this.rolesRepository.addUserRole(userId, roleId, transactionClient as any);
 
             const userProviderPhone = {
                 phone_number: params.phone_number,
@@ -143,6 +132,20 @@ export class ProviderService {
             const createUserProviderPhone = await this.phoneRepository.createPhone(userId, userProviderPhone, transactionClient as any);
             const createUserProviderAddress = await this.addressRepository.createAddress(userId, userProviderAddress, transactionClient as any);
 
+            const addressId = createUserProviderAddress.id
+            const phoneId = createUserProviderPhone.id
+
+            const userProviderData = {
+                business_name: params.business_name,
+                description: params?.description,
+                logo_url: params?.logo_url,
+                banner_url: params?.banner_url,
+                cnpj: params.cnpj ? removeMask(params.cnpj) : undefined,
+                cpf: params.cpf ? removeMask(params.cpf) : undefined,
+            }
+
+            const newUserProvider = await this.providerRepository.createProvider(userId, addressId, phoneId, userProviderData, transactionClient as any)
+            const addUserRole = await this.rolesRepository.addUserRole(userId, roleId, transactionClient as any);
 
             if (newUserProvider.cnpj) newUserProvider.cnpj = cnpj.format(newUserProvider.cnpj)
             if (newUserProvider.cpf) newUserProvider.cpf = cpf.format(newUserProvider.cpf)
@@ -173,5 +176,85 @@ export class ProviderService {
             return formattedProvider;
         })
         return formattedProvider;
+    }
+
+    async updateProvider(userId: number, providerId: number, params: Partial<FullProviderAttributes>) {
+        const userExist = await this.userRepository.findById(userId);
+        if (!userExist) throw new HttpError(404, "User not found");
+
+        const providerExist = await this.providerRepository.findByIdProvider(userId, providerId);
+        if (!providerExist) throw new HttpError(404, "Provider not found");
+
+        const formattedProvider = await this.prismaClient.$transaction(async (transactionClient: Prisma.TransactionClient) => { 
+
+            const userProviderPhone = {
+                phone_number: params?.phone_number,
+                phone_type: PhoneType.Work,
+                is_primary: true
+            }
+
+            const userProviderAddress = {
+                street: params.street,
+                number: params.number,
+                cep_street: params.cep_street,
+                complement: params.complement,
+                address_type: AddressType.Work,
+                district: {
+                    name: params.district?.name,
+                    city: {
+                        name: params.district?.city.name,
+                        state: {
+                            name: params.district?.city.state.name,
+                            uf: params.district?.city.state.uf,
+                            country: {
+                                name: params.district?.city.state.country.name,
+                                acronym: params.district?.city.state.country.acronym
+                            }
+                        }
+                    }
+                }
+            }
+            
+            const updateUserProviderData = {
+                business_name: params?.business_name,
+                description: params?.description,
+                logo_url: params?.logo_url,
+                banner_url: params?.banner_url,
+                cnpj: params.cnpj ? removeMask(params.cnpj) : undefined,
+                cpf: params.cpf ? removeMask(params.cpf) : undefined,
+            }
+
+            await this.addressRepository.updateByIdAddress(userId, providerExist.address_id, userProviderAddress, transactionClient as any);
+            await this.phoneRepository.updateByIdPhone(userId, providerExist.phone_id, userProviderPhone, transactionClient as any);
+            const updateProvider = await this.providerRepository.updateProvider(userId, providerId, updateUserProviderData, transactionClient as any);
+
+            const findPhone = await this.phoneRepository.findByUserIdPhoneId(updateProvider.user_id, updateProvider.phone_id, transactionClient as any)
+            const findAddress = await this.addressRepository.findByUserIdAddressId(updateProvider.user_id, updateProvider.address_id, transactionClient as any)
+
+            const formattedProvider = { 
+                name: userExist.name,
+                business_name: updateProvider.business_name,
+                description: updateProvider.description,
+                phone: findPhone!.phone_number,
+                phoneType: findPhone!.phone_type,
+                cnpj: updateProvider.cnpj,
+                cpf: updateProvider.cpf,
+                address: {
+                    addressType: findAddress!.address_type,
+                    country: findAddress!.district.city.state.country.name,
+                    acronym: findAddress!.district.city.state.country.acronym,
+                    state: findAddress!.district.city.state.name,
+                    uf: findAddress!.district.city.state.uf,
+                    city: findAddress!.district.city.name,
+                    district: findAddress!.district.name,
+                    street: findAddress!.street,
+                    number: findAddress!.number,
+                    cep: findAddress!.cep_street,
+                    complement: findAddress!.complement
+                }
+            }
+            return formattedProvider
+        })
+        return formattedProvider
     }
 }

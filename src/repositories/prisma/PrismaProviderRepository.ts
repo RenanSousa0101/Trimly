@@ -24,6 +24,8 @@ export class PrismaProviderRepository implements IproviderRepository {
             select: {
                 id: true,
                 user_id: true,
+                phone_id: true,
+                address_id: true,
                 business_name: true,
                 cnpj: true,
                 cpf: true,
@@ -61,14 +63,27 @@ export class PrismaProviderRepository implements IproviderRepository {
         })
     }
 
-    async createProvider(userId: number, attributes: CreateProviderAttributes, client?: PrismaClientOrTransaction): Promise<Provider> {
+    async createProvider(userId: number, addressId: number, phoneId: number, attributes: CreateProviderAttributes, client?: PrismaClientOrTransaction): Promise<Provider> {
         const prismaClient = client || this.prisma;
 
         return prismaClient.provider.create({
             data: {
                 ...attributes,
-                user_id: userId
+                user_id: userId,
+                phone_id: phoneId,
+                address_id: addressId
             },
+        })
+    }
+
+    async updateProvider(userId: number, providerId: number, attributes: Partial<CreateProviderAttributes>, client?: PrismaClientOrTransaction): Promise<Provider> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.provider.update({
+            where: {user_id: userId, id: providerId},
+            data: {
+                ...attributes
+            }
         })
     }
 }

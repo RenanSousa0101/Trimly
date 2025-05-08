@@ -63,3 +63,42 @@ export const CreateProviderRequestSchema = z.object({
         });
     }
 });
+
+export const UpdateProviderRequestSchema = z.object({
+    // Informações do Provedor
+    business_name: z.string().optional(),
+    cnpj: z.string().min(14).max(18).nullable().optional().refine((val) => {
+        if (!val) return true;
+        return cnpj.isValid(val);
+    }, { message: "CNPJ inválido. Verifique o número." }),
+    cpf: z.string().min(11).max(14).nullable().optional().refine((val) => {
+       if (!val) return true;
+       return cpf.isValid(val);
+   }, { message: "CPF inválido. Verifique o número." }),
+    description: z.string().optional(),
+    logo_url: z.string().url().optional(),
+    banner_url: z.string().url().optional(),
+
+    // Número de telefone do Provedor 
+    phone_number: z.string().min(10).max(15).optional(),
+
+    // Endereço do Provedor
+    street: z.string().min(1).optional(),
+    number: z.string().min(1).optional(),
+    cep_street: z.string().min(1).optional(),
+    complement: z.string().optional(),
+    district: z.object({
+        name: z.string().min(1),
+        city: z.object({
+            name: z.string().min(1),
+            state: z.object({
+                name: z.string().min(1),
+                uf: z.string().min(1),
+                country: z.object({
+                    name: z.string().min(1),
+                    acronym: z.string().min(1),
+                }),
+            }),
+        }),
+    }).optional(),
+})
