@@ -48,25 +48,25 @@ export class AuthService {
         await this.tokenRepository.createToken(newUserId, token)
 
         this.emailService.sendVerificationEmail(params.email, verificationToken)
-            .catch(err => console.error('Erro ao enviar email de verificação após registro:', err));
+            .catch(err => console.error('Error sending selection email after registration:', err));
         return newUser
     }
 
     async resendVerificationEmail(email: string): Promise<string> {
     
         if (!email) {
-            throw new HttpError(400, "Email é obrigatório.");
+            throw new HttpError(400, "Email is mandatory.");
         }
 
         const user = await this.userRepository.findByEmail(email);
 
         if (!user) {
-            console.log(`Tentativa de reenviar email de verificação para email não encontrado: ${email}`);
-            return "Se o email estiver cadastrado, um novo link de verificação será enviado.";
+            console.log(`Attempt to resend verification email to email not found: ${email}`);
+            return "If the email is registered, a new verification link will be sent.";
         }
 
         if (user.isEmailVerified) {
-            return "Seu email já foi verificado anteriormente.";
+            return "Your email has already been verified previously.";
         }
 
         const verificationToken = crypto.randomBytes(32).toString("hex");
@@ -88,9 +88,9 @@ export class AuthService {
         await this.tokenRepository.createToken(userId, token)
 
         this.emailService.sendVerificationEmail(user.email, verificationToken)
-            .catch(err => console.error('Erro ao enviar novo email de verificação:', err));
+            .catch(err => console.error('Error sending new verification email:', err));
 
-        return "Um novo link de verificação foi enviado para o seu email.";
+        return "A new verification link has been sent to your email.";
     }
 
     async loginUser(params: LoginUser) {
@@ -108,40 +108,40 @@ export class AuthService {
     }
 
     async verifyEmailUser(token: string) {
-        if (!token) throw new HttpError(400, 'Token de verificação inválido.');
+        if (!token) throw new HttpError(400, 'Invalid verification token.');
 
         const verificationToken = await this.tokenRepository.findToken(token)
-        if (!verificationToken || verificationToken.type !== TokenType.EMAIL_VERIFICATION) throw new HttpError(404, 'Token de verificação não encontrado ou inválido.');
+        if (!verificationToken || verificationToken.type !== TokenType.EMAIL_VERIFICATION) throw new HttpError(404, 'Verification token not found or invalid.');
 
         const tokenId = verificationToken.id
         const userId = verificationToken.user_id
 
         if (verificationToken.user.isEmailVerified) {
             await this.tokenRepository.deleteToken(tokenId);
-            return { status: 200, message: 'Email já verificado anteriormente.'}
+            return { status: 200, message: 'Email already verified previously.'}
         }
 
         if (verificationToken.expiresAt < new Date()) {
             await this.tokenRepository.deleteToken(tokenId);
-            throw new HttpError(400, 'Token de verificação expirado. Por favor, solicite um novo link.');
+            throw new HttpError(400, 'Verification token expired. Please request a new link.');
         }
 
         await this.tokenRepository.updateTokenUser(userId);
         await this.tokenRepository.deleteToken(tokenId);
 
-        return { status: 200, message: 'Seu email foi verificado com sucesso! Você já pode fazer login.'}
+        return { status: 200, message: 'Your email has been successfully verified! You can now log in.'}
     }
 
     async forgotPassword(email: string): Promise<string> {
         
         if (!email) {
-            throw new HttpError(400, "Email é obrigatório.");
+            throw new HttpError(400, "Email is mandatory.");
         }
 
         const user = await this.userRepository.findByEmail(email);
         if (!user) {
-            console.log(`Tentativa de reset de senha para email não encontrado: ${email}`);
-            return "Se o email estiver cadastrado, um link de recuperação será enviado.";
+            console.log(`Password reset attempt for email not found: ${email}`);
+            return "If the email is registered, a recovery link will be sent.";
         }
  
         const token = crypto.randomBytes(32).toString("hex");
@@ -151,25 +151,25 @@ export class AuthService {
         await this.tokenRepository.deleteUserIdToken(user.id, TokenType.PASSWORD_RESET)
         await this.tokenRepository.createToken(user.id, {token, type: TokenType.PASSWORD_RESET, expiresAt})
         this.passwordService.sendPasswordResetEmail(user.email, token)
-             .catch(err => console.error('Erro ao enviar email de reset de senha:', err));
+             .catch(err => console.error('Error sending password reset email:', err));
 
-        return "Se o email estiver cadastrado, um link de recuperação será enviado.";
+        return "If the email is registered, a recovery link will be sent.";
     }
 
     async resetPassword(token: string, newPassword: string): Promise<string> {
         
         if (!token || !newPassword) {
-            throw new HttpError(400, "Token e nova senha são obrigatórios.");
+            throw new HttpError(400, "Token and new password are required.");
         }
         const verificationToken = await this.tokenRepository.findToken(token)
 
         if (!verificationToken || verificationToken.type !== TokenType.PASSWORD_RESET) {
-            throw new HttpError(400, "Token de recuperação inválido ou já utilizado.");
+            throw new HttpError(400, "Invalid or already used recovery token.");
         }
 
         if (verificationToken.expiresAt < new Date()) {
             await this.tokenRepository.deleteToken(verificationToken.id)
-            throw new HttpError(400, "Token de recuperação expirado. Por favor, solicite um novo link.");
+            throw new HttpError(400, "Recovery token expired. Please request a new link.");
         }
 
         const newPasswordHash = await bcrypt.hash(newPassword, 10); 
@@ -177,7 +177,7 @@ export class AuthService {
         await this.tokenRepository.updateTokenUserPassword(verificationToken.user_id, newPasswordHash)
         await this.tokenRepository.deleteToken(verificationToken.id)
 
-        return 'Senha atualizada com sucesso.';
+        return 'Password updated successfully.';
     }
 }
 

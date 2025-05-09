@@ -29,7 +29,7 @@ export class EmailService {
             `,
         };
 
-        console.log(`Enviando email de verificação para ${toEmail} com link ${verificationLink}`); // Log para depuração
+        console.log(`Sending verification email to ${toEmail} with link ${verificationLink}`);
         await transporter.sendMail(mailOptions);
     }
 }

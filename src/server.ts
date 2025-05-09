@@ -18,17 +18,17 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server started successfuly at port ${PORT}`)
 
-    console.log('Configurando tarefa agendada para limpeza diária de usuários não verificados...');
+    console.log('Setting up scheduled task for daily cleanup of unverified users...');
 
     const CRON_SCHEDULE_CLEANUP = '0 0 * * *';
     cron.schedule(CRON_SCHEDULE_CLEANUP, () => {
-        console.log(`Executando tarefa agendada de limpeza (${CRON_SCHEDULE_CLEANUP})...`);
+        console.log(`Running scheduled cleanup task (${CRON_SCHEDULE_CLEANUP})...`);
         cleanupUnverifiedUsers().catch(error => {
-            console.error('Erro na execução da tarefa agendada de limpeza:', error);
+            console.error('Error executing scheduled cleaning task:', error);
         });
     }, {
         scheduled: true,
         timezone: 'America/Sao_Paulo'
     });
-    console.log(`Tarefa de limpeza agendada com sucesso para "${CRON_SCHEDULE_CLEANUP}"${process.env.NODE_ENV !== 'production' ? ' (Lembre-se de ajustar para produção!)' : ''}.`);
+    console.log(`Cleaning task successfully scheduled for "${CRON_SCHEDULE_CLEANUP}"${process.env.NODE_ENV !== 'production' ? ' (Remember to adjust for production!)' : ''}.`);
 });

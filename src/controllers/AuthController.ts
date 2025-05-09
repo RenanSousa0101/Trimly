@@ -14,7 +14,7 @@ export class AuthController {
             const newUser = await this.authService.registerUser(body);
             res.status(201).json({
                 message:
-                    "Usuário cadastrado com sucesso. Verifique seu email para ativar sua conta.",
+                    "User registered successfully. Check your email to activate your account.",
                 ...newUser,
                 id: undefined,
                 password: undefined,

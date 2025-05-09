@@ -19,7 +19,7 @@ export class PasswordService {
     const mailOptions = {
       from: process.env.EMAIL_FROM,
       to: toEmail,
-      subject: "Reset de Senha",
+      subject: "Resete de Senha",
       html: `
       <p>Olá!</p>
       <p>Você solicitou a redefinição da sua senha. Clique no link abaixo:</p>
@@ -30,7 +30,7 @@ export class PasswordService {
     };
 
     console.log(
-      `Enviando email de reset de senha para ${toEmail} com link ${resetLink}`
+      `Sending password reset email to ${toEmail} with link ${resetLink}`
     ); 
     await transporter.sendMail(mailOptions);
   }

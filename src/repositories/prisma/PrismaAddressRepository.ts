@@ -265,7 +265,7 @@ export class PrismaAddressRepository implements IaddressRepository {
                                             districtIdToConnect = district.id;
 
                                         } catch (districterror) {
-                                            console.error('Erro no upsert de District:', districterror);
+                                            console.error('Error upsert District:', districterror);
 
                                             throw districterror;
                                         }
@@ -273,21 +273,21 @@ export class PrismaAddressRepository implements IaddressRepository {
                                         console.warn(`District name missing in update attributes for address ${addressId}. Cannot upsert district.`);
                                     }
                                 } catch (cityerror) {
-                                    console.error('Erro no upsert de City:', cityerror);
+                                    console.error('Error upsertting City:', cityerror);
                                     throw cityerror;
                                 }
                             } else {
                                 console.warn(`State uf or name missing in update attributes for address ${addressId}. Cannot upsert city or district.`);
                             }
                         } catch (stateerror) {
-                            console.error('Erro no upsert de State:', stateerror);
+                            console.error('Error upsertting State:', stateerror);
                             throw stateerror;
                         }
                     } else {
                         console.warn(`Country acronym or name missing in update attributes for address ${addressId}. Cannot upsert state, city or district.`);
                     }
                 } catch (countryerror) {
-                    console.error('Erro no upsert de Country:', countryerror);
+                    console.error('Error upsertting Country:', countryerror);
                     throw countryerror;
                 }
             } else {
@@ -333,11 +333,11 @@ export class PrismaAddressRepository implements IaddressRepository {
 
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
                 if (error.code === 'P2025') {
-                    console.error(`Endereço com ID ${addressId} para o usuário ${userId} não encontrado durante update.`);
+                    console.error(`Address with ID ${addressId} for the user ${userId} not found during update.`);
                     return null;
                 }
             }
-            console.error('Erro inesperado ao atualizar endereço:', error);
+            console.error('Unexpected error updating address:', error);
             throw error;
         }
     }
@@ -353,7 +353,7 @@ export class PrismaAddressRepository implements IaddressRepository {
             });
 
             if (!addressToDelete) {
-                console.warn(`Tentativa de deletar endereço ${addressId} pelo usuário ${userId}, mas não encontrado.`);
+                console.warn(`Attempt to delete address ${addressId} by the user ${userId}, but not found.`);
                 return null;
             }
 
@@ -368,11 +368,11 @@ export class PrismaAddressRepository implements IaddressRepository {
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
                 if (error.code === 'P2025') {
-                    console.error(`Erro P2025 durante o delete para Endereço ${addressId}. Pode ter sido excluído concorrentemente.`);
+                    console.error(`Error P2025 during delete for Address ${addressId}. It may have been deleted concurrently.`);
                     return null;
                 }
             }
-            console.error('Erro ao deletar endereço:', error);
+            console.error('Error deleting address:', error);
             throw error;
         }
     }

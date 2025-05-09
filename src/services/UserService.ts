@@ -131,7 +131,7 @@ export class UsersService {
 
             const receivedAnyParamsAtAll = Object.keys(params).length > 0;
             if (receivedAnyParamsAtAll && !actingUserIsAdmin) {
-                const fieldsAllowedForRegularUser: Array<keyof CreateUserAttributes> = ['name', 'avatar_url', 'bio', 'password']
+                const fieldsAllowedForRegularUser: Array<keyof CreateUserAttributes> = ['name', 'avatar_url', 'bio']
                 throw new HttpError(400, `No allowed fields provided for update. You can only update your own: ${fieldsAllowedForRegularUser.join(', ')}`)
             }
 

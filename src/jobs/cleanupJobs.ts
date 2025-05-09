@@ -1,7 +1,7 @@
 import { prisma } from "../database";
 
 export async function cleanupUnverifiedUsers() {
-  console.log('Iniciando tarefa de limpeza de usuários não verificados e tokens expirados...');
+  console.log('Starting cleanup task for unverified users and expired tokens...');
 
   try {
 
@@ -22,8 +22,8 @@ export async function cleanupUnverifiedUsers() {
     const cutoffTimestamp = currentTimestamp - totalRetentionMilliseconds; 
     const cutoffDate = new Date(cutoffTimestamp); 
 
-    console.log(`  - Deletando usuários não verificados criados antes de: ${cutoffDate.toISOString()}`);
-    console.log(`  - Período de retenção: ${UNVERIFIED_USER_RETENTION_DAYS} dias, ${UNVERIFIED_USER_RETENTION_HOURS} horas, ${UNVERIFIED_USER_RETENTION_MINUTES} minutos.`);
+    console.log(`  - Deleting unverified users created before: ${cutoffDate.toISOString()}`);
+    console.log(`  - Retention period: ${UNVERIFIED_USER_RETENTION_DAYS} dias, ${UNVERIFIED_USER_RETENTION_HOURS} horas, ${UNVERIFIED_USER_RETENTION_MINUTES} minutos.`);
 
     const expiredTokensDeleted = await prisma.verificationToken.deleteMany({
       where: {
@@ -32,7 +32,7 @@ export async function cleanupUnverifiedUsers() {
         }
       }
     });
-    console.log(`  - Deletados ${expiredTokensDeleted.count} tokens expirados.`);
+    console.log(`  - Deleted ${expiredTokensDeleted.count} expired tokens.`);
 
     const oldUnverifiedUsersDeleted = await prisma.user.deleteMany({
       where: {
@@ -42,11 +42,11 @@ export async function cleanupUnverifiedUsers() {
         }
       }
     });
-    console.log(`  - Deletados ${oldUnverifiedUsersDeleted.count} usuários não verificados antigos.`);
-    console.log('Tarefa de limpeza concluída.');
+    console.log(`  - Deleted ${oldUnverifiedUsersDeleted.count} old unverified users.`);
+    console.log('Cleaning task completed.');
 
   } catch (error) {
-    console.error('Erro durante a tarefa de limpeza:', error);
+    console.error('Error during cleanup task: ', error);
   }
 }
 
