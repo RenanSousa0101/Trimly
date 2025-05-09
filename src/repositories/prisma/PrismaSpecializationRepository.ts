@@ -2,7 +2,7 @@ import { Specialization, Provider_Specialization, PrismaClient } from "../../gen
 import { PrismaClientOrTransaction } from "../ClientTransaction";
 import { CreateSpecialization, FullSpecialization, IspecializationRepository } from "../SpecializationRepository";
 
-export class PrismaRoleRepository implements IspecializationRepository {
+export class PrismaSpecializationRepository implements IspecializationRepository {
     
     constructor(private readonly prisma: PrismaClient) {}
 

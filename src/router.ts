@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ensureAdmin, ensureAuth, ensureProvider, authorizeAdminOrOwner, ensureNotSelf} from "./middlewares/auth-middleware";
-import { addressController, authController, phoneController, providerController, rolesController, userController } from "./container";
+import { addressController, authController, phoneController, providerController, rolesController, specializationController, userController } from "./container";
 
 const router = Router()
 
@@ -39,5 +39,7 @@ router.get("/users/:id/provider/:providerId", ensureAuth, ensureProvider, author
 router.put("/users/:id/provider/:providerId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), providerController.update)
 router.delete("/users/:id/provider/:providerId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), providerController.delete)
 
-
+router.get("/users/:id/provider/:providerId/specialization", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), specializationController.show)
+router.post("/users/:id/provider/:providerId/specialization", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), specializationController.create)
+router.put("/users/:id/provider/:providerId/specialization/:specializationId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), specializationController.update)
 export { router };

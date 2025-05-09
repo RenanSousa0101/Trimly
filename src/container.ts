@@ -19,6 +19,9 @@ import { PrismaProviderRepository } from "./repositories/prisma/PrismaProviderRe
 import { ProviderService } from "./services/ProviderService";
 import { ProviderController } from "./controllers/ProviderController";
 import { PrismaClient } from "./generated/prisma/client";
+import { PrismaSpecializationRepository } from "./repositories/prisma/PrismaSpecializationRepository";
+import { SpecializationService } from "./services/SpecializationService";
+import { SpecializationController } from "./controllers/SpecializationController";
 
 export const prismaClient = new PrismaClient();
 
@@ -28,6 +31,7 @@ export const addressRepository = new PrismaAddressRepository(prismaClient)
 export const rolesRepository = new PrismaRoleRepository(prismaClient)
 export const tokenRepository = new PrismaTokenRepository(prismaClient)
 export const providerRepository = new PrismaProviderRepository(prismaClient)
+export const specializationRepository = new PrismaSpecializationRepository(prismaClient)
 
 export const emailService = new EmailService;
 export const passwordService = new PasswordService;
@@ -42,6 +46,7 @@ export const authService = new AuthService(
 export const providerService = new ProviderService(
     prismaClient, userRepository, phoneRepository, addressRepository, rolesRepository, providerRepository
 )
+export const specializationService = new SpecializationService(prismaClient, userRepository, providerRepository, specializationRepository)
 
 export const userController = new UserController(usersService)
 export const phoneController = new PhoneController(phoneService)
@@ -49,3 +54,4 @@ export const addressController = new AddressController(addressService)
 export const rolesController = new RolesController(rolesService)
 export const authController = new AuthController(authService)
 export const providerController = new ProviderController(providerService)
+export const specializationController = new SpecializationController(specializationService)

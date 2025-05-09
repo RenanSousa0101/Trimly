@@ -1,5 +1,3 @@
-// src/services/RolesService.ts
-
 import { HttpError } from "../errors/HttpError";
 import { IrolesRepository, RoleTypeAttributes } from "../repositories/RolesRepository";
 import { IuserRepository } from "../repositories/UserRepository";
@@ -14,7 +12,7 @@ export class RolesService {
     async getUserRoles(userId: number) {
         const userExists = await this.userRepository.findById(userId);
         if (!userExists) {
-            throw new HttpError(404, "User not found"); // Target user
+            throw new HttpError(404, "User not found");
         }
 
         const roles = await this.rolesRepository.findByUserIdRoles(userId);
