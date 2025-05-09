@@ -24,11 +24,11 @@ export class RolesService {
         const actingUserRoles = await this.rolesRepository.findByUserIdRoles(actingUserId);
         const safeActingUserRoles = actingUserRoles || [];
         const actingUserIsAdmin = safeActingUserRoles.some(assignment => assignment.roles.role_type === "Admin");
-        const actingUserIsClient = safeActingUserRoles.some(assignment => assignment.roles.role_type === "Client");
+        const actingUserIsUser = safeActingUserRoles.some(assignment => assignment.roles.role_type === "User");
 
         if (!actingUserIsAdmin) {
-            if (!actingUserIsClient || params.role_type !== "Provider") {
-                 throw new HttpError(403, "Permission denied. As a non-Admin user, you can only add the Provider role to yourself if you are a Client.");
+            if (!actingUserIsUser || params.role_type !== "Provider" || "Client") {
+                 throw new HttpError(403, "Permission denied. As a non-Admin user, you can only add the Provider or Client role to yourself if you are a User.");
             }
         }
 
@@ -71,7 +71,7 @@ export class RolesService {
             throw new HttpError(404, `Old role with ID ${oldRoleId} details not found.`);
         }
         
-        if (oldRoleDetails.role_type === "Client") {
+        if (oldRoleDetails.role_type === "User") {
             throw new HttpError(403, "Unable to change the 'Client' role assignment.");
         }
 
@@ -108,8 +108,8 @@ export class RolesService {
             throw new HttpError(404, `Role with ID ${roleId} details not found.`);
         }
         
-        if (roleDetails.role_type === "Client") {
-            throw new HttpError(403, "Unable to delete the 'Client' role assignment.");
+        if (roleDetails.role_type === "User") {
+            throw new HttpError(403, "Unable to delete the 'User' role assignment.");
         }
 
         const deletedAssignment = await this.rolesRepository.deletedByUserIdRoleId(userId, roleId);

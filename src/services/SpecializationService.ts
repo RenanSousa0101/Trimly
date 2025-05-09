@@ -102,4 +102,19 @@ export class SpecializationService {
         })
         return transactionProviderSpecialization
     }
+
+    async deleteProviderSpecialization(userId: number, providerId: number, specializationId: number) {
+        const user = await this.userRepository.findById(userId);
+        if (!user) throw new HttpError(404, "User not found");
+    
+        const provider = await this.providerRepository.findByIdProvider(userId, providerId);
+        if (!provider) throw new HttpError(404, "Provider not found");
+
+        const specialization = await this.specializationRepository.findByProviderIdSpecializationId(providerId, specializationId)
+        if (!specialization) throw new HttpError(404, "Specialization not found");
+
+        const deleteProviderSpecialization = await this.specializationRepository.deletedByProviderIdSpecializationId(providerId, specializationId);
+
+        return deleteProviderSpecialization
+    }
 }

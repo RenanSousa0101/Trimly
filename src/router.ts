@@ -42,4 +42,6 @@ router.delete("/users/:id/provider/:providerId", ensureAuth, ensureProvider, aut
 router.get("/users/:id/provider/:providerId/specialization", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), specializationController.show)
 router.post("/users/:id/provider/:providerId/specialization", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), specializationController.create)
 router.put("/users/:id/provider/:providerId/specialization/:specializationId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), specializationController.update)
+router.delete("/users/:id/provider/:providerId/specialization/:specializationId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), specializationController.delete)
+
 export { router };

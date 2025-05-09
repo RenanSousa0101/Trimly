@@ -42,4 +42,16 @@ export class SpecializationController {
             next(error)
         }
     }
+
+    delete: Handler = async (req, res, next) => {
+        try {
+            const id = Number(req.params.id);
+            const providerId = Number(req.params.providerId)
+            const specializationId = Number(req.params.specializationId)
+            const deletedProviderSpecialization = await this.specializationService.deleteProviderSpecialization(id, providerId, specializationId)
+            res.status(201).json(deletedProviderSpecialization);
+        } catch (error) {
+            next(error)
+        }
+    }
 }
