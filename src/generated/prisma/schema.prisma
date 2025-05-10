@@ -265,7 +265,7 @@ model Provider_Service {
   id          Int      @id @default(autoincrement())
   provider_id Int
   service_id  Int
-  price       Float
+  price       Decimal
   duration    Int
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt

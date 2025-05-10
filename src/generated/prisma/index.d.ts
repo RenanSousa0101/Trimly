@@ -23850,7 +23850,7 @@ export namespace Prisma {
     id: number | null
     provider_id: number | null
     service_id: number | null
-    price: number | null
+    price: Decimal | null
     duration: number | null
   }
 
@@ -23858,7 +23858,7 @@ export namespace Prisma {
     id: number | null
     provider_id: number | null
     service_id: number | null
-    price: number | null
+    price: Decimal | null
     duration: number | null
   }
 
@@ -23866,7 +23866,7 @@ export namespace Prisma {
     id: number | null
     provider_id: number | null
     service_id: number | null
-    price: number | null
+    price: Decimal | null
     duration: number | null
     created_at: Date | null
     updated_at: Date | null
@@ -23876,7 +23876,7 @@ export namespace Prisma {
     id: number | null
     provider_id: number | null
     service_id: number | null
-    price: number | null
+    price: Decimal | null
     duration: number | null
     created_at: Date | null
     updated_at: Date | null
@@ -24031,7 +24031,7 @@ export namespace Prisma {
     id: number
     provider_id: number
     service_id: number
-    price: number
+    price: Decimal
     duration: number
     created_at: Date
     updated_at: Date
@@ -24126,7 +24126,7 @@ export namespace Prisma {
       id: number
       provider_id: number
       service_id: number
-      price: number
+      price: Prisma.Decimal
       duration: number
       created_at: Date
       updated_at: Date
@@ -24558,7 +24558,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Provider_Service", 'Int'>
     readonly provider_id: FieldRef<"Provider_Service", 'Int'>
     readonly service_id: FieldRef<"Provider_Service", 'Int'>
-    readonly price: FieldRef<"Provider_Service", 'Float'>
+    readonly price: FieldRef<"Provider_Service", 'Decimal'>
     readonly duration: FieldRef<"Provider_Service", 'Int'>
     readonly created_at: FieldRef<"Provider_Service", 'DateTime'>
     readonly updated_at: FieldRef<"Provider_Service", 'DateTime'>
@@ -27753,6 +27753,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal[]'
+   */
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
    * Reference to a field of type 'SchedulingStatus'
    */
   export type EnumSchedulingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SchedulingStatus'>
@@ -28986,7 +29000,7 @@ export namespace Prisma {
     id?: IntFilter<"Provider_Service"> | number
     provider_id?: IntFilter<"Provider_Service"> | number
     service_id?: IntFilter<"Provider_Service"> | number
-    price?: FloatFilter<"Provider_Service"> | number
+    price?: DecimalFilter<"Provider_Service"> | Decimal | DecimalJsLike | number | string
     duration?: IntFilter<"Provider_Service"> | number
     created_at?: DateTimeFilter<"Provider_Service"> | Date | string
     updated_at?: DateTimeFilter<"Provider_Service"> | Date | string
@@ -29013,7 +29027,7 @@ export namespace Prisma {
     NOT?: Provider_ServiceWhereInput | Provider_ServiceWhereInput[]
     provider_id?: IntFilter<"Provider_Service"> | number
     service_id?: IntFilter<"Provider_Service"> | number
-    price?: FloatFilter<"Provider_Service"> | number
+    price?: DecimalFilter<"Provider_Service"> | Decimal | DecimalJsLike | number | string
     duration?: IntFilter<"Provider_Service"> | number
     created_at?: DateTimeFilter<"Provider_Service"> | Date | string
     updated_at?: DateTimeFilter<"Provider_Service"> | Date | string
@@ -29043,7 +29057,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Provider_Service"> | number
     provider_id?: IntWithAggregatesFilter<"Provider_Service"> | number
     service_id?: IntWithAggregatesFilter<"Provider_Service"> | number
-    price?: FloatWithAggregatesFilter<"Provider_Service"> | number
+    price?: DecimalWithAggregatesFilter<"Provider_Service"> | Decimal | DecimalJsLike | number | string
     duration?: IntWithAggregatesFilter<"Provider_Service"> | number
     created_at?: DateTimeWithAggregatesFilter<"Provider_Service"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Provider_Service"> | Date | string
@@ -30400,7 +30414,7 @@ export namespace Prisma {
   }
 
   export type Provider_ServiceCreateInput = {
-    price: number
+    price: Decimal | DecimalJsLike | number | string
     duration: number
     created_at?: Date | string
     updated_at?: Date | string
@@ -30412,14 +30426,14 @@ export namespace Prisma {
     id?: number
     provider_id: number
     service_id: number
-    price: number
+    price: Decimal | DecimalJsLike | number | string
     duration: number
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type Provider_ServiceUpdateInput = {
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     duration?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30431,7 +30445,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     provider_id?: IntFieldUpdateOperationsInput | number
     service_id?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     duration?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30441,14 +30455,14 @@ export namespace Prisma {
     id?: number
     provider_id: number
     service_id: number
-    price: number
+    price: Decimal | DecimalJsLike | number | string
     duration: number
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type Provider_ServiceUpdateManyMutationInput = {
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     duration?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30458,7 +30472,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     provider_id?: IntFieldUpdateOperationsInput | number
     service_id?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     duration?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31746,15 +31760,15 @@ export namespace Prisma {
     service_category_id?: SortOrder
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
   export type ServiceScalarRelationFilter = {
@@ -31808,20 +31822,20 @@ export namespace Prisma {
     duration?: SortOrder
   }
 
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
   export type EnumSchedulingStatusFilter<$PrismaModel = never> = {
@@ -33167,12 +33181,12 @@ export namespace Prisma {
     connect?: ServiceWhereUniqueInput
   }
 
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
   }
 
   export type ProviderUpdateOneRequiredWithoutProvider_ServiceNestedInput = {
@@ -33565,20 +33579,31 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
   export type NestedEnumSchedulingStatusFilter<$PrismaModel = never> = {
@@ -34966,7 +34991,7 @@ export namespace Prisma {
   }
 
   export type Provider_ServiceCreateWithoutProviderInput = {
-    price: number
+    price: Decimal | DecimalJsLike | number | string
     duration: number
     created_at?: Date | string
     updated_at?: Date | string
@@ -34976,7 +35001,7 @@ export namespace Prisma {
   export type Provider_ServiceUncheckedCreateWithoutProviderInput = {
     id?: number
     service_id: number
-    price: number
+    price: Decimal | DecimalJsLike | number | string
     duration: number
     created_at?: Date | string
     updated_at?: Date | string
@@ -35171,7 +35196,7 @@ export namespace Prisma {
     id?: IntFilter<"Provider_Service"> | number
     provider_id?: IntFilter<"Provider_Service"> | number
     service_id?: IntFilter<"Provider_Service"> | number
-    price?: FloatFilter<"Provider_Service"> | number
+    price?: DecimalFilter<"Provider_Service"> | Decimal | DecimalJsLike | number | string
     duration?: IntFilter<"Provider_Service"> | number
     created_at?: DateTimeFilter<"Provider_Service"> | Date | string
     updated_at?: DateTimeFilter<"Provider_Service"> | Date | string
@@ -35792,7 +35817,7 @@ export namespace Prisma {
   }
 
   export type Provider_ServiceCreateWithoutServiceInput = {
-    price: number
+    price: Decimal | DecimalJsLike | number | string
     duration: number
     created_at?: Date | string
     updated_at?: Date | string
@@ -35802,7 +35827,7 @@ export namespace Prisma {
   export type Provider_ServiceUncheckedCreateWithoutServiceInput = {
     id?: number
     provider_id: number
-    price: number
+    price: Decimal | DecimalJsLike | number | string
     duration: number
     created_at?: Date | string
     updated_at?: Date | string
@@ -36856,7 +36881,7 @@ export namespace Prisma {
   export type Provider_ServiceCreateManyProviderInput = {
     id?: number
     service_id: number
-    price: number
+    price: Decimal | DecimalJsLike | number | string
     duration: number
     created_at?: Date | string
     updated_at?: Date | string
@@ -36929,7 +36954,7 @@ export namespace Prisma {
   }
 
   export type Provider_ServiceUpdateWithoutProviderInput = {
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     duration?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36939,7 +36964,7 @@ export namespace Prisma {
   export type Provider_ServiceUncheckedUpdateWithoutProviderInput = {
     id?: IntFieldUpdateOperationsInput | number
     service_id?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     duration?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36948,7 +36973,7 @@ export namespace Prisma {
   export type Provider_ServiceUncheckedUpdateManyWithoutProviderInput = {
     id?: IntFieldUpdateOperationsInput | number
     service_id?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     duration?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37159,7 +37184,7 @@ export namespace Prisma {
   export type Provider_ServiceCreateManyServiceInput = {
     id?: number
     provider_id: number
-    price: number
+    price: Decimal | DecimalJsLike | number | string
     duration: number
     created_at?: Date | string
     updated_at?: Date | string
@@ -37177,7 +37202,7 @@ export namespace Prisma {
   }
 
   export type Provider_ServiceUpdateWithoutServiceInput = {
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     duration?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37187,7 +37212,7 @@ export namespace Prisma {
   export type Provider_ServiceUncheckedUpdateWithoutServiceInput = {
     id?: IntFieldUpdateOperationsInput | number
     provider_id?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     duration?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37196,7 +37221,7 @@ export namespace Prisma {
   export type Provider_ServiceUncheckedUpdateManyWithoutServiceInput = {
     id?: IntFieldUpdateOperationsInput | number
     provider_id?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     duration?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
