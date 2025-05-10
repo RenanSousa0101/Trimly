@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ensureAdmin, ensureAuth, ensureProvider, authorizeAdminOrOwner, ensureNotSelf} from "./middlewares/auth-middleware";
-import { addressController, authController, phoneController, providerController, rolesController, specializationController, userController } from "./container";
+import { addressController, authController, phoneController, providerController, rolesController, specializationController, timeController, userController } from "./container";
 
 const router = Router()
 
@@ -43,5 +43,9 @@ router.get("/users/:id/provider/:providerId/specialization", ensureAuth, ensureP
 router.post("/users/:id/provider/:providerId/specialization", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), specializationController.create)
 router.put("/users/:id/provider/:providerId/specialization/:specializationId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), specializationController.update)
 router.delete("/users/:id/provider/:providerId/specialization/:specializationId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), specializationController.delete)
+
+router.get("/users/:id/provider/:providerId/time", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.index)
+router.get("/users/:id/provider/:providerId/time/:timeId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.show)
+router.post("/users/:id/provider/:providerId/time", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.create)
 
 export { router };
