@@ -21,7 +21,7 @@ export enum DayOfTheWeek {
     Thursday = 5,
     Friday  = 6,
     Saturday = 7,
-  }
+}
 
 export interface ItimeRepository {
     findTime: (providerId: number, client?: PrismaClientOrTransaction) => Promise<Time[] | null>

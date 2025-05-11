@@ -221,8 +221,8 @@ model Time {
   id          Int      @id @default(autoincrement())
   provider_id Int
   day_of_week Int
-  start_time  DateTime
-  end_time    DateTime
+  start_time  DateTime @db.Time()
+  end_time    DateTime @db.Time()
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   provider    Provider @relation(fields: [provider_id], references: [id], onDelete: Cascade)
