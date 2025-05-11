@@ -34,8 +34,21 @@ export class TimeController {
             const id = Number(req.params.id);
             const providerId = Number(req.params.providerId);
             const body = CreateTimeRequestSchema.parse(req.body);
-            const getProviderTime =  await this.timeService.createProviderTime(id, providerId, body)
-            res.status(200).json(getProviderTime);
+            const createProviderTime =  await this.timeService.createProviderTime(id, providerId, body);
+            res.status(200).json(createProviderTime);
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    update: Handler = async (req, res, next) => {
+        try{
+            const id = Number(req.params.id);
+            const providerId = Number(req.params.providerId);
+            const timeId = Number(req.params.timeId);
+            const body = CreateTimeRequestSchema.parse(req.body);
+            const updatedProviderTime =  await this.timeService.updateProviderTime(id, providerId, timeId, body);
+            res.status(200).json(updatedProviderTime);
         } catch (error) {
             next(error)
         }

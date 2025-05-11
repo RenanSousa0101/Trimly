@@ -47,5 +47,6 @@ router.delete("/users/:id/provider/:providerId/specialization/:specializationId"
 router.get("/users/:id/provider/:providerId/time", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.index)
 router.get("/users/:id/provider/:providerId/time/:timeId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.show)
 router.post("/users/:id/provider/:providerId/time", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.create)
+router.put("/users/:id/provider/:providerId/time/:timeId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.update)
 
 export { router };
