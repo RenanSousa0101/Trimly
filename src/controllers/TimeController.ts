@@ -53,4 +53,16 @@ export class TimeController {
             next(error)
         }
     }
+
+    delete: Handler = async (req, res, next) => {
+        try{
+            const id = Number(req.params.id);
+            const providerId = Number(req.params.providerId);
+            const timeId = Number(req.params.timeId);
+            const deletedProviderTime =  await this.timeService.deleteProviderTime(id, providerId, timeId);
+            res.status(200).json(deletedProviderTime);
+        } catch (error) {
+            next(error)
+        }
+    }
 }

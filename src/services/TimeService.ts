@@ -1,21 +1,15 @@
 import { HttpError } from "../errors/HttpError";
-import { PrismaClient } from "../generated/prisma/client";
 import { IproviderRepository } from "../repositories/ProviderRepository";
 import { DayOfTheWeek, ItimeRepository, TimeAttributes } from "../repositories/TimeRepository";
 import { IuserRepository } from "../repositories/UserRepository";
 import dayjs from 'dayjs';
-
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
-import { Certificate } from "crypto";
+import utc from 'dayjs/plugin/utc';
 import { formatTimeResponse } from "./functions/formatTime";
 
 dayjs.extend(utc);
-dayjs.extend(timezone);
 export class TimeService {
 
     constructor(
-        private readonly prismaClient: PrismaClient,
         private readonly userRepository: IuserRepository,
         private readonly providerRepository: IproviderRepository,
         private readonly timeRepository: ItimeRepository
@@ -121,5 +115,20 @@ export class TimeService {
         const updateTime = await this.timeRepository.updateTime(providerId, timeId, {...params, day_of_week: day, start_time: dateStartTime, end_time: dateEndTime});
 
         return formatTimeResponse(updateTime);
+    }
+
+    async deleteProviderTime(userId: number, providerId: number, timeId: number) {
+        const user = await this.userRepository.findById(userId);
+        if (!user) throw new HttpError(404, "User not found");
+
+        const provider = await this.providerRepository.findByIdProvider(userId, providerId);
+        if (!provider) throw new HttpError(404, "Provider not found");
+
+        const time = await this.timeRepository.findByTimeId(providerId, timeId);
+        if (!time) throw new HttpError(404, "Time not found");
+
+        const deleteTime = await this.timeRepository.deleteTime(providerId, timeId);
+
+        return formatTimeResponse(deleteTime)
     }
 }

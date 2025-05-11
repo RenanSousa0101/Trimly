@@ -51,7 +51,7 @@ export const providerService = new ProviderService(
     prismaClient, userRepository, phoneRepository, addressRepository, rolesRepository, providerRepository
 )
 export const specializationService = new SpecializationService(prismaClient, userRepository, providerRepository, specializationRepository)
-export const timeService = new TimeService(prismaClient, userRepository, providerRepository, timeRepository)
+export const timeService = new TimeService(userRepository, providerRepository, timeRepository)
 
 export const userController = new UserController(usersService)
 export const phoneController = new PhoneController(phoneService)

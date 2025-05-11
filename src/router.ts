@@ -4,13 +4,12 @@ import { addressController, authController, phoneController, providerController,
 
 const router = Router()
 
-router.post("/auth/register", authController.register)
+router.post("/auth/register", authController.register);
 router.post("/auth/resend-verification", authController.resendVerificationEmail);
 router.get("/auth/verify-email", authController.verifyEmail);
 router.post('/auth/forgot-password', authController.forgotPassword);
 router.post('/auth/reset-password', authController.resetPassword);
-
-router.post("/auth/login", authController.login)
+router.post("/auth/login", authController.login);
 
 router.get("/users", ensureAuth, ensureAdmin, userController.index)
 router.post("/users", ensureAuth, ensureAdmin, userController.create)
@@ -48,5 +47,6 @@ router.get("/users/:id/provider/:providerId/time", ensureAuth, ensureProvider, a
 router.get("/users/:id/provider/:providerId/time/:timeId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.show)
 router.post("/users/:id/provider/:providerId/time", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.create)
 router.put("/users/:id/provider/:providerId/time/:timeId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.update)
+router.delete("/users/:id/provider/:providerId/time/:timeId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.delete)
 
 export { router };
