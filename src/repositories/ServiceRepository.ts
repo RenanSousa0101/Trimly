@@ -1,5 +1,7 @@
 import { Service_Category } from "../generated/prisma/client";
+import { Decimal } from "../generated/prisma/runtime/library";
 import { PrismaClientOrTransaction } from "./ClientTransaction";
+
 
 export interface ServiceCategoryWhereParams {
     name?: {
@@ -20,6 +22,15 @@ export interface FindServiceCategoryParams {
 export interface CreateServiceCategory {
     name: string
     description?: string
+}
+
+export interface CreateServiceProvicerAttributes {
+    nameService: string
+    descriptionService: string
+    price: Decimal
+    duration: number
+    nameCategory: string
+    description: string
 }
 
 export interface IserviceRepository { 
