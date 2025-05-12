@@ -1,6 +1,6 @@
 import { PrismaClient, Service_Category } from "../../generated/prisma/client";
 import { PrismaClientOrTransaction } from "../ClientTransaction";
-import { CreateServiceCategory, FindServiceCategoryParams, IserviceRepository } from "../ServiceRepository";
+import { CreateServiceCategory, FindServiceCategoryParams, IserviceRepository, ServiceCategoryWhereParams } from "../ServiceRepository";
 
 export class PrismaServiceRepository implements IserviceRepository {
 
@@ -29,6 +29,7 @@ export class PrismaServiceRepository implements IserviceRepository {
             }
         })
     }
+
     async findByServiceCategoryId(serviceCategoryId: number, client?: PrismaClientOrTransaction): Promise<Service_Category | null> {
         const prismaClient = client || this.prisma;
 
@@ -36,6 +37,29 @@ export class PrismaServiceRepository implements IserviceRepository {
             where: {id: serviceCategoryId }
         })
     }
+
+    findByServiceCategoryName(serviceCategoryName: string, client?: PrismaClientOrTransaction): Promise<Service_Category | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.service_Category.findFirst({
+            where: {name: serviceCategoryName }
+        })
+    }
+
+    countServiceCategory(where: ServiceCategoryWhereParams, client?: PrismaClientOrTransaction): Promise<number> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.service_Category.count({
+            where: {
+                name: {
+                    contains: where.name?.contains,
+                    equals: where.name?.equals,
+                    mode: where.name?.mode,
+                }
+            }
+        })
+    }
+
     async createServiceCategory(attributes: CreateServiceCategory, client?: PrismaClientOrTransaction): Promise<Service_Category> {
         const prismaClient = client || this.prisma;
 
@@ -43,6 +67,7 @@ export class PrismaServiceRepository implements IserviceRepository {
             data: { ...attributes }
         })
     }
+
     async updateServiceCategory(serviceCategoryId: number, attributes: Partial<CreateServiceCategory>, client?: PrismaClientOrTransaction): Promise<Service_Category> {
         const prismaClient = client || this.prisma;
 
@@ -51,6 +76,7 @@ export class PrismaServiceRepository implements IserviceRepository {
             data: { ...attributes }
         })
     }
+
     async deleteServiceCategory(serviceCategoryId: number, client?: PrismaClientOrTransaction): Promise<Service_Category> {
         const prismaClient = client || this.prisma;
 

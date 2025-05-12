@@ -36,6 +36,8 @@ export interface CreateServiceProvicerAttributes {
 export interface IserviceRepository { 
     findServiceCategory: (params: FindServiceCategoryParams, client?: PrismaClientOrTransaction) => Promise<Service_Category[] | null>
     findByServiceCategoryId: (serviceCategoryId: number, client?: PrismaClientOrTransaction) => Promise<Service_Category | null>
+    findByServiceCategoryName: (serviceCategoryName: string, client?: PrismaClientOrTransaction) => Promise<Service_Category | null>
+    countServiceCategory: (where: ServiceCategoryWhereParams, client?: PrismaClientOrTransaction) => Promise<number>
     createServiceCategory: (attributes: CreateServiceCategory, client?: PrismaClientOrTransaction) => Promise<Service_Category>
     updateServiceCategory: (serviceCategoryId: number, attributes: Partial<CreateServiceCategory>, client?: PrismaClientOrTransaction) => Promise<Service_Category>
     deleteServiceCategory: (serviceCategoryId: number, client?: PrismaClientOrTransaction) => Promise<Service_Category>
