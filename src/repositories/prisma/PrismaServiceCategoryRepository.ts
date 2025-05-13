@@ -1,8 +1,8 @@
 import { PrismaClient, Service_Category } from "../../generated/prisma/client";
 import { PrismaClientOrTransaction } from "../ClientTransaction";
-import { CreateServiceCategory, FindServiceCategoryParams, IserviceRepository, ServiceCategoryWhereParams } from "../ServiceRepository";
+import { CreateServiceCategory, FindServiceCategoryParams, IserviceCategoryRepository, ServiceCategoryWhereParams } from "../ServiceCategoryRepository";
 
-export class PrismaServiceRepository implements IserviceRepository {
+export class PrismaServiceCategoryRepository implements IserviceCategoryRepository {
 
     constructor(private readonly prisma: PrismaClient) {}
 

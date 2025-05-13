@@ -33,7 +33,7 @@ export interface CreateServiceProvicerAttributes {
     description: string
 }
 
-export interface IserviceRepository { 
+export interface IserviceCategoryRepository { 
     findServiceCategory: (params: FindServiceCategoryParams, client?: PrismaClientOrTransaction) => Promise<Service_Category[] | null>
     findByServiceCategoryId: (serviceCategoryId: number, client?: PrismaClientOrTransaction) => Promise<Service_Category | null>
     findByServiceCategoryName: (serviceCategoryName: string, client?: PrismaClientOrTransaction) => Promise<Service_Category | null>

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ensureAdmin, ensureAuth, ensureProvider, authorizeAdminOrOwner, ensureNotSelf} from "./middlewares/auth-middleware";
-import { addressController, authController, phoneController, providerController, rolesController, serviceController, specializationController, timeController, userController } from "./container";
+import { addressController, authController, phoneController, providerController, rolesController, serviceCategoryController, specializationController, timeController, userController } from "./container";
 
 const router = Router()
 
@@ -49,10 +49,10 @@ router.post("/users/:id/provider/:providerId/time", ensureAuth, ensureProvider, 
 router.put("/users/:id/provider/:providerId/time/:timeId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.update)
 router.delete("/users/:id/provider/:providerId/time/:timeId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), timeController.delete)
 
-router.get("/users/:id/provider/:providerId/serviceCategory",  ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), serviceController.index)
-router.get("/users/:id/provider/:providerId/serviceCategory/:serviceCategoryId",  ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), serviceController.show)
-router.post("/users/:id/provider/:providerId/serviceCategory",  ensureAuth, ensureAdmin, authorizeAdminOrOwner('id'), serviceController.create)
-router.put("/users/:id/provider/:providerId/serviceCategory/:serviceCategoryId",  ensureAuth, ensureAdmin, authorizeAdminOrOwner('id'), serviceController.update)
-router.delete("/users/:id/provider/:providerId/serviceCategory/:serviceCategoryId",  ensureAuth, ensureAdmin, authorizeAdminOrOwner('id'), serviceController.delete)
+router.get("/users/:id/provider/:providerId/serviceCategory", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), serviceCategoryController.index)
+router.get("/users/:id/provider/:providerId/serviceCategory/:serviceCategoryId",  ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), serviceCategoryController.show)
+router.post("/users/:id/provider/:providerId/serviceCategory", ensureAuth, ensureAdmin, serviceCategoryController.create)
+router.put("/users/:id/provider/:providerId/serviceCategory/:serviceCategoryId", ensureAuth, ensureAdmin, serviceCategoryController.update)
+router.delete("/users/:id/provider/:providerId/serviceCategory/:serviceCategoryId", ensureAuth, ensureAdmin, serviceCategoryController.delete)
 
 export { router };

@@ -1,7 +1,7 @@
 import { HttpError } from "../errors/HttpError";
 import { PrismaClient } from "../generated/prisma";
 import { IproviderRepository } from "../repositories/ProviderRepository";
-import { CreateServiceCategory, CreateServiceProvicerAttributes, IserviceRepository, ServiceCategoryWhereParams } from "../repositories/ServiceRepository";
+import { CreateServiceCategory, IserviceCategoryRepository, ServiceCategoryWhereParams } from "../repositories/ServiceCategoryRepository";
 import { IuserRepository } from "../repositories/UserRepository";
 
 interface GetServiceCategoryWithPaginationParams {
@@ -11,13 +11,10 @@ interface GetServiceCategoryWithPaginationParams {
     sortBy?: "name"
     order?: "asc" | "desc"
 }
-export class ServiceService {
+export class ServiceCategoryService {
 
     constructor(
-        private readonly prismaClient: PrismaClient,
-        private readonly userRepository: IuserRepository,
-        private readonly providerRepository: IproviderRepository,
-        private readonly serviceRepository: IserviceRepository
+        private readonly serviceCategoryRepository: IserviceCategoryRepository
     ) { }
 
     async getAllServiceCategoryPaginated(params: GetServiceCategoryWithPaginationParams) {
@@ -32,8 +29,8 @@ export class ServiceService {
             where.name = { contains: name, mode: "insensitive" };
         }
 
-        const serviceCategory = await this.serviceRepository.findServiceCategory({ where, sortBy, order, skip, take });
-        const totalServiceCategory = await this.serviceRepository.countServiceCategory(where);
+        const serviceCategory = await this.serviceCategoryRepository.findServiceCategory({ where, sortBy, order, skip, take });
+        const totalServiceCategory = await this.serviceCategoryRepository.countServiceCategory(where);
 
         return {
             serviceCategory,
@@ -47,39 +44,39 @@ export class ServiceService {
     }
 
     async getServiceCategory(serviceCategoryId: number) { 
-        const serviceCategory = await this.serviceRepository.findByServiceCategoryId(serviceCategoryId)
+        const serviceCategory = await this.serviceCategoryRepository.findByServiceCategoryId(serviceCategoryId)
         if (!serviceCategory) throw new HttpError(404, "Service Category not found")
         return serviceCategory
     }
 
     async createServiceCategory(params: CreateServiceCategory) {
-        const serviceCategory = await this.serviceRepository.findByServiceCategoryName(params.name.toLowerCase());
+        const serviceCategory = await this.serviceCategoryRepository.findByServiceCategoryName(params.name.toLowerCase());
         if(serviceCategory) throw new HttpError(409, "This category already exists");
-        const createServiceCategory = await this.serviceRepository.createServiceCategory({...params, name: params.name.toLowerCase()})
+        const createServiceCategory = await this.serviceCategoryRepository.createServiceCategory({...params, name: params.name.toLowerCase()})
         return createServiceCategory
     }
 
     async updateServiceCategory(serviceCategoryId: number, params: Partial<CreateServiceCategory>) {
 
-        const serviceCategory = await this.serviceRepository.findByServiceCategoryId(serviceCategoryId)
+        const serviceCategory = await this.serviceCategoryRepository.findByServiceCategoryId(serviceCategoryId)
         if (!serviceCategory) throw new HttpError(404, "Service Category not found");
 
         let formatedName = params.name
 
         if(params.name){
             formatedName = params.name.toLowerCase()
-            const serviceCategoryName = await this.serviceRepository.findByServiceCategoryName(formatedName);
+            const serviceCategoryName = await this.serviceCategoryRepository.findByServiceCategoryName(formatedName);
             if(serviceCategoryName) throw new HttpError(409, "This category already exists");
         }
 
-        const updateServiceCategory = await this.serviceRepository.updateServiceCategory(serviceCategoryId, {...params, name: formatedName})
+        const updateServiceCategory = await this.serviceCategoryRepository.updateServiceCategory(serviceCategoryId, {...params, name: formatedName})
         return updateServiceCategory
     }
 
     async deleteServiceCategory(serviceCategoryId: number) {
-        const serviceCategory = await this.serviceRepository.findByServiceCategoryId(serviceCategoryId)
+        const serviceCategory = await this.serviceCategoryRepository.findByServiceCategoryId(serviceCategoryId)
         if (!serviceCategory) throw new HttpError(404, "Service Category not found");
-        const deleteServiceCategory = await this.serviceRepository.deleteServiceCategory(serviceCategoryId)
+        const deleteServiceCategory = await this.serviceCategoryRepository.deleteServiceCategory(serviceCategoryId)
         return deleteServiceCategory
     }
 }

@@ -25,9 +25,9 @@ import { SpecializationController } from "./controllers/SpecializationController
 import { PrismaTimeRepository } from "./repositories/prisma/PrismaTimeRepository";
 import { TimeService } from "./services/TimeService";
 import { TimeController } from "./controllers/TimeController";
-import { PrismaServiceRepository } from "./repositories/prisma/PrismaServiceRepository";
-import { ServiceService } from "./services/ServiceService";
-import { ServiceController } from "./controllers/ServiceController";
+import { PrismaServiceCategoryRepository } from "./repositories/prisma/PrismaServiceCategoryRepository";
+import { ServiceCategoryService } from "./services/ServiceCategoryService";
+import { ServiceCategoryController } from "./controllers/ServiceCategoryController";
 
 export const prismaClient = new PrismaClient();
 
@@ -39,7 +39,7 @@ export const tokenRepository = new PrismaTokenRepository(prismaClient)
 export const providerRepository = new PrismaProviderRepository(prismaClient)
 export const specializationRepository = new PrismaSpecializationRepository(prismaClient)
 export const timeRepository = new PrismaTimeRepository(prismaClient)
-export const serviceRepository = new PrismaServiceRepository(prismaClient)
+export const serviceCategoryRepository = new PrismaServiceCategoryRepository(prismaClient)
 
 export const emailService = new EmailService;
 export const passwordService = new PasswordService;
@@ -56,7 +56,7 @@ export const providerService = new ProviderService(
 )
 export const specializationService = new SpecializationService(prismaClient, userRepository, providerRepository, specializationRepository)
 export const timeService = new TimeService(userRepository, providerRepository, timeRepository)
-export const serviceService = new ServiceService(prismaClient, userRepository, providerRepository, serviceRepository)
+export const serviceCategoryService = new ServiceCategoryService(serviceCategoryRepository)
 
 export const userController = new UserController(usersService)
 export const phoneController = new PhoneController(phoneService)
@@ -66,4 +66,4 @@ export const authController = new AuthController(authService)
 export const providerController = new ProviderController(providerService)
 export const specializationController = new SpecializationController(specializationService)
 export const timeController = new TimeController(timeService)
-export const serviceController = new ServiceController(serviceService)
+export const serviceCategoryController = new ServiceCategoryController(serviceCategoryService)
