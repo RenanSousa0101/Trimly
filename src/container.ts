@@ -28,6 +28,9 @@ import { TimeController } from "./controllers/TimeController";
 import { PrismaServiceCategoryRepository } from "./repositories/prisma/PrismaServiceCategoryRepository";
 import { ServiceCategoryService } from "./services/ServiceCategoryService";
 import { ServiceCategoryController } from "./controllers/ServiceCategoryController";
+import { PrismaServiceRepository } from "./repositories/prisma/PrismaServiceRepository";
+import { ServiceService } from "./services/ServiceService";
+import { ServiceController } from "./controllers/ServiceController";
 
 export const prismaClient = new PrismaClient();
 
@@ -40,6 +43,7 @@ export const providerRepository = new PrismaProviderRepository(prismaClient)
 export const specializationRepository = new PrismaSpecializationRepository(prismaClient)
 export const timeRepository = new PrismaTimeRepository(prismaClient)
 export const serviceCategoryRepository = new PrismaServiceCategoryRepository(prismaClient)
+export const serviceRepository = new PrismaServiceRepository(prismaClient)
 
 export const emailService = new EmailService;
 export const passwordService = new PasswordService;
@@ -57,6 +61,7 @@ export const providerService = new ProviderService(
 export const specializationService = new SpecializationService(prismaClient, userRepository, providerRepository, specializationRepository)
 export const timeService = new TimeService(userRepository, providerRepository, timeRepository)
 export const serviceCategoryService = new ServiceCategoryService(serviceCategoryRepository)
+export const serviceService = new ServiceService(serviceRepository, serviceCategoryRepository)
 
 export const userController = new UserController(usersService)
 export const phoneController = new PhoneController(phoneService)
@@ -67,3 +72,4 @@ export const providerController = new ProviderController(providerService)
 export const specializationController = new SpecializationController(specializationService)
 export const timeController = new TimeController(timeService)
 export const serviceCategoryController = new ServiceCategoryController(serviceCategoryService)
+export const serviceController = new ServiceController(serviceService)
