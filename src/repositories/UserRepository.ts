@@ -29,6 +29,16 @@ export interface returnUser {
 
 export interface CreateUserAttributes {
     name: string
+    date_of_birth: string
+    email: string
+    password: string
+    avatar_url?: string
+    bio?: string
+}
+
+export interface CreateUserAttributesRepository {
+    name: string
+    date_of_birth: Date
     email: string
     password: string
     avatar_url?: string
@@ -37,6 +47,14 @@ export interface CreateUserAttributes {
 
 export interface RegisterUser {
     name: string
+    date_of_birth: string
+    email: string
+    password: string
+}
+
+export interface RegisterUserRepository {
+    name: string
+    date_of_birth: Date
     email: string
     password: string
 }
@@ -103,8 +121,8 @@ export interface IuserRepository {
     findById: (id: number, client?: PrismaClientOrTransaction) => Promise<FullUserDate | null>;
     findByEmail: (email: string, client?: PrismaClientOrTransaction) => Promise<User | null>;
     count: (where: UserWhereParams, client?: PrismaClientOrTransaction) => Promise<number>;
-    create: (roleId: number, attributes: CreateUserAttributes, client?: PrismaClientOrTransaction) => Promise<User>;
-    register: (roleId: number, attributes: RegisterUser, client?: PrismaClientOrTransaction) => Promise<ReturnRegisterUser>
+    create: (roleId: number, attributes: CreateUserAttributesRepository, client?: PrismaClientOrTransaction) => Promise<User>;
+    register: (roleId: number, attributes: RegisterUserRepository, client?: PrismaClientOrTransaction) => Promise<ReturnRegisterUser>
     updateById: (id: number, attributes: Partial<CreateUserAttributes>, client?: PrismaClientOrTransaction) => Promise<User | null>;
     deleteById: (id: number, client?: PrismaClientOrTransaction) => Promise<User | null>;
 }

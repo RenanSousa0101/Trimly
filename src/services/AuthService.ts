@@ -8,6 +8,7 @@ import * as crypto from "crypto";
 import { EmailService } from "./EmailService";
 import { PasswordService } from "./PasswordService";
 import { TokenType } from "../generated/prisma";
+import dayjs from "dayjs";
 
 
 const EMAIL_VERIFICATION_TOKEN_EXPIRY_HOURS = 24;
@@ -28,7 +29,10 @@ export class AuthService {
         const role = await this.rolesRepository.findByRoleType("User");
         if (!role) throw new HttpError(404, "Role not found!");
 
-        const newUser = await this.userRepository.register(role.id, params);
+        const dateBirth = dayjs(params.date_of_birth).toDate()
+        console.log(dateBirth)
+
+        const newUser = await this.userRepository.register(role.id, {...params, date_of_birth: dateBirth});
 
         const verificationToken = crypto.randomBytes(32).toString("hex");
         const verificationTokenExpiresAt = new Date();

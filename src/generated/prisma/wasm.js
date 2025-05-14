@@ -125,6 +125,7 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  date_of_birth: 'date_of_birth',
   avatar_url: 'avatar_url',
   bio: 'bio',
   isEmailVerified: 'isEmailVerified',
@@ -264,7 +265,10 @@ exports.Prisma.TimeScalarFieldEnum = {
 exports.Prisma.ClientScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
-  date_of_birth: 'date_of_birth',
+  phone_id: 'phone_id',
+  address_id: 'address_id',
+  cpf: 'cpf',
+  communication_preference: 'communication_preference',
   is_active: 'is_active',
   created_at: 'created_at',
   updated_at: 'updated_at'

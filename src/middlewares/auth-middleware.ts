@@ -110,6 +110,24 @@ export const ensureProvider = (req: Request, res: Response, next: NextFunction) 
     }
 };
 
+export const ensureClient = (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+        console.error("Middleware configuration error: ensureClient running before ensureAuth or req.user not defined.");
+        res.status(500).json({ message: "Internal server error." });
+        return;
+    }
+
+    const isClient = req.user.User_Roles?.some(
+        userRole => userRole.roles?.role_type === 'Client'
+    );
+
+    if (isClient) {
+        next(); 
+    } else {
+        res.status(403).json({ message: 'Access denied. Requires service Client privileges.' });
+    }
+};
+
 export const authorizeAdminOrOwner = (paramUserIdName = 'id') => {
     return (req: Request, res: Response, next: NextFunction) => {
         const user = req.user;

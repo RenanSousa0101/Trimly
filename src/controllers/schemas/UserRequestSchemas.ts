@@ -10,6 +10,7 @@ export const GetUserRequestSchema = z.object({
 
 export const CreateUserRequestSchema = z.object({
     name: z.string(),
+    date_of_birth: z.string(),
     email: z.string().email(),
     password: z.string().min(8),
     avatar_url: z.string().url().optional(),

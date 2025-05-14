@@ -1,7 +1,7 @@
 import { userWithFullAddressSelect } from "../prisma/utils/userWithFullAddressSelect";
 import { prisma } from "../../database";
 import { PrismaClient, User } from "../../generated/prisma/client";
-import { CreateUserAttributes, FindUserParams, FullUserDate, IuserRepository, RegisterUser, ReturnRegisterUser, returnUser, UserWhereParams } from "../UserRepository";
+import { CreateUserAttributes, CreateUserAttributesRepository, FindUserParams, FullUserDate, IuserRepository, RegisterUser, RegisterUserRepository, ReturnRegisterUser, returnUser, UserWhereParams } from "../UserRepository";
 import bcrypt from "bcrypt";
 import { PrismaClientOrTransaction } from "../ClientTransaction";
 
@@ -66,7 +66,7 @@ export class PrismaUserRepository implements IuserRepository {
         })
     }
 
-    async create(roleId: number, attributes: CreateUserAttributes, client?: PrismaClientOrTransaction): Promise<User> {
+    async create(roleId: number, attributes: CreateUserAttributesRepository, client?: PrismaClientOrTransaction): Promise<User> {
         const prismaClient = client || this.prisma;
 
         return prismaClient.user.create({ 
@@ -81,7 +81,7 @@ export class PrismaUserRepository implements IuserRepository {
         })
     }
 
-    async register(roleId: number, attributes: RegisterUser, client?: PrismaClientOrTransaction): Promise<ReturnRegisterUser> {
+    async register(roleId: number, attributes: RegisterUserRepository, client?: PrismaClientOrTransaction): Promise<ReturnRegisterUser> {
         const prismaClient = client || this.prisma;
 
         return prismaClient.user.create({

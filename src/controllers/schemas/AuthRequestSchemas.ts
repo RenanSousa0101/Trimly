@@ -9,6 +9,7 @@ const passwordRequirements = z.string()
 
 export const RegisterUserSchema = z.object({
     name: z.string().min(2).max(50),
+    date_of_birth: z.string(),
     email: z.string().email().toLowerCase(),
     password: passwordRequirements,
 })

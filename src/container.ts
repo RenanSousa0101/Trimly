@@ -34,6 +34,9 @@ import { ServiceController } from "./controllers/ServiceController";
 import { PrismaProviderServiceRepository } from "./repositories/prisma/PrismaProviderServiceRepository";
 import { ProviderServiceService } from "./services/ProviderServiceService";
 import { ProviderServiceController } from "./controllers/ProviderServiceController";
+import { PrismaClientRepository } from "./repositories/prisma/PrismaClientRepository";
+import { ClientService } from "./services/ClientService";
+import { ClientController } from "./controllers/ClientController";
 
 export const prismaClient = new PrismaClient();
 
@@ -48,6 +51,7 @@ export const timeRepository = new PrismaTimeRepository(prismaClient)
 export const serviceCategoryRepository = new PrismaServiceCategoryRepository(prismaClient)
 export const serviceRepository = new PrismaServiceRepository(prismaClient)
 export const providerServiceRepository = new PrismaProviderServiceRepository(prismaClient)
+export const clientRepository = new PrismaClientRepository(prismaClient)
 
 export const emailService = new EmailService;
 export const passwordService = new PasswordService;
@@ -67,6 +71,9 @@ export const timeService = new TimeService(userRepository, providerRepository, t
 export const serviceCategoryService = new ServiceCategoryService(serviceCategoryRepository)
 export const serviceService = new ServiceService(serviceRepository, serviceCategoryRepository)
 export const providerServiceService = new ProviderServiceService(userRepository, providerRepository, serviceRepository, providerServiceRepository)
+export const clientService = new ClientService(
+    prismaClient, userRepository, phoneRepository, addressRepository, rolesRepository, clientRepository
+)
 
 export const userController = new UserController(usersService)
 export const phoneController = new PhoneController(phoneService)
@@ -79,3 +86,4 @@ export const timeController = new TimeController(timeService)
 export const serviceCategoryController = new ServiceCategoryController(serviceCategoryService)
 export const serviceController = new ServiceController(serviceService)
 export const providerServiceController = new ProviderServiceController(providerServiceService)
+export const clientController = new ClientController(clientService)

@@ -2,6 +2,7 @@ import { HttpError } from "../errors/HttpError";
 import { CreateUserAttributes, IuserRepository, UserWhereParams } from "../repositories/UserRepository";
 import { IrolesRepository } from "../repositories/RolesRepository";
 import bcrypt from "bcrypt";
+import dayjs from 'dayjs';
 
 interface GetUsersWithPaginationParams {
     page?: number
@@ -94,7 +95,9 @@ export class UsersService {
             throw new HttpError(500, "Default 'Client' role not found!")
         }
 
-        const newUser = await this.userRepository.create(role.id, params);
+        const dateBirth = dayjs.utc(params.date_of_birth).toDate()
+
+        const newUser = await this.userRepository.create(role.id, {...params, date_of_birth: dateBirth});
 
         return newUser
     }

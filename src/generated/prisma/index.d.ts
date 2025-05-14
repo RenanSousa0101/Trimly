@@ -3239,6 +3239,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    date_of_birth: Date | null
     avatar_url: string | null
     bio: string | null
     isEmailVerified: boolean | null
@@ -3251,6 +3252,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    date_of_birth: Date | null
     avatar_url: string | null
     bio: string | null
     isEmailVerified: boolean | null
@@ -3263,6 +3265,7 @@ export namespace Prisma {
     name: number
     email: number
     password: number
+    date_of_birth: number
     avatar_url: number
     bio: number
     isEmailVerified: number
@@ -3285,6 +3288,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    date_of_birth?: true
     avatar_url?: true
     bio?: true
     isEmailVerified?: true
@@ -3297,6 +3301,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    date_of_birth?: true
     avatar_url?: true
     bio?: true
     isEmailVerified?: true
@@ -3309,6 +3314,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    date_of_birth?: true
     avatar_url?: true
     bio?: true
     isEmailVerified?: true
@@ -3408,6 +3414,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date
     avatar_url: string | null
     bio: string | null
     isEmailVerified: boolean
@@ -3439,6 +3446,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    date_of_birth?: boolean
     avatar_url?: boolean
     bio?: boolean
     isEmailVerified?: boolean
@@ -3459,6 +3467,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    date_of_birth?: boolean
     avatar_url?: boolean
     bio?: boolean
     isEmailVerified?: boolean
@@ -3471,6 +3480,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    date_of_birth?: boolean
     avatar_url?: boolean
     bio?: boolean
     isEmailVerified?: boolean
@@ -3483,6 +3493,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    date_of_birth?: boolean
     avatar_url?: boolean
     bio?: boolean
     isEmailVerified?: boolean
@@ -3490,7 +3501,7 @@ export namespace Prisma {
     updated_at?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "avatar_url" | "bio" | "isEmailVerified" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "date_of_birth" | "avatar_url" | "bio" | "isEmailVerified" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Phone?: boolean | User$PhoneArgs<ExtArgs>
     Address?: boolean | User$AddressArgs<ExtArgs>
@@ -3520,6 +3531,7 @@ export namespace Prisma {
       name: string
       email: string
       password: string
+      date_of_birth: Date
       avatar_url: string | null
       bio: string | null
       isEmailVerified: boolean
@@ -3959,6 +3971,7 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly date_of_birth: FieldRef<"User", 'DateTime'>
     readonly avatar_url: FieldRef<"User", 'String'>
     readonly bio: FieldRef<"User", 'String'>
     readonly isEmailVerified: FieldRef<"User", 'Boolean'>
@@ -20411,17 +20424,24 @@ export namespace Prisma {
   export type ClientAvgAggregateOutputType = {
     id: number | null
     user_id: number | null
+    phone_id: number | null
+    address_id: number | null
   }
 
   export type ClientSumAggregateOutputType = {
     id: number | null
     user_id: number | null
+    phone_id: number | null
+    address_id: number | null
   }
 
   export type ClientMinAggregateOutputType = {
     id: number | null
     user_id: number | null
-    date_of_birth: Date | null
+    phone_id: number | null
+    address_id: number | null
+    cpf: string | null
+    communication_preference: string | null
     is_active: boolean | null
     created_at: Date | null
     updated_at: Date | null
@@ -20430,7 +20450,10 @@ export namespace Prisma {
   export type ClientMaxAggregateOutputType = {
     id: number | null
     user_id: number | null
-    date_of_birth: Date | null
+    phone_id: number | null
+    address_id: number | null
+    cpf: string | null
+    communication_preference: string | null
     is_active: boolean | null
     created_at: Date | null
     updated_at: Date | null
@@ -20439,7 +20462,10 @@ export namespace Prisma {
   export type ClientCountAggregateOutputType = {
     id: number
     user_id: number
-    date_of_birth: number
+    phone_id: number
+    address_id: number
+    cpf: number
+    communication_preference: number
     is_active: number
     created_at: number
     updated_at: number
@@ -20450,17 +20476,24 @@ export namespace Prisma {
   export type ClientAvgAggregateInputType = {
     id?: true
     user_id?: true
+    phone_id?: true
+    address_id?: true
   }
 
   export type ClientSumAggregateInputType = {
     id?: true
     user_id?: true
+    phone_id?: true
+    address_id?: true
   }
 
   export type ClientMinAggregateInputType = {
     id?: true
     user_id?: true
-    date_of_birth?: true
+    phone_id?: true
+    address_id?: true
+    cpf?: true
+    communication_preference?: true
     is_active?: true
     created_at?: true
     updated_at?: true
@@ -20469,7 +20502,10 @@ export namespace Prisma {
   export type ClientMaxAggregateInputType = {
     id?: true
     user_id?: true
-    date_of_birth?: true
+    phone_id?: true
+    address_id?: true
+    cpf?: true
+    communication_preference?: true
     is_active?: true
     created_at?: true
     updated_at?: true
@@ -20478,7 +20514,10 @@ export namespace Prisma {
   export type ClientCountAggregateInputType = {
     id?: true
     user_id?: true
-    date_of_birth?: true
+    phone_id?: true
+    address_id?: true
+    cpf?: true
+    communication_preference?: true
     is_active?: true
     created_at?: true
     updated_at?: true
@@ -20574,7 +20613,10 @@ export namespace Prisma {
   export type ClientGroupByOutputType = {
     id: number
     user_id: number
-    date_of_birth: Date
+    phone_id: number
+    address_id: number
+    cpf: string
+    communication_preference: string | null
     is_active: boolean
     created_at: Date
     updated_at: Date
@@ -20602,7 +20644,10 @@ export namespace Prisma {
   export type ClientSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     user_id?: boolean
-    date_of_birth?: boolean
+    phone_id?: boolean
+    address_id?: boolean
+    cpf?: boolean
+    communication_preference?: boolean
     is_active?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -20615,7 +20660,10 @@ export namespace Prisma {
   export type ClientSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     user_id?: boolean
-    date_of_birth?: boolean
+    phone_id?: boolean
+    address_id?: boolean
+    cpf?: boolean
+    communication_preference?: boolean
     is_active?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -20625,7 +20673,10 @@ export namespace Prisma {
   export type ClientSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     user_id?: boolean
-    date_of_birth?: boolean
+    phone_id?: boolean
+    address_id?: boolean
+    cpf?: boolean
+    communication_preference?: boolean
     is_active?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -20635,13 +20686,16 @@ export namespace Prisma {
   export type ClientSelectScalar = {
     id?: boolean
     user_id?: boolean
-    date_of_birth?: boolean
+    phone_id?: boolean
+    address_id?: boolean
+    cpf?: boolean
+    communication_preference?: boolean
     is_active?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "date_of_birth" | "is_active" | "created_at" | "updated_at", ExtArgs["result"]["client"]>
+  export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "phone_id" | "address_id" | "cpf" | "communication_preference" | "is_active" | "created_at" | "updated_at", ExtArgs["result"]["client"]>
   export type ClientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Scheduling?: boolean | Client$SchedulingArgs<ExtArgs>
     Rating?: boolean | Client$RatingArgs<ExtArgs>
@@ -20665,7 +20719,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       user_id: number
-      date_of_birth: Date
+      phone_id: number
+      address_id: number
+      cpf: string
+      communication_preference: string | null
       is_active: boolean
       created_at: Date
       updated_at: Date
@@ -21097,7 +21154,10 @@ export namespace Prisma {
   interface ClientFieldRefs {
     readonly id: FieldRef<"Client", 'Int'>
     readonly user_id: FieldRef<"Client", 'Int'>
-    readonly date_of_birth: FieldRef<"Client", 'DateTime'>
+    readonly phone_id: FieldRef<"Client", 'Int'>
+    readonly address_id: FieldRef<"Client", 'Int'>
+    readonly cpf: FieldRef<"Client", 'String'>
+    readonly communication_preference: FieldRef<"Client", 'String'>
     readonly is_active: FieldRef<"Client", 'Boolean'>
     readonly created_at: FieldRef<"Client", 'DateTime'>
     readonly updated_at: FieldRef<"Client", 'DateTime'>
@@ -27347,6 +27407,7 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     password: 'password',
+    date_of_birth: 'date_of_birth',
     avatar_url: 'avatar_url',
     bio: 'bio',
     isEmailVerified: 'isEmailVerified',
@@ -27531,7 +27592,10 @@ export namespace Prisma {
   export const ClientScalarFieldEnum: {
     id: 'id',
     user_id: 'user_id',
-    date_of_birth: 'date_of_birth',
+    phone_id: 'phone_id',
+    address_id: 'address_id',
+    cpf: 'cpf',
+    communication_preference: 'communication_preference',
     is_active: 'is_active',
     created_at: 'created_at',
     updated_at: 'updated_at'
@@ -27662,13 +27726,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -27679,6 +27736,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -27791,6 +27855,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    date_of_birth?: DateTimeFilter<"User"> | Date | string
     avatar_url?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     isEmailVerified?: BoolFilter<"User"> | boolean
@@ -27810,6 +27875,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    date_of_birth?: SortOrder
     avatar_url?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     isEmailVerified?: SortOrder
@@ -27832,6 +27898,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    date_of_birth?: DateTimeFilter<"User"> | Date | string
     avatar_url?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     isEmailVerified?: BoolFilter<"User"> | boolean
@@ -27851,6 +27918,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    date_of_birth?: SortOrder
     avatar_url?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     isEmailVerified?: SortOrder
@@ -27871,6 +27939,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    date_of_birth?: DateTimeWithAggregatesFilter<"User"> | Date | string
     avatar_url?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     isEmailVerified?: BoolWithAggregatesFilter<"User"> | boolean
@@ -28806,7 +28875,10 @@ export namespace Prisma {
     NOT?: ClientWhereInput | ClientWhereInput[]
     id?: IntFilter<"Client"> | number
     user_id?: IntFilter<"Client"> | number
-    date_of_birth?: DateTimeFilter<"Client"> | Date | string
+    phone_id?: IntFilter<"Client"> | number
+    address_id?: IntFilter<"Client"> | number
+    cpf?: StringFilter<"Client"> | string
+    communication_preference?: StringNullableFilter<"Client"> | string | null
     is_active?: BoolFilter<"Client"> | boolean
     created_at?: DateTimeFilter<"Client"> | Date | string
     updated_at?: DateTimeFilter<"Client"> | Date | string
@@ -28818,7 +28890,10 @@ export namespace Prisma {
   export type ClientOrderByWithRelationInput = {
     id?: SortOrder
     user_id?: SortOrder
-    date_of_birth?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
+    cpf?: SortOrder
+    communication_preference?: SortOrderInput | SortOrder
     is_active?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -28830,22 +28905,28 @@ export namespace Prisma {
   export type ClientWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     user_id?: number
+    phone_id?: number
+    address_id?: number
+    cpf?: string
     AND?: ClientWhereInput | ClientWhereInput[]
     OR?: ClientWhereInput[]
     NOT?: ClientWhereInput | ClientWhereInput[]
-    date_of_birth?: DateTimeFilter<"Client"> | Date | string
+    communication_preference?: StringNullableFilter<"Client"> | string | null
     is_active?: BoolFilter<"Client"> | boolean
     created_at?: DateTimeFilter<"Client"> | Date | string
     updated_at?: DateTimeFilter<"Client"> | Date | string
     Scheduling?: SchedulingListRelationFilter
     Rating?: RatingListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "user_id">
+  }, "id" | "user_id" | "phone_id" | "address_id" | "cpf">
 
   export type ClientOrderByWithAggregationInput = {
     id?: SortOrder
     user_id?: SortOrder
-    date_of_birth?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
+    cpf?: SortOrder
+    communication_preference?: SortOrderInput | SortOrder
     is_active?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -28862,7 +28943,10 @@ export namespace Prisma {
     NOT?: ClientScalarWhereWithAggregatesInput | ClientScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Client"> | number
     user_id?: IntWithAggregatesFilter<"Client"> | number
-    date_of_birth?: DateTimeWithAggregatesFilter<"Client"> | Date | string
+    phone_id?: IntWithAggregatesFilter<"Client"> | number
+    address_id?: IntWithAggregatesFilter<"Client"> | number
+    cpf?: StringWithAggregatesFilter<"Client"> | string
+    communication_preference?: StringNullableWithAggregatesFilter<"Client"> | string | null
     is_active?: BoolWithAggregatesFilter<"Client"> | boolean
     created_at?: DateTimeWithAggregatesFilter<"Client"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Client"> | Date | string
@@ -29227,6 +29311,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -29246,6 +29331,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -29264,6 +29350,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29283,6 +29370,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29302,6 +29390,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -29313,6 +29402,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29325,6 +29415,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -30224,7 +30315,10 @@ export namespace Prisma {
   }
 
   export type ClientCreateInput = {
-    date_of_birth: Date | string
+    phone_id: number
+    address_id: number
+    cpf: string
+    communication_preference?: string | null
     is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -30236,7 +30330,10 @@ export namespace Prisma {
   export type ClientUncheckedCreateInput = {
     id?: number
     user_id: number
-    date_of_birth: Date | string
+    phone_id: number
+    address_id: number
+    cpf: string
+    communication_preference?: string | null
     is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -30245,7 +30342,10 @@ export namespace Prisma {
   }
 
   export type ClientUpdateInput = {
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
+    cpf?: StringFieldUpdateOperationsInput | string
+    communication_preference?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30257,7 +30357,10 @@ export namespace Prisma {
   export type ClientUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
+    cpf?: StringFieldUpdateOperationsInput | string
+    communication_preference?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30268,14 +30371,20 @@ export namespace Prisma {
   export type ClientCreateManyInput = {
     id?: number
     user_id: number
-    date_of_birth: Date | string
+    phone_id: number
+    address_id: number
+    cpf: string
+    communication_preference?: string | null
     is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type ClientUpdateManyMutationInput = {
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
+    cpf?: StringFieldUpdateOperationsInput | string
+    communication_preference?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30284,7 +30393,10 @@ export namespace Prisma {
   export type ClientUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
+    cpf?: StringFieldUpdateOperationsInput | string
+    communication_preference?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30651,6 +30763,17 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -30669,17 +30792,6 @@ export namespace Prisma {
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type PhoneListRelationFilter = {
@@ -30747,6 +30859,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    date_of_birth?: SortOrder
     avatar_url?: SortOrder
     bio?: SortOrder
     isEmailVerified?: SortOrder
@@ -30763,6 +30876,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    date_of_birth?: SortOrder
     avatar_url?: SortOrder
     bio?: SortOrder
     isEmailVerified?: SortOrder
@@ -30775,6 +30889,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    date_of_birth?: SortOrder
     avatar_url?: SortOrder
     bio?: SortOrder
     isEmailVerified?: SortOrder
@@ -30820,6 +30935,20 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -30844,20 +30973,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type EnumTokenTypeFilter<$PrismaModel = never> = {
@@ -31643,7 +31758,10 @@ export namespace Prisma {
   export type ClientCountOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
-    date_of_birth?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
+    cpf?: SortOrder
+    communication_preference?: SortOrder
     is_active?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -31652,12 +31770,17 @@ export namespace Prisma {
   export type ClientAvgOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
   }
 
   export type ClientMaxOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
-    date_of_birth?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
+    cpf?: SortOrder
+    communication_preference?: SortOrder
     is_active?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -31666,7 +31789,10 @@ export namespace Prisma {
   export type ClientMinOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
-    date_of_birth?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
+    cpf?: SortOrder
+    communication_preference?: SortOrder
     is_active?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -31675,6 +31801,8 @@ export namespace Prisma {
   export type ClientSumOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
+    phone_id?: SortOrder
+    address_id?: SortOrder
   }
 
   export type ServiceListRelationFilter = {
@@ -32063,16 +32191,16 @@ export namespace Prisma {
     set?: string
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type PhoneUpdateManyWithoutUserNestedInput = {
@@ -33366,6 +33494,17 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -33383,17 +33522,6 @@ export namespace Prisma {
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -33440,6 +33568,20 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -33474,20 +33616,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedEnumTokenTypeFilter<$PrismaModel = never> = {
@@ -33773,7 +33901,10 @@ export namespace Prisma {
   }
 
   export type ClientCreateWithoutUserInput = {
-    date_of_birth: Date | string
+    phone_id: number
+    address_id: number
+    cpf: string
+    communication_preference?: string | null
     is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -33783,7 +33914,10 @@ export namespace Prisma {
 
   export type ClientUncheckedCreateWithoutUserInput = {
     id?: number
-    date_of_birth: Date | string
+    phone_id: number
+    address_id: number
+    cpf: string
+    communication_preference?: string | null
     is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -33993,7 +34127,10 @@ export namespace Prisma {
   }
 
   export type ClientUpdateWithoutUserInput = {
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
+    cpf?: StringFieldUpdateOperationsInput | string
+    communication_preference?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34003,7 +34140,10 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
+    cpf?: StringFieldUpdateOperationsInput | string
+    communication_preference?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34043,6 +34183,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -34061,6 +34202,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -34094,6 +34236,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -34112,6 +34255,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -34129,6 +34273,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -34147,6 +34292,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -34180,6 +34326,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -34198,6 +34345,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -34215,6 +34363,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -34233,6 +34382,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -34286,6 +34436,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -34304,6 +34455,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -34736,6 +34888,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -34754,6 +34907,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -34805,6 +34959,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -34823,6 +34978,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -34864,6 +35020,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -34882,6 +35039,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -34915,6 +35073,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -34933,6 +35092,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -35087,6 +35247,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -35105,6 +35266,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -35283,6 +35445,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -35301,6 +35464,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -35651,6 +35815,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -35669,6 +35834,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    date_of_birth: Date | string
     avatar_url?: string | null
     bio?: string | null
     isEmailVerified?: boolean
@@ -35734,6 +35900,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -35752,6 +35919,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -36136,7 +36304,10 @@ export namespace Prisma {
   }
 
   export type ClientCreateWithoutSchedulingInput = {
-    date_of_birth: Date | string
+    phone_id: number
+    address_id: number
+    cpf: string
+    communication_preference?: string | null
     is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -36147,7 +36318,10 @@ export namespace Prisma {
   export type ClientUncheckedCreateWithoutSchedulingInput = {
     id?: number
     user_id: number
-    date_of_birth: Date | string
+    phone_id: number
+    address_id: number
+    cpf: string
+    communication_preference?: string | null
     is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -36255,7 +36429,10 @@ export namespace Prisma {
   }
 
   export type ClientUpdateWithoutSchedulingInput = {
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
+    cpf?: StringFieldUpdateOperationsInput | string
+    communication_preference?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36266,7 +36443,10 @@ export namespace Prisma {
   export type ClientUncheckedUpdateWithoutSchedulingInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
+    cpf?: StringFieldUpdateOperationsInput | string
+    communication_preference?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36382,7 +36562,10 @@ export namespace Prisma {
   }
 
   export type ClientCreateWithoutRatingInput = {
-    date_of_birth: Date | string
+    phone_id: number
+    address_id: number
+    cpf: string
+    communication_preference?: string | null
     is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -36393,7 +36576,10 @@ export namespace Prisma {
   export type ClientUncheckedCreateWithoutRatingInput = {
     id?: number
     user_id: number
-    date_of_birth: Date | string
+    phone_id: number
+    address_id: number
+    cpf: string
+    communication_preference?: string | null
     is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -36495,7 +36681,10 @@ export namespace Prisma {
   }
 
   export type ClientUpdateWithoutRatingInput = {
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
+    cpf?: StringFieldUpdateOperationsInput | string
+    communication_preference?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36506,7 +36695,10 @@ export namespace Prisma {
   export type ClientUncheckedUpdateWithoutRatingInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
-    date_of_birth?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_id?: IntFieldUpdateOperationsInput | number
+    address_id?: IntFieldUpdateOperationsInput | number
+    cpf?: StringFieldUpdateOperationsInput | string
+    communication_preference?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string

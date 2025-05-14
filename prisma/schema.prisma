@@ -19,6 +19,7 @@ model User {
   name            String       @db.VarChar(255)
   email           String       @unique @db.VarChar(255)
   password        String       @db.VarChar(255)
+  date_of_birth   DateTime
   avatar_url      String?      @db.VarChar(255)
   bio             String?      @db.Text
   isEmailVerified Boolean      @default(false)
@@ -229,15 +230,18 @@ model Time {
 }
 
 model Client {
-  id            Int          @id @default(autoincrement())
-  user_id       Int          @unique
-  date_of_birth DateTime
-  is_active     Boolean      @default(true)
-  created_at    DateTime     @default(now())
-  updated_at    DateTime     @updatedAt
-  Scheduling    Scheduling[]
-  Rating        Rating[]
-  user          User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  id                       Int          @id @default(autoincrement())
+  user_id                  Int          @unique
+  phone_id                 Int          @unique
+  address_id               Int          @unique
+  cpf                      String       @unique @db.VarChar(11)
+  communication_preference String?      @db.VarChar(255)
+  is_active                Boolean      @default(true)
+  created_at               DateTime     @default(now())
+  updated_at               DateTime     @updatedAt
+  Scheduling               Scheduling[]
+  Rating                   Rating[]
+  user                     User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model Service_Category {
