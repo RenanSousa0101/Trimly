@@ -29022,6 +29022,7 @@ export namespace Prisma {
 
   export type Provider_ServiceWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    provider_id_service_id?: Provider_ServiceProvider_idService_idCompoundUniqueInput
     AND?: Provider_ServiceWhereInput | Provider_ServiceWhereInput[]
     OR?: Provider_ServiceWhereInput[]
     NOT?: Provider_ServiceWhereInput | Provider_ServiceWhereInput[]
@@ -29033,7 +29034,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Provider_Service"> | Date | string
     Provider?: XOR<ProviderScalarRelationFilter, ProviderWhereInput>
     Service?: XOR<ServiceScalarRelationFilter, ServiceWhereInput>
-  }, "id">
+  }, "id" | "provider_id_service_id">
 
   export type Provider_ServiceOrderByWithAggregationInput = {
     id?: SortOrder
@@ -31774,6 +31775,11 @@ export namespace Prisma {
   export type ServiceScalarRelationFilter = {
     is?: ServiceWhereInput
     isNot?: ServiceWhereInput
+  }
+
+  export type Provider_ServiceProvider_idService_idCompoundUniqueInput = {
+    provider_id: number
+    service_id: number
   }
 
   export type Provider_ServiceCountOrderByAggregateInput = {

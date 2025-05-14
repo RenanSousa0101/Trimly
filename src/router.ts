@@ -57,8 +57,10 @@ router.delete("/users/:id/provider/:providerId/serviceCategory/:serviceCategoryI
 
 router.get("/users/:id/provider/:providerId/service", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), serviceController.index)
 router.get("/users/:id/provider/:providerId/service/:serviceId",  ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), serviceController.show)
-router.post("/users/:id/provider/:providerId/service", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), serviceController.create)
-router.put("/users/:id/provider/:providerId/service/:serviceId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), serviceController.update)
-router.delete("/users/:id/provider/:providerId/service/:serviceId", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), serviceController.delete)
+router.post("/users/:id/provider/:providerId/service", ensureAuth, ensureAdmin, serviceController.create)
+router.put("/users/:id/provider/:providerId/service/:serviceId", ensureAuth, ensureAdmin, serviceController.update)
+router.delete("/users/:id/provider/:providerId/service/:serviceId", ensureAuth, ensureAdmin, serviceController.delete)
+
+
 
 export { router };

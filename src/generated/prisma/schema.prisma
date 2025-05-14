@@ -271,6 +271,8 @@ model Provider_Service {
   updated_at  DateTime @updatedAt
   Provider    Provider @relation(fields: [provider_id], references: [id], onDelete: Cascade)
   Service     Service  @relation(fields: [service_id], references: [id], onDelete: Cascade)
+
+  @@unique([provider_id, service_id])
 }
 
 model Scheduling {
