@@ -31,6 +31,9 @@ import { ServiceCategoryController } from "./controllers/ServiceCategoryControll
 import { PrismaServiceRepository } from "./repositories/prisma/PrismaServiceRepository";
 import { ServiceService } from "./services/ServiceService";
 import { ServiceController } from "./controllers/ServiceController";
+import { PrismaProviderServiceRepository } from "./repositories/prisma/PrismaProviderServiceRepository";
+import { ProviderServiceService } from "./services/ProviderServiceService";
+import { ProviderServiceController } from "./controllers/ProviderServiceController";
 
 export const prismaClient = new PrismaClient();
 
@@ -44,6 +47,7 @@ export const specializationRepository = new PrismaSpecializationRepository(prism
 export const timeRepository = new PrismaTimeRepository(prismaClient)
 export const serviceCategoryRepository = new PrismaServiceCategoryRepository(prismaClient)
 export const serviceRepository = new PrismaServiceRepository(prismaClient)
+export const providerServiceRepository = new PrismaProviderServiceRepository(prismaClient)
 
 export const emailService = new EmailService;
 export const passwordService = new PasswordService;
@@ -62,6 +66,7 @@ export const specializationService = new SpecializationService(prismaClient, use
 export const timeService = new TimeService(userRepository, providerRepository, timeRepository)
 export const serviceCategoryService = new ServiceCategoryService(serviceCategoryRepository)
 export const serviceService = new ServiceService(serviceRepository, serviceCategoryRepository)
+export const providerServiceService = new ProviderServiceService(userRepository, providerRepository, serviceRepository, providerServiceRepository)
 
 export const userController = new UserController(usersService)
 export const phoneController = new PhoneController(phoneService)
@@ -73,3 +78,4 @@ export const specializationController = new SpecializationController(specializat
 export const timeController = new TimeController(timeService)
 export const serviceCategoryController = new ServiceCategoryController(serviceCategoryService)
 export const serviceController = new ServiceController(serviceService)
+export const providerServiceController = new ProviderServiceController(providerServiceService)

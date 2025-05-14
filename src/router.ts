@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ensureAdmin, ensureAuth, ensureProvider, authorizeAdminOrOwner, ensureNotSelf} from "./middlewares/auth-middleware";
-import { addressController, authController, phoneController, providerController, rolesController, serviceCategoryController, serviceController, specializationController, timeController, userController } from "./container";
+import { addressController, authController, phoneController, providerController, providerServiceController, rolesController, serviceCategoryController, serviceController, specializationController, timeController, userController } from "./container";
 
 const router = Router()
 
@@ -60,6 +60,12 @@ router.get("/users/:id/provider/:providerId/service/:serviceId",  ensureAuth, en
 router.post("/users/:id/provider/:providerId/service", ensureAuth, ensureAdmin, serviceController.create)
 router.put("/users/:id/provider/:providerId/service/:serviceId", ensureAuth, ensureAdmin, serviceController.update)
 router.delete("/users/:id/provider/:providerId/service/:serviceId", ensureAuth, ensureAdmin, serviceController.delete)
+
+router.get("/users/:id/provider/:providerId/providerService", ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), providerServiceController.index)
+router.get("/users/:id/provider/:providerId/providerService/:providerServiceId",  ensureAuth, ensureProvider, authorizeAdminOrOwner('id'), providerServiceController.show)
+router.post("/users/:id/provider/:providerId/providerService", ensureAuth, ensureProvider, providerServiceController.create)
+router.put("/users/:id/provider/:providerId/providerService/:providerServiceId", ensureAuth, ensureProvider, providerServiceController.update)
+router.delete("/users/:id/provider/:providerId/providerService/:providerServiceId", ensureAuth, ensureProvider, providerServiceController.delete)
 
 
 

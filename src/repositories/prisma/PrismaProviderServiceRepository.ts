@@ -50,7 +50,7 @@ export class PrismaProviderServiceRepository implements IproviderServiceReposito
         })
     }
 
-    findByProviderServiceId(userId: number, providerId: number, serviceId: number, client?: PrismaClientOrTransaction): Promise<FindFullProviderService | null> {
+    findByProviderExistServiceId(userId: number, providerId: number, serviceId: number, client?: PrismaClientOrTransaction): Promise<FindFullProviderService | null> {
         const prismaClient = client || this.prisma;
 
         return prismaClient.provider_Service.findUnique({
@@ -87,11 +87,67 @@ export class PrismaProviderServiceRepository implements IproviderServiceReposito
         })
     }
 
-    createProviderService(providerId: number, serviceId: number, attributes: CreateProviderServiceAttributes, client?: PrismaClientOrTransaction): Promise<Provider_Service> {
+    findByProviderServiceId(userId: number, providerId: number, providerServiceId: number, client?: PrismaClientOrTransaction): Promise<FindFullProviderService | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.provider_Service.findUnique({
+            where: {
+                id: providerServiceId,
+                Provider: {
+                    user_id: userId
+                },
+                provider_id: providerId
+            },
+            select: {
+                id: true,
+                price: true,
+                duration: true,
+                created_at:true,
+                updated_at: true,
+                Service: {
+                    select: {
+                        id: true,
+                        name: true,
+                        description: true,
+                        Service_Category: {
+                            select: {
+                                id: true,
+                                name: true,
+                                description: true
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    createProviderService(providerId: number, serviceId: number, attributes: CreateProviderServiceAttributes, client?: PrismaClientOrTransaction): Promise<FindFullProviderService> {
         const prismaClient = client || this.prisma;
 
         return prismaClient.provider_Service.create({
-            data: { ...attributes, provider_id: providerId, service_id: serviceId }
+            data: { ...attributes, provider_id: providerId, service_id: serviceId },
+            select: {
+                id: true,
+                price: true,
+                duration: true,
+                created_at:true,
+                updated_at: true,
+                Service: {
+                    select: {
+                        id: true,
+                        name: true,
+                        description: true,
+                        Service_Category: {
+                            select: {
+                                id: true,
+                                name: true,
+                                description: true
+                            }
+                        }
+                    }
+                }
+            }
         })
     }
 
@@ -111,30 +167,69 @@ export class PrismaProviderServiceRepository implements IproviderServiceReposito
         })
     }
 
-    updateProviderService(providerId: number, serviceId: number, attributes: Partial<CreateProviderServiceAttributes>, client?: PrismaClientOrTransaction): Promise<Provider_Service> {
+    updateProviderService(providerId: number, providerServiceId: number, attributes: Partial<CreateProviderServiceAttributes>, newServiceId?: Partial<number>, client?: PrismaClientOrTransaction): Promise<FindFullProviderService> {
         const prismaClient = client || this.prisma;
 
         return prismaClient.provider_Service.update({
             where: {
-                provider_id_service_id: {
-                    provider_id: providerId,
-                    service_id: serviceId
-                }
+                id: providerServiceId,
+                provider_id: providerId
             },
             data: {
-                ...attributes
+                ...attributes,
+                service_id: newServiceId
+            }, 
+            select: {
+                id: true,
+                price: true,
+                duration: true,
+                created_at:true,
+                updated_at: true,
+                Service: {
+                    select: {
+                        id: true,
+                        name: true,
+                        description: true,
+                        Service_Category: {
+                            select: {
+                                id: true,
+                                name: true,
+                                description: true
+                            }
+                        }
+                    }
+                }
             }
         })
     }
 
-    deleteProviderService(providerId: number, serviceId: number, client?: PrismaClientOrTransaction): Promise<Provider_Service> {
+    deleteProviderService(providerId: number, providerServiceId: number, client?: PrismaClientOrTransaction): Promise<FindFullProviderService> {
         const prismaClient = client || this.prisma;
 
         return prismaClient.provider_Service.delete({
             where: {
-                provider_id_service_id: {
-                    provider_id: providerId,
-                    service_id: serviceId
+                id: providerServiceId,
+                provider_id: providerId
+            },
+            select: {
+                id: true,
+                price: true,
+                duration: true,
+                created_at:true,
+                updated_at: true,
+                Service: {
+                    select: {
+                        id: true,
+                        name: true,
+                        description: true,
+                        Service_Category: {
+                            select: {
+                                id: true,
+                                name: true,
+                                description: true
+                            }
+                        }
+                    }
                 }
             }
         })

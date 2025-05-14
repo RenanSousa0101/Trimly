@@ -1,6 +1,5 @@
 import { Decimal } from "@prisma/client/runtime/library";
 import { PrismaClientOrTransaction } from "./ClientTransaction";
-import { Provider_Service } from "../generated/prisma";
 
 export interface ProviderServiceWhereParams {
     name?: {
@@ -38,15 +37,22 @@ export interface FindFullProviderService {
 }
 
 export interface CreateProviderServiceAttributes {
-    price: Decimal
+    price: number
     duration: number
+}
+
+export interface AddProviderServiceAttributes {
+    price: number
+    duration: number
+    nameService: string
 }
 
 export interface IproviderServiceRepository {
     findProviderServices: (userId: number, providerId: number, params: FindProviderServiceParams, client?: PrismaClientOrTransaction) => Promise<FindFullProviderService[]>
-    findByProviderServiceId: (userId: number, providerId: number, serviceId: number, client?: PrismaClientOrTransaction) => Promise<FindFullProviderService | null>
-    createProviderService: (providerId: number, serviceId: number, attributes: CreateProviderServiceAttributes, client?: PrismaClientOrTransaction) => Promise<Provider_Service>
+    findByProviderServiceId: (userId: number, providerId: number, providerServiceId: number, client?: PrismaClientOrTransaction) => Promise<FindFullProviderService | null>
+    findByProviderExistServiceId: (userId: number, providerId: number, serviceId: number, client?: PrismaClientOrTransaction) => Promise<FindFullProviderService | null>
+    createProviderService: (providerId: number, serviceId: number, attributes: CreateProviderServiceAttributes, client?: PrismaClientOrTransaction) => Promise<FindFullProviderService>
     countProviderService: (where: ProviderServiceWhereParams, client?: PrismaClientOrTransaction) => Promise<number>;
-    updateProviderService: (providerId: number, serviceId: number, attributes: Partial<CreateProviderServiceAttributes>, client?: PrismaClientOrTransaction) => Promise<Provider_Service>
-    deleteProviderService: (providerId: number, serviceId: number, client?: PrismaClientOrTransaction) => Promise<Provider_Service>
+    updateProviderService: (providerId: number, providerServiceId: number, attributes: Partial<CreateProviderServiceAttributes>, newServiceId?: Partial<number>, client?: PrismaClientOrTransaction) => Promise<FindFullProviderService>
+    deleteProviderService: (providerId: number, providerServiceId: number, client?: PrismaClientOrTransaction) => Promise<FindFullProviderService>
 }
