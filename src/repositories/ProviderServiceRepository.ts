@@ -19,7 +19,7 @@ export interface FindProviderServiceParams {
 
 export interface FindFullProviderService {
     id: number,
-    price: Decimal,
+    price: number,
     duration: number,
     created_at: Date,
     updated_at: Date,

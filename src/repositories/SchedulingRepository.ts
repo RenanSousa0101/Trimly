@@ -9,7 +9,7 @@ export interface CreateScheduling {
 }
 
 export interface CreateSchedulingParams {
-    appointment_date: Date
+    appointment_date: string
     notes: string
 }
 

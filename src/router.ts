@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ensureAdmin, ensureAuth, ensureProvider, authorizeAdminOrOwner, ensureNotSelf, ensureClient} from "./middlewares/auth-middleware";
-import { addressController, authController, clientController, phoneController, providerController, providerServiceController, rolesController, serviceCategoryController, serviceController, specializationController, timeController, userController } from "./container";
+import { addressController, authController, clientController, phoneController, providerController, providerServiceController, rolesController, schedulingController, serviceCategoryController, serviceController, specializationController, timeController, userController } from "./container";
 
 const router = Router()
 
@@ -72,5 +72,7 @@ router.post("/users/:id/client", ensureAuth, authorizeAdminOrOwner('id'), client
 router.get("/users/:id/client/:clientId", ensureAuth, ensureClient, authorizeAdminOrOwner('id'), clientController.show)
 router.put("/users/:id/client/:clientId", ensureAuth, ensureClient, authorizeAdminOrOwner('id'), clientController.update)
 router.delete("/users/:id/client/:clientId", ensureAuth, ensureClient, authorizeAdminOrOwner('id'), clientController.delete)
+
+router.post("/users/:id/client/:clientId/provider/:providerId/service/:serviceId/scheduling", ensureAuth, ensureClient, authorizeAdminOrOwner('id'), schedulingController.create)
 
 export { router };

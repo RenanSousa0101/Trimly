@@ -37,6 +37,9 @@ import { ProviderServiceController } from "./controllers/ProviderServiceControll
 import { PrismaClientRepository } from "./repositories/prisma/PrismaClientRepository";
 import { ClientService } from "./services/ClientService";
 import { ClientController } from "./controllers/ClientController";
+import { PrismaSchedulingRepository } from "./repositories/prisma/PrismaSchedulingRepository";
+import { SchedulingService } from "./services/SchedulingService";
+import { SchedulingController } from "./controllers/SchedulingController";
 
 export const prismaClient = new PrismaClient();
 
@@ -52,6 +55,7 @@ export const serviceCategoryRepository = new PrismaServiceCategoryRepository(pri
 export const serviceRepository = new PrismaServiceRepository(prismaClient)
 export const providerServiceRepository = new PrismaProviderServiceRepository(prismaClient)
 export const clientRepository = new PrismaClientRepository(prismaClient)
+export const schedulingRepository = new PrismaSchedulingRepository(prismaClient)
 
 export const emailService = new EmailService;
 export const passwordService = new PasswordService;
@@ -74,6 +78,10 @@ export const providerServiceService = new ProviderServiceService(userRepository,
 export const clientService = new ClientService(
     prismaClient, userRepository, phoneRepository, addressRepository, rolesRepository, clientRepository
 )
+export const schedulingService = new SchedulingService(
+    schedulingRepository, clientRepository, providerRepository, serviceRepository, 
+    providerServiceRepository, phoneRepository, addressRepository
+)
 
 export const userController = new UserController(usersService)
 export const phoneController = new PhoneController(phoneService)
@@ -87,3 +95,4 @@ export const serviceCategoryController = new ServiceCategoryController(serviceCa
 export const serviceController = new ServiceController(serviceService)
 export const providerServiceController = new ProviderServiceController(providerServiceService)
 export const clientController = new ClientController(clientService)
+export const schedulingController = new SchedulingController(schedulingService)
