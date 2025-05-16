@@ -63,6 +63,14 @@ export class PrismaProviderRepository implements IproviderRepository {
         })
     }
 
+    findGlobalByProviderId(providerId: number, client?: PrismaClientOrTransaction): Promise<Provider | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.provider.findUnique({
+            where: { id: providerId }
+        })
+    }
+
     async createProvider(userId: number, addressId: number, phoneId: number, attributes: CreateProviderAttributes, client?: PrismaClientOrTransaction): Promise<Provider> {
         const prismaClient = client || this.prisma;
 

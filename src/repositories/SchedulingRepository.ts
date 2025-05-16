@@ -8,9 +8,15 @@ export interface CreateScheduling {
     status: SchedulingStatus
 }
 
+export interface CreateSchedulingParams {
+    appointment_date: Date
+    notes: string
+}
+
 export interface FullScheduling {
     appointment_date: Date
     notes?: string | null
+    status: SchedulingStatus
     Client: {
         user: {
             name: string,

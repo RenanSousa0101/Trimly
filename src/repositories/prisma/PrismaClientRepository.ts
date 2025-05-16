@@ -38,6 +38,14 @@ export class PrismaClientRepository implements IclientRepository {
         })
     }
 
+    findGlobalByClientId(clientId: number, client?: PrismaClientOrTransaction): Promise<Client | null> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.client.findUnique({
+            where: {id: clientId}
+        })
+    }
+
     createClient(userId: number, addressId: number, phoneId: number, attributes: CreateClientAttributes, client?: PrismaClientOrTransaction): Promise<Client> {
         const prismaClient = client || this.prisma;
 

@@ -45,6 +45,7 @@ export interface FullClientAttributes {
 export interface IclientRepository {
     findClients: (params: FindClientParams, client?: PrismaClientOrTransaction) => Promise<Client[]>
     findByIdClient: (userId: number, clientId: number, client?: PrismaClientOrTransaction) => Promise<Client | null>
+    findGlobalByClientId: (clientId: number, client?: PrismaClientOrTransaction) => Promise<Client | null>
     createClient: (userId: number, addressId: number, phoneId: number, attributes: CreateClientAttributes, client?: PrismaClientOrTransaction) => Promise<Client>
     countClient: (where: ClientWhereParams, client?: PrismaClientOrTransaction) => Promise<number>;
     updateClient: (userId: number, clientId: number, attributes: Partial<CreateClientAttributes>, client?: PrismaClientOrTransaction) => Promise<Client>
