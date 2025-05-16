@@ -2,7 +2,7 @@ import { Provider } from "../generated/prisma/client"
 import { PrismaClientOrTransaction } from "./ClientTransaction"
 
 export interface ProviderWhereParams {
-        business_name?: {
+    business_name?: {
         contains?: string
         equals?: string
         mode?: "default" | "insensitive"

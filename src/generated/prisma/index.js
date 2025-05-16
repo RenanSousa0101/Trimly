@@ -405,12 +405,11 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "postgresql://renansousa:renan260601gx@localhost:5432/Trimly?schema=public"
       }
     }
   },
