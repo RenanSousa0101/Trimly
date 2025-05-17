@@ -37,15 +37,52 @@ export class SchedulingService {
         if (!provider) throw new HttpError(404, `Provider with ID ${providerId} not found`);
         if (!service) throw new HttpError(404, `Service with ID ${serviceId} not found`);
         if (!times) throw new HttpError(404, `Times with ID ${providerId} not found`);
+
+        const [providerService, providerScheduling, clientScheduling] = await Promise.all([
+            this.providerServiceRepository.findByProviderExistServiceId(provider.user_id, providerId, serviceId),
+            this.schedulingRepository.findByProviderIdScheduling(providerId),
+            this.schedulingRepository.findByClientIdScheduling(clientId)
+        ]);
+
+        let providerSchedulingEmpty, clientSchedulingEmpty
         
-        const providerService = await this.providerServiceRepository.findByProviderExistServiceId(provider.user_id, providerId, serviceId);
-        if (!providerService) throw new HttpError(404, `Service with ID ${serviceId} is not offered by Provider with ID ${providerId}`);
+        if (!providerService) throw new HttpError(404, `Service ${service.name} is not offered by Provider ${provider.business_name}`);
+        providerScheduling.length === 0 ? providerSchedulingEmpty = true : providerSchedulingEmpty = false
+        clientScheduling.length === 0 ? clientSchedulingEmpty = true : clientSchedulingEmpty = false
 
         const dayTimes = times.filter(time => DayOfTheWeek[time.day_of_week] === dayjs(params.appointment_date).format('dddd'));
         const appointment = dayjs.utc(params.appointment_date).toDate()
 
         let appointmentConfirmed = dayTimes.some(time => dayjs.utc(time.start_time).format('HH:mm:ss') <= dayjs.utc(appointment).format('HH:mm:ss') && dayjs.utc(time.end_time).subtract(providerService.duration, 'minute').format('HH:mm:ss') > dayjs.utc(appointment).format('HH:mm:ss'))
         if (!appointmentConfirmed) throw new HttpError(409, "Unavailable time or amount of time unavailable for this service");
+
+        if (!providerSchedulingEmpty) {
+            const providerAllServices = await this.providerServiceRepository.findProviderAllServices(providerId);
+            const appointmentProvider = providerScheduling.filter(scheduling => dayjs.utc(scheduling.appointment_date).format('DD/MM/YYYY') === dayjs.utc(params.appointment_date).format('DD/MM/YYYY'));
+
+            const appointmentProviderEndService = appointmentProvider.map(appointment => {
+                const service = providerAllServices.find(service => service.service_id === appointment.service_id);
+                if (!service) {
+                    console.error(`Service with ID ${appointment.service_id} not found for existing appointment ID ${appointment.id}`);
+                    return null; 
+                }
+                const objAppointment = {...appointment, endService: dayjs.utc(appointment.appointment_date).add(service.duration, 'minute').toDate()}
+                return objAppointment
+            }).filter(appointment => appointment !== null)
+
+            const newAppointmentStart = dayjs.utc(appointment);
+            const newAppointmentEnd = newAppointmentStart.add(providerService.duration, 'minute');
+            
+            const hasConflict = appointmentProviderEndService.some(existingAppointment => {
+                const existingAppointmentStart = dayjs.utc(existingAppointment.appointment_date);
+                const existingAppointmentEnd = dayjs.utc(existingAppointment.endService);
+                return newAppointmentStart.isBefore(existingAppointmentEnd) && newAppointmentEnd.isAfter(existingAppointmentStart);
+            });
+            
+            if (hasConflict) {
+                throw new HttpError(409, `The provider ${provider.business_name} already has an appointment at that time ${newAppointmentStart}`);
+            }
+        }
         
         const createScheduling = await this.schedulingRepository.createScheduling(clientId, providerId, serviceId, { ...params, appointment_date: dayjs.utc(params.appointment_date).toDate(), status: SchedulingStatus.Pending });
 
@@ -64,7 +101,8 @@ export class SchedulingService {
                 avatar: createScheduling.Client.user.avatar_url,
                 name: createScheduling.Client.user.name,
                 email: createScheduling.Client.user.email,
-                phone: validateAndFormatPhoneInternational(phoneClient.phone_number)
+                phone: validateAndFormatPhoneInternational(phoneClient.phone_number),
+                notes: createScheduling.notes
             },
             service: {
                 category: createScheduling.Service.Service_Category.name,
@@ -72,7 +110,6 @@ export class SchedulingService {
                 name: createScheduling.Service.name,
                 description: createScheduling.Service.description,
                 duration: providerService.duration,
-                notes: createScheduling.notes,
                 appointment_date: createScheduling.appointment_date,
                 price: Number(providerService.price),
                 status: createScheduling.status

@@ -6,6 +6,14 @@ export class PrismaProviderServiceRepository implements IproviderServiceReposito
 
     constructor(private readonly prisma: PrismaClient) {}
 
+    findProviderAllServices(providerId: number, client?: PrismaClientOrTransaction): Promise<Provider_Service[]> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.provider_Service.findMany({
+            where:  { provider_id: providerId }
+        })
+    }
+
     findProviderServices(userId: number, providerId: number, params: FindProviderServiceParams, client?: PrismaClientOrTransaction): Promise<FindFullProviderService[]> {
         const prismaClient = client || this.prisma;
 

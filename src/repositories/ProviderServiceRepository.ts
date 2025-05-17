@@ -1,5 +1,6 @@
-import { Decimal } from "@prisma/client/runtime/library";
 import { PrismaClientOrTransaction } from "./ClientTransaction";
+import { Provider_Service } from "../generated/prisma/client";
+import { Decimal } from "../generated/prisma/runtime/library";
 
 export interface ProviderServiceWhereParams {
     name?: {
@@ -19,7 +20,7 @@ export interface FindProviderServiceParams {
 
 export interface FindFullProviderService {
     id: number,
-    price: number,
+    price: Decimal,
     duration: number,
     created_at: Date,
     updated_at: Date,
@@ -49,6 +50,7 @@ export interface AddProviderServiceAttributes {
 
 export interface IproviderServiceRepository {
     findProviderServices: (userId: number, providerId: number, params: FindProviderServiceParams, client?: PrismaClientOrTransaction) => Promise<FindFullProviderService[]>
+    findProviderAllServices: (providerId: number, client?: PrismaClientOrTransaction) => Promise<Provider_Service[]>
     findByProviderServiceId: (userId: number, providerId: number, providerServiceId: number, client?: PrismaClientOrTransaction) => Promise<FindFullProviderService | null>
     findByProviderExistServiceId: (userId: number, providerId: number, serviceId: number, client?: PrismaClientOrTransaction) => Promise<FindFullProviderService | null>
     createProviderService: (providerId: number, serviceId: number, attributes: CreateProviderServiceAttributes, client?: PrismaClientOrTransaction) => Promise<FindFullProviderService>

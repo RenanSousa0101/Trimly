@@ -1,3 +1,4 @@
+import { Scheduling } from "../../../prisma/prisma";
 import { PrismaClient } from "../../generated/prisma/client";
 import { PrismaClientOrTransaction } from "../ClientTransaction";
 import { CreateScheduling, FullScheduling, IschedulingRepository } from "../SchedulingRepository";
@@ -5,6 +6,22 @@ import { CreateScheduling, FullScheduling, IschedulingRepository } from "../Sche
 export class PrismaSchedulingRepository implements IschedulingRepository {
 
     constructor(private readonly prisma: PrismaClient) {}
+
+    findByProviderIdScheduling(providerId: number, client?: PrismaClientOrTransaction): Promise<Scheduling[]> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.scheduling.findMany({
+            where: { provider_id: providerId }
+        })
+    }
+
+    findByClientIdScheduling(clientId: number, client?: PrismaClientOrTransaction): Promise<Scheduling[]> {
+        const prismaClient = client || this.prisma;
+
+        return prismaClient.scheduling.findMany({
+            where: { client_id: clientId }
+        })
+    }
 
     createScheduling(clientId: number, providerId: number, serviceId: number, attributes: CreateScheduling, client?: PrismaClientOrTransaction): Promise<FullScheduling> {
         const prismaClient = client || this.prisma;

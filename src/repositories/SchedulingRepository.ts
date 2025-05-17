@@ -1,3 +1,4 @@
+import { Scheduling } from "../../prisma/prisma"
 import { SchedulingStatus } from "../generated/prisma/client"
 import { Decimal } from "../generated/prisma/runtime/library"
 import { PrismaClientOrTransaction } from "./ClientTransaction"
@@ -57,8 +58,8 @@ export interface FullScheduling {
     }
 }
 
-
-
 export interface IschedulingRepository {
+    findByProviderIdScheduling: (providerId: number, client?: PrismaClientOrTransaction) => Promise<Scheduling[]>
+    findByClientIdScheduling: (clientId: number, client?: PrismaClientOrTransaction) => Promise<Scheduling[]>
     createScheduling: (clientId: number, providerId: number, serviceId: number, attributes: CreateScheduling, client?: PrismaClientOrTransaction) => Promise<FullScheduling>
 }
