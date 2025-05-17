@@ -1,25 +1,58 @@
-import { Scheduling } from "../../../prisma/prisma";
 import { PrismaClient } from "../../generated/prisma/client";
 import { PrismaClientOrTransaction } from "../ClientTransaction";
-import { CreateScheduling, FullScheduling, IschedulingRepository } from "../SchedulingRepository";
+import { ReturnScheduling, CreateScheduling, FullScheduling, IschedulingRepository } from "../SchedulingRepository";
 
 export class PrismaSchedulingRepository implements IschedulingRepository {
 
     constructor(private readonly prisma: PrismaClient) {}
 
-    findByProviderIdScheduling(providerId: number, client?: PrismaClientOrTransaction): Promise<Scheduling[]> {
+    findByProviderIdScheduling(providerId: number, client?: PrismaClientOrTransaction): Promise<ReturnScheduling[]> {
         const prismaClient = client || this.prisma;
 
         return prismaClient.scheduling.findMany({
-            where: { provider_id: providerId }
+            where: { provider_id: providerId },
+            include: {
+                Service: {
+                    select: {
+                        Provider_Service: {
+                            select: {
+                                id: true,
+                                service_id: true,
+                                price: true,
+                                duration: true
+                            }
+                        },
+                        id: true,
+                        name: true,
+                        description: true
+                    }
+                },
+            }
         })
     }
 
-    findByClientIdScheduling(clientId: number, client?: PrismaClientOrTransaction): Promise<Scheduling[]> {
+    findByClientIdScheduling(clientId: number, client?: PrismaClientOrTransaction): Promise<ReturnScheduling[]> {
         const prismaClient = client || this.prisma;
 
         return prismaClient.scheduling.findMany({
-            where: { client_id: clientId }
+            where: { client_id: clientId },
+            include: {
+                Service: {
+                    select: {
+                        Provider_Service: {
+                            select: {
+                                id: true,
+                                service_id: true,
+                                price: true,
+                                duration: true
+                            }
+                        },
+                        id: true,
+                        name: true,
+                        description: true
+                    }
+                },
+            }
         })
     }
 

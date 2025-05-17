@@ -43,27 +43,24 @@ export class SchedulingService {
             this.schedulingRepository.findByProviderIdScheduling(providerId),
             this.schedulingRepository.findByClientIdScheduling(clientId)
         ]);
-
-        let providerSchedulingEmpty, clientSchedulingEmpty
         
         if (!providerService) throw new HttpError(404, `Service ${service.name} is not offered by Provider ${provider.business_name}`);
-        providerScheduling.length === 0 ? providerSchedulingEmpty = true : providerSchedulingEmpty = false
-        clientScheduling.length === 0 ? clientSchedulingEmpty = true : clientSchedulingEmpty = false
+        const providerSchedulingEmpty = providerScheduling.length === 0;
+        const clientSchedulingEmpty = clientScheduling.length === 0;
 
         const dayTimes = times.filter(time => DayOfTheWeek[time.day_of_week] === dayjs(params.appointment_date).format('dddd'));
         const appointment = dayjs.utc(params.appointment_date).toDate()
 
-        let appointmentConfirmed = dayTimes.some(time => dayjs.utc(time.start_time).format('HH:mm:ss') <= dayjs.utc(appointment).format('HH:mm:ss') && dayjs.utc(time.end_time).subtract(providerService.duration, 'minute').format('HH:mm:ss') > dayjs.utc(appointment).format('HH:mm:ss'))
+        let appointmentConfirmed = dayTimes.some(time => dayjs.utc(time.start_time).format('HH:mm:ss') <= dayjs.utc(appointment).format('HH:mm:ss') && dayjs.utc(time.end_time).subtract(providerService.duration, 'minute').format('HH:mm:ss') >= dayjs.utc(appointment).format('HH:mm:ss'))
         if (!appointmentConfirmed) throw new HttpError(409, "Unavailable time or amount of time unavailable for this service");
 
         if (!providerSchedulingEmpty) {
-            const providerAllServices = await this.providerServiceRepository.findProviderAllServices(providerId);
             const appointmentProvider = providerScheduling.filter(scheduling => dayjs.utc(scheduling.appointment_date).format('DD/MM/YYYY') === dayjs.utc(params.appointment_date).format('DD/MM/YYYY'));
 
             const appointmentProviderEndService = appointmentProvider.map(appointment => {
-                const service = providerAllServices.find(service => service.service_id === appointment.service_id);
+                const service = appointment.Service.Provider_Service.find(service => service.service_id === appointment.Service.id);
                 if (!service) {
-                    console.error(`Service with ID ${appointment.service_id} not found for existing appointment ID ${appointment.id}`);
+                    console.error(`Service with ID ${appointment.Service.id} not found for existing appointment ID ${appointment.id}`);
                     return null; 
                 }
                 const objAppointment = {...appointment, endService: dayjs.utc(appointment.appointment_date).add(service.duration, 'minute').toDate()}
@@ -81,6 +78,33 @@ export class SchedulingService {
             
             if (hasConflict) {
                 throw new HttpError(409, `The provider ${provider.business_name} already has an appointment at that time ${newAppointmentStart}`);
+            }
+        }
+
+        if (!clientSchedulingEmpty) {
+            const appointmentClient = clientScheduling.filter(scheduling => dayjs.utc(scheduling.appointment_date).format('DD/MM/YYYY') === dayjs.utc(params.appointment_date).format('DD/MM/YYYY'));
+            
+            const appointmentClientEndService = appointmentClient.map(appointment => {
+                const service = appointment.Service.Provider_Service.find(service => service.service_id === appointment.Service.id);
+                if (!service) {
+                    console.error(`Service with ID ${appointment.Service.id} not found for existing appointment ID ${appointment.id}`);
+                    return null; 
+                }
+                const objAppointment = {...appointment, endService: dayjs.utc(appointment.appointment_date).add(service.duration, 'minute').toDate()}
+                return objAppointment
+            }).filter(appointment => appointment !== null)
+
+            const newAppointmentStart = dayjs.utc(appointment);
+            const newAppointmentEnd = newAppointmentStart.add(providerService.duration, 'minute');
+            
+            const hasConflict = appointmentClientEndService.some(existingAppointment => {
+                const existingAppointmentStart = dayjs.utc(existingAppointment.appointment_date);
+                const existingAppointmentEnd = dayjs.utc(existingAppointment.endService);
+                return newAppointmentStart.isBefore(existingAppointmentEnd) && newAppointmentEnd.isAfter(existingAppointmentStart);
+            });
+            
+            if (hasConflict) {
+                throw new HttpError(409, `The Client already has an appointment at that time ${newAppointmentStart}`);
             }
         }
         

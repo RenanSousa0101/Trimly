@@ -58,8 +58,26 @@ export interface FullScheduling {
     }
 }
 
+export interface ReturnScheduling {
+    id: number
+    appointment_date: Date
+    notes?: string | null
+    status: SchedulingStatus
+    Service: {
+        Provider_Service: {
+            id: number,
+            service_id: number,
+            price: Decimal,
+            duration: number
+        }[]
+        id: number,
+        name: string,
+        description?: string | null
+    }
+}
+
 export interface IschedulingRepository {
-    findByProviderIdScheduling: (providerId: number, client?: PrismaClientOrTransaction) => Promise<Scheduling[]>
-    findByClientIdScheduling: (clientId: number, client?: PrismaClientOrTransaction) => Promise<Scheduling[]>
+    findByProviderIdScheduling: (providerId: number, client?: PrismaClientOrTransaction) => Promise<ReturnScheduling[]>
+    findByClientIdScheduling: (clientId: number, client?: PrismaClientOrTransaction) => Promise<ReturnScheduling[]>
     createScheduling: (clientId: number, providerId: number, serviceId: number, attributes: CreateScheduling, client?: PrismaClientOrTransaction) => Promise<FullScheduling>
 }
