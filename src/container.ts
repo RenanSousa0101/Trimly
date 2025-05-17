@@ -80,7 +80,7 @@ export const clientService = new ClientService(
 )
 export const schedulingService = new SchedulingService(
     schedulingRepository, clientRepository, providerRepository, serviceRepository, 
-    providerServiceRepository, phoneRepository, addressRepository
+    providerServiceRepository, phoneRepository, addressRepository, timeRepository
 )
 
 export const userController = new UserController(usersService)
